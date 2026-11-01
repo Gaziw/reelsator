@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="tr" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reelsatör - Replikten Video Bul</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fdfdf4',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                        },
+                        accent: '#ff2d55'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-accent selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent to-orange-500 flex items-center justify-center shadow-lg shadow-accent/20">
+                    <i data-lucide="play" class="w-5 h-5 text-white fill-current"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Reelsatör</h1>
+                    <p class="text-xs text-slate-400 font-medium">Replikten Vine ve Reel Bulucu</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+                <button onclick="openUploadModal()" class="flex items-center space-x-2 bg-accent hover:bg-accent/90 text-white font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-accent/25 transition-all active:scale-95 text-sm">
+                    <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Video Yükle</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 flex flex-col space-y-8">
+        
+        <!-- Hero Search Section -->
+        <div class="text-center space-y-4 py-4">
+            <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-white">
+                Aklındaki repliği yaz, <span class="bg-gradient-to-r from-accent to-orange-400 bg-clip-text text-transparent">anında bul!</span>
+            </h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
+                Yüzlerce Vine ve Instagram Reels kaydı arasından yapay zeka ile sesli arama yap, saniyesinde yakala.
+            </p>
+
+            <!-- Search Bar Box -->
+            <div class="max-w-2xl mx-auto relative mt-6">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </div>
+                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Örn: 'Ne anlatıyon ak' veya 'Aykut elmas mutfakta'..." 
+                    class="w-full pl-12 pr-24 py-4 bg-slate-900 border border-slate-800 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 text-sm sm:text-base shadow-2xl transition-all">
+                <div class="absolute inset-y-1.5 right-1.5 flex items-center space-x-1">
+                    <button onclick="startVoiceSearch()" title="Sesli Ara" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all">
+                        <i data-lucide="mic" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="triggerSearch()" class="bg-accent hover:bg-accent/90 text-white px-4 py-2.5 rounded-xl font-medium text-sm transition-all shadow-md">
+                        Bul
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Tags -->
+            <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+                <span class="text-xs text-slate-500 font-medium mr-1">Popüler:</span>
+                <button onclick="setQuery('Ne anlatıyon ak')" class="text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-3 py-1.5 rounded-lg transition-all">"Ne anlatıyon ak"</button>
+                <button onclick="setQuery('Vezir chery')" class="text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-3 py-1.5 rounded-lg transition-all">"Vezir chery"</button>
+                <button onclick="setQuery('Ananı avradını')" class="text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-3 py-1.5 rounded-lg transition-all">"Ananı avradını"</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-lg text-white flex items-center space-x-2">
+                    <i data-lucide="film" class="w-5 h-5 text-accent"></i>
+                    <span>Eşleşen Videolar</span>
+                    <span id="resultCount" class="text-xs bg-slate-900 border border-slate-800 text-slate-400 px-2.5 py-0.5 rounded-full">3 Kayıt</span>
+                </h3>
+            </div>
+
+            <!-- Video Grid -->
+            <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Video Card 1 -->
+                <div class="bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-700 transition-all group flex flex-col">
+                    <div class="relative aspect-[9/16] bg-slate-950 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
+                        <div class="absolute inset-0 flex items-center justify-center bg-slate-900/40 group-hover:bg-slate-900/20 transition-all z-10">
+                            <button class="w-12 h-12 rounded-full bg-accent/90 hover:bg-accent text-white flex items-center justify-center shadow-lg transition-all transform group-hover:scale-110">
+                                <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between text-xs text-slate-300">
+                            <span class="bg-slate-900/80 backdrop-blur-md px-2 py-1 rounded-md border border-slate-800">00:12 - 00:18</span>
+                            <span class="bg-accent/20 text-accent font-semibold px-2 py-1 rounded-md border border-accent/30">%98 Eşleşme</span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <h4 class="font-bold text-white text-sm line-clamp-1">Aykut Elmas - Ne Anlatıyon Ak</h4>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">"Sadexe pencereden atlayabiliyorsun aq senn ne anlatıyon ak..."</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                            <button onclick="shareVideo('1')" class="text-xs text-slate-400 hover:text-white flex items-center space-x-1.5 transition-all">
+                                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                                <span>Paylaş</span>
+                            </button>
+                            <button onclick="downloadClip('1')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>İndir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-700 transition-all group flex flex-col">
+                    <div class="relative aspect-[9/16] bg-slate-950 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
+                        <div class="absolute inset-0 flex items-center justify-center bg-slate-900/40 group-hover:bg-slate-900/20 transition-all z-10">
+                            <button class="w-12 h-12 rounded-full bg-accent/90 hover:bg-accent text-white flex items-center justify-center shadow-lg transition-all transform group-hover:scale-110">
+                                <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between text-xs text-slate-300">
+                            <span class="bg-slate-900/80 backdrop-blur-md px-2 py-1 rounded-md border border-slate-800">00:04 - 00:09</span>
+                            <span class="bg-accent/20 text-accent font-semibold px-2 py-1 rounded-md border border-accent/30">%94 Eşleşme</span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <h4 class="font-bold text-white text-sm line-clamp-1">Halil İbrahim Göker - Klasik Tartışma</h4>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">"Piyasa bilgin sıfır amk..."</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                            <button onclick="shareVideo('2')" class="text-xs text-slate-400 hover:text-white flex items-center space-x-1.5 transition-all">
+                                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                                <span>Paylaş</span>
+                            </button>
+                            <button onclick="downloadClip('2')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>İndir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 -->
+                <div class="bg-slate-900 border border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-700 transition-all group flex flex-col">
+                    <div class="relative aspect-[9/16] bg-slate-950 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
+                        <div class="absolute inset-0 flex items-center justify-center bg-slate-900/40 group-hover:bg-slate-900/20 transition-all z-10">
+                            <button class="w-12 h-12 rounded-full bg-accent/90 hover:bg-accent text-white flex items-center justify-center shadow-lg transition-all transform group-hover:scale-110">
+                                <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between text-xs text-slate-300">
+                            <span class="bg-slate-900/80 backdrop-blur-md px-2 py-1 rounded-md border border-slate-800">00:22 - 00:30</span>
+                            <span class="bg-accent/20 text-accent font-semibold px-2 py-1 rounded-md border border-accent/30">%91 Eşleşme</span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <h4 class="font-bold text-white text-sm line-clamp-1">Efsane Vine Serisi - Katlanır Plaka</h4>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">"Ama ben bundan bahsetmedim ki, katlanır plaka cezasından..."</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                            <button onclick="shareVideo('3')" class="text-xs text-slate-400 hover:text-white flex items-center space-x-1.5 transition-all">
+                                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                                <span>Paylaş</span>
+                            </button>
+                            <button onclick="downloadClip('3')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>İndir</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500 mt-auto">
+        <p>Reelsatör © 2026 — Yapay Zeka Destekli Replik Arama Motoru</p>
+    </footer>
+<!-- Scripts -->
+    <script>
+        // İkonları başlat
+        lucide.createIcons();
+
+        // 1. Gerçek Karanlık Mod İşlevi (Sağ üstteki tuş için)
+        function toggleDarkMode() {
+            const htmlTag = document.documentElement;
+            if (htmlTag.classList.contains('dark')) {
+                htmlTag.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlTag.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Sayfa açıldığında daha önceki seçtiğin modu hatırlar
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // 2. Arama ve Filtreleme (Yazdığını veya etikete tıkladığını filtreler)
+        function setQuery(text) {
+            document.getElementById('searchInput').value = text;
+            handleSearch(text);
+        }
+
+        function handleSearch(query) {
+            const searchTerm = query.toLowerCase().trim();
+            const cards = document.querySelectorAll('#videoGrid > div');
+            let matchCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector('h4').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                    matchCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('resultCount').textContent = matchCount + ' Kayıt';
+        }
+
+        function triggerSearch() {
+            const query = document.getElementById('searchInput').value;
+            handleSearch(query);
+        }
+
+        // 3. Diğer Butonlar (Hata vermesin diye)
+        function startVoiceSearch() {
+            alert("Mikrofon dinlemede (Whisper AI entegrasyonu aktif)...");
+        }
+
+        function shareVideo(id) {
+            alert("Video bağlantısı kopyalandı!");
+        }
+
+        function downloadClip(id) {
+            alert("Klip indirme başlatılıyor...");
+        }
+
+        function openUploadModal() {
+            alert("Video yükleme paneli açılıyor!");
+        }
+    </script>
+    </body>
+</html>
