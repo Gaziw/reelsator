@@ -31,9 +31,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -52,10 +57,9 @@
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Tarayıcının varsayılan video indirme butonunu gizle */
-        video::-webkit-media-controls-download-button {
-            display: none;
-        }
+        /* Video Gizli Özellik Temizliği */
+        video::-webkit-media-controls-download-button { display: none !important; }
+        video::-webkit-media-controls-picture-in-picture-button { display: none !important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col selection:bg-accent selection:text-white transition-colors duration-300">
@@ -250,7 +254,7 @@
                 </button>
             </div>
             <div class="relative aspect-[9/16] max-h-[65vh] bg-black flex items-center justify-center">
-                <video id="modalVideo" class="w-full h-full object-contain" controls autoplay controlslist="nodownload">
+                <video id="modalVideo" class="w-full h-full object-contain" controls autoplay controlslist="nodownload noplaybackrate" disablepictureinpicture>
                     <source src="" type="video/mp4">
                     Tarayıcınız video etiketini desteklemiyor.
                 </video>
@@ -271,7 +275,7 @@
                 </button>
             </div>
 
-            <!-- Paylaşım Kanalları (WhatsApp, Instagram, Kopyala, İndir) -->
+            <!-- Paylaşım Kanalları -->
             <div class="grid grid-cols-4 gap-2">
                 <button onclick="shareViaWhatsApp()" class="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800/60 hover:bg-green-50 dark:hover:bg-green-950/30 text-slate-700 dark:text-slate-200 hover:text-green-600 dark:hover:text-green-400 transition-all group cursor-pointer border border-transparent hover:border-green-500/30">
                     <div class="w-10 h-10 rounded-xl bg-green-500 text-white flex items-center justify-center shadow-lg shadow-green-500/20 mb-1.5 group-hover:scale-105 transition-all">
@@ -333,7 +337,6 @@
                 const targetCard = document.querySelector(`[data-id="${vId}"]`);
                 if (targetCard) {
                     const title = targetCard.querySelector('h4').textContent;
-                    // Örnek video URL'si
                     playVideo(title, 'https://www.w3schools.com/html/mov_bbb.mp4');
                 }
             }
@@ -406,7 +409,7 @@
             }
         });
 
-        // Paylaşım Butonu İşlevleri (Doğrudan ilgili videonun linkini üretir)
+        // Paylaşım Butonu İşlevleri
         function getShareableLink() {
             const baseUrl = window.location.href.split('?')[0];
             return `${baseUrl}?v=${activeVideoId}`;
@@ -432,24 +435,24 @@
             const link = getShareableLink();
             navigator.clipboard.writeText(link).then(() => {
                 closeShareSheet();
-                showToast("Link kopyalandı! Instagram'da paylaşabilirsin 📸");
+                showToast("Link kopyalandı! Instagram açılıyor... 📸");
+                setTimeout(() => {
+                    window.open('https://instagram.com', '_blank');
+                }, 800);
             });
         }
 
         function downloadFromSheet() {
             closeShareSheet();
-            triggerDownload(activeShareTitle, activeVideoUrl);
+            downloadDirectClip(activeShareTitle, activeVideoUrl);
         }
 
+        // Doğrudan İndirme Fonksiyonu (Kart içi ve Çekmece içi)
         function downloadDirectClip(title, videoUrl) {
-            triggerDownload(title, videoUrl);
-        }
-
-        function triggerDownload(title, videoUrl) {
-            showToast(`"${title}" indiriliyor... 📥`);
+            showToast(`"${title}" indirmesi başlatılıyor... 📥`);
             const a = document.createElement('a');
             a.href = videoUrl;
-            a.download = title + ".mp4";
+            a.download = title.replace(/[^a-zA-Z0-9]/g, "_") + ".mp4";
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
