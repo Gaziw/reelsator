@@ -44,14 +44,17 @@
             scrollbar-width: none;
         }
 
-        /* Toast Animasyonu */
         #toast {
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Paylaşım Çekmecesi Animasyonu */
         #shareSheetContent {
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Tarayıcının varsayılan video indirme butonunu gizle */
+        video::-webkit-media-controls-download-button {
+            display: none;
         }
     </style>
 </head>
@@ -139,7 +142,7 @@
             <!-- Video Grid -->
             <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <!-- Video Card 1 -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
+                <div data-id="1" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
                     <div class="relative aspect-[9/16] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
                         <div class="absolute inset-0 flex items-center justify-center bg-slate-900/20 dark:bg-slate-900/40 group-hover:bg-slate-900/10 transition-all z-10">
@@ -158,11 +161,11 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Sadece pencereden atlayabiliyorsun aq sen ne anlatıyon ak..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="openShareSheet('Aykut Elmas - Ne Anlatıyon Ak')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="openShareSheet('1', 'Aykut Elmas - Ne Anlatıyon Ak', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadClip('1')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="downloadDirectClip('Aykut Elmas - Ne Anlatıyon Ak', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -171,7 +174,7 @@
                 </div>
 
                 <!-- Video Card 2 -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
+                <div data-id="2" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
                     <div class="relative aspect-[9/16] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
                         <div class="absolute inset-0 flex items-center justify-center bg-slate-900/20 dark:bg-slate-900/40 group-hover:bg-slate-900/10 transition-all z-10">
@@ -190,11 +193,11 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Piyasa bilgin sıfır amk..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="openShareSheet('Halil İbrahim Göker - Klasik Tartışma')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="openShareSheet('2', 'Halil İbrahim Göker - Klasik Tartışma', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadClip('2')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="downloadDirectClip('Halil İbrahim Göker - Klasik Tartışma', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -203,7 +206,7 @@
                 </div>
 
                 <!-- Video Card 3 -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
+                <div data-id="3" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
                     <div class="relative aspect-[9/16] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
                         <div class="absolute inset-0 flex items-center justify-center bg-slate-900/20 dark:bg-slate-900/40 group-hover:bg-slate-900/10 transition-all z-10">
@@ -222,11 +225,11 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Ama ben bundan bahsetmedim ki, katlanır plaka cezasından..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="openShareSheet('Efsane Vine Serisi - Katlanır Plaka')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="openShareSheet('3', 'Efsane Vine Serisi - Katlanır Plaka', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadClip('3')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="downloadDirectClip('Efsane Vine Serisi - Katlanır Plaka', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -239,15 +242,15 @@
 
     <!-- Video Player Modal (Popup) -->
     <div id="videoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md transition-all">
-        <div class="relative w-full max-w-lg bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col">
+        <div class="relative w-full max-w-sm sm:max-w-md bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col mx-auto">
             <div class="p-4 flex items-center justify-between border-b border-slate-800">
                 <h4 id="modalTitle" class="font-bold text-sm text-white line-clamp-1">Video Oynatıcı</h4>
                 <button onclick="closeVideoModal()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
-            <div class="relative aspect-[9/16] max-h-[70vh] bg-black flex items-center justify-center">
-                <video id="modalVideo" class="w-full h-full object-contain" controls autoplay>
+            <div class="relative aspect-[9/16] max-h-[65vh] bg-black flex items-center justify-center">
+                <video id="modalVideo" class="w-full h-full object-contain" controls autoplay controlslist="nodownload">
                     <source src="" type="video/mp4">
                     Tarayıcınız video etiketini desteklemiyor.
                 </video>
@@ -258,7 +261,6 @@
     <!-- Alttan Açılan Paylaşım Çekmecesi (Share Sheet Modal) -->
     <div id="shareSheetModal" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center bg-slate-950/80 backdrop-blur-md transition-all">
         <div id="shareSheetContent" class="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col space-y-5 transform translate-y-full sm:translate-y-0">
-            <!-- Çekmece Başlığı -->
             <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
                 <div>
                     <h4 class="font-extrabold text-base text-slate-900 dark:text-white">Klibi Paylaş</h4>
@@ -269,38 +271,45 @@
                 </button>
             </div>
 
-            <!-- Uygulama / Paylaşım Seçenekleri Çekmecesi -->
-            <div class="grid grid-cols-3 gap-3">
-                <button onclick="shareViaWhatsApp()" class="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/60 hover:bg-green-50 dark:hover:bg-green-950/30 text-slate-700 dark:text-slate-200 hover:text-green-600 dark:hover:text-green-400 transition-all group cursor-pointer border border-transparent hover:border-green-500/30">
-                    <div class="w-12 h-12 rounded-2xl bg-green-500 text-white flex items-center justify-center shadow-lg shadow-green-500/20 mb-2 group-hover:scale-105 transition-all">
-                        <i data-lucide="message-circle" class="w-6 h-6"></i>
+            <!-- Paylaşım Kanalları (WhatsApp, Instagram, Kopyala, İndir) -->
+            <div class="grid grid-cols-4 gap-2">
+                <button onclick="shareViaWhatsApp()" class="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800/60 hover:bg-green-50 dark:hover:bg-green-950/30 text-slate-700 dark:text-slate-200 hover:text-green-600 dark:hover:text-green-400 transition-all group cursor-pointer border border-transparent hover:border-green-500/30">
+                    <div class="w-10 h-10 rounded-xl bg-green-500 text-white flex items-center justify-center shadow-lg shadow-green-500/20 mb-1.5 group-hover:scale-105 transition-all">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-xs font-semibold">WhatsApp</span>
+                    <span class="text-[11px] font-semibold">WhatsApp</span>
                 </button>
 
-                <button onclick="copyLinkOnly()" class="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/60 hover:bg-accent/10 text-slate-700 dark:text-slate-200 hover:text-accent transition-all group cursor-pointer border border-transparent hover:border-accent/30">
-                    <div class="w-12 h-12 rounded-2xl bg-accent text-white flex items-center justify-center shadow-lg shadow-accent/20 mb-2 group-hover:scale-105 transition-all">
-                        <i data-lucide="copy" class="w-6 h-6"></i>
+                <button onclick="shareViaInstagram()" class="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800/60 hover:bg-pink-50 dark:hover:bg-pink-950/30 text-slate-700 dark:text-slate-200 hover:text-pink-600 dark:hover:text-pink-400 transition-all group cursor-pointer border border-transparent hover:border-pink-500/30">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-pink-500/20 mb-1.5 group-hover:scale-105 transition-all">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-xs font-semibold">Bağlantıyı Kopyala</span>
+                    <span class="text-[11px] font-semibold">Instagram</span>
                 </button>
 
-                <button onclick="simulateDownloadFromSheet()" class="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-blue-950/30 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all group cursor-pointer border border-transparent hover:border-blue-500/30">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/20 mb-2 group-hover:scale-105 transition-all">
-                        <i data-lucide="download" class="w-6 h-6"></i>
+                <button onclick="copyLinkOnly()" class="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800/60 hover:bg-accent/10 text-slate-700 dark:text-slate-200 hover:text-accent transition-all group cursor-pointer border border-transparent hover:border-accent/30">
+                    <div class="w-10 h-10 rounded-xl bg-accent text-white flex items-center justify-center shadow-lg shadow-accent/20 mb-1.5 group-hover:scale-105 transition-all">
+                        <i data-lucide="copy" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-xs font-semibold">Klibi İndir</span>
+                    <span class="text-[11px] font-semibold">Kopyala</span>
+                </button>
+
+                <button onclick="downloadFromSheet()" class="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-blue-950/30 text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all group cursor-pointer border border-transparent hover:border-blue-500/30">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/20 mb-1.5 group-hover:scale-105 transition-all">
+                        <i data-lucide="download" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[11px] font-semibold">İndir</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification (Şık Kayan Bildirim) -->
+    <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 right-6 z-50 translate-y-20 opacity-0 pointer-events-none bg-slate-900 dark:bg-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 flex items-center space-x-3">
         <div class="w-7 h-7 rounded-xl bg-green-500/20 text-green-400 flex items-center justify-center">
             <i data-lucide="check" class="w-4 h-4"></i>
         </div>
-        <span id="toastText" class="text-sm font-medium">Bağlantı panoya kopyalandı! ✨</span>
+        <span id="toastText" class="text-sm font-medium">Bağlantı kopyalandı! ✨</span>
     </div>
 
     <!-- Footer -->
@@ -312,7 +321,23 @@
     <script>
         lucide.createIcons();
 
+        let activeVideoId = "";
         let activeShareTitle = "";
+        let activeVideoUrl = "";
+
+        // Sayfa açıldığında URL'de video parametresi varsa otomatik oynat
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const vId = urlParams.get('v');
+            if (vId) {
+                const targetCard = document.querySelector(`[data-id="${vId}"]`);
+                if (targetCard) {
+                    const title = targetCard.querySelector('h4').textContent;
+                    // Örnek video URL'si
+                    playVideo(title, 'https://www.w3schools.com/html/mov_bbb.mp4');
+                }
+            }
+        });
 
         // Karanlık Mod
         function toggleDarkMode() {
@@ -332,7 +357,6 @@
             document.documentElement.classList.remove('dark');
         }
 
-        // Toast Bildirim Gösterme Fonksiyonu
         function showToast(message) {
             const toast = document.getElementById('toast');
             const toastText = document.getElementById('toastText');
@@ -347,10 +371,13 @@
             }, 2500);
         }
 
-        // Paylaşım Çekmecesi (Share Sheet) Kontrolleri
-        function openShareSheet(title) {
+        // Paylaşım Çekmecesi Kontrolleri
+        function openShareSheet(id, title, videoUrl) {
+            activeVideoId = id;
             activeShareTitle = title;
+            activeVideoUrl = videoUrl;
             document.getElementById('shareSheetSubtitle').textContent = title;
+            
             const modal = document.getElementById('shareSheetModal');
             const content = document.getElementById('shareSheetContent');
 
@@ -373,33 +400,59 @@
             }, 300);
         }
 
-        // Çekmece Dışına Tıklayınca Kapatma
         document.getElementById('shareSheetModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeShareSheet();
             }
         });
 
-        // Çekmece İçindeki Eylemler
+        // Paylaşım Butonu İşlevleri (Doğrudan ilgili videonun linkini üretir)
+        function getShareableLink() {
+            const baseUrl = window.location.href.split('?')[0];
+            return `${baseUrl}?v=${activeVideoId}`;
+        }
+
         function copyLinkOnly() {
-            const currentUrl = window.location.href;
-            navigator.clipboard.writeText(currentUrl).then(() => {
+            const link = getShareableLink();
+            navigator.clipboard.writeText(link).then(() => {
                 closeShareSheet();
                 showToast(`"${activeShareTitle}" bağlantısı kopyalandı! ✨`);
             });
         }
 
         function shareViaWhatsApp() {
-            const currentUrl = window.location.href;
-            const text = encodeURIComponent(`Bak Reelsatör'de ne buldum: "${activeShareTitle}" 🎬 ${currentUrl}`);
+            const link = getShareableLink();
+            const text = encodeURIComponent(`Bak Reelsatör'de ne buldum: "${activeShareTitle}" 🎬 ${link}`);
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
             closeShareSheet();
             showToast("WhatsApp açılıyor... 🚀");
         }
 
-        function simulateDownloadFromSheet() {
+        function shareViaInstagram() {
+            const link = getShareableLink();
+            navigator.clipboard.writeText(link).then(() => {
+                closeShareSheet();
+                showToast("Link kopyalandı! Instagram'da paylaşabilirsin 📸");
+            });
+        }
+
+        function downloadFromSheet() {
             closeShareSheet();
-            showToast("Klip indirme başlatıldı! 📥");
+            triggerDownload(activeShareTitle, activeVideoUrl);
+        }
+
+        function downloadDirectClip(title, videoUrl) {
+            triggerDownload(title, videoUrl);
+        }
+
+        function triggerDownload(title, videoUrl) {
+            showToast(`"${title}" indiriliyor... 📥`);
+            const a = document.createElement('a');
+            a.href = videoUrl;
+            a.download = title + ".mp4";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         // Video Modal Fonksiyonları
@@ -429,7 +482,7 @@
             }
         });
 
-        // Arama ve Temizleme Fonksiyonları
+        // Arama Fonksiyonları
         function setQuery(text) {
             document.getElementById('searchInput').value = text;
             handleSearch(text);
@@ -476,10 +529,6 @@
 
         function startVoiceSearch() {
             alert("Mikrofon dinlemede (Whisper AI entegrasyonu aktif)...");
-        }
-
-        function downloadClip(id) {
-            showToast("Klip indirme başlatılıyor... 📥");
         }
 
         function openUploadModal() {
