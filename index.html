@@ -33,15 +33,12 @@
         
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         html, body {
             background-color: #0f172a;
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
-            overflow-x: hidden;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -60,7 +57,7 @@
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Tarayıcı Ekstra Oynatıcı Özelliklerini Temizleme */
+        /* Tarayıcı Ekstra Oynatıcı Özelliklerini ve Altyazı/PiP Menülerini Temizleme */
         video::-webkit-media-controls-download-button { display: none !important; }
         video::-webkit-media-controls-picture-in-picture-button { display: none !important; }
         video::-webkit-media-controls-closed-captions-button { display: none !important; }
@@ -452,34 +449,18 @@
             downloadDirectClip(activeShareTitle, activeVideoUrl);
         }
 
-        // GERÇEK DOSYA İNDİRME FONKSİYONU (Arka planda blob olarak çekip indirir)
+        // GERÇEK İNDİRME FONKSİYONU
         function downloadDirectClip(title, videoUrl) {
-            showToast(`"${title}" indirmesi başlatıldı... 📥`);
-
-            fetch(videoUrl)
-                .then(response => response.blob())
-                .then(blob => {
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = blobUrl;
-                    a.download = title.replace(/[^a-zA-Z0-9]/g, "_") + ".mp4";
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(blobUrl);
-                    document.body.removeChild(a);
-                    showToast(`"${title}" başarıyla indirildi! ✅`);
-                })
-                .catch(() => {
-                    // Yönlendirme güvenliği engellerse doğrudan link ile indir
-                    const a = document.createElement('a');
-                    a.href = videoUrl;
-                    a.target = '_blank';
-                    a.download = title.replace(/[^a-zA-Z0-9]/g, "_") + ".mp4";
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                });
+            showToast(`"${title}" indirmesi başlatılıyor... 📥`);
+            
+            // Gizli indirme a etiketi
+            const a = document.createElement('a');
+            a.href = videoUrl;
+            a.target = '_blank';
+            a.download = title.replace(/[^a-zA-Z0-9]/g, "_") + ".mp4";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         // Video Modal Fonksiyonları
