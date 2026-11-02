@@ -36,7 +36,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Custom Scrollbar */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -91,9 +90,16 @@
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                     <i data-lucide="search" class="w-5 h-5"></i>
                 </div>
+                
                 <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Örn: 'Ne anlatıyon ak' veya 'Aykut elmas mutfakta'..." 
-                    class="w-full pl-12 pr-24 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 text-sm sm:text-base shadow-lg dark:shadow-2xl transition-all">
+                    class="w-full pl-12 pr-32 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 text-sm sm:text-base shadow-lg dark:shadow-2xl transition-all">
+                
+                <!-- Sağ Buton Grubu (Temizleme Çarpısı + Mikrofon + Bul) -->
                 <div class="absolute inset-y-1.5 right-1.5 flex items-center space-x-1">
+                    <!-- Dinamik Temizleme Çarpısı (Başta Gizli) -->
+                    <button id="clearBtn" onclick="clearSearch()" title="Temizle" class="hidden p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-all cursor-pointer">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
                     <button onclick="startVoiceSearch()" title="Sesli Ara" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white transition-all cursor-pointer">
                         <i data-lucide="mic" class="w-4 h-4"></i>
                     </button>
@@ -230,10 +236,9 @@
 
     <!-- Scripts -->
     <script>
-        // İkonları başlat
         lucide.createIcons();
 
-        // 1. Gerçek Karanlık Mod İşlevi (Sağ üstteki tuş için)
+        // Karanlık Mod
         function toggleDarkMode() {
             const htmlTag = document.documentElement;
             if (htmlTag.classList.contains('dark')) {
@@ -245,14 +250,13 @@
             }
         }
 
-        // Sayfa açıldığında daha önceki seçtiğin modu hatırlar
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
 
-        // 2. Arama ve Filtreleme
+        // Arama ve Temizleme Fonksiyonları
         function setQuery(text) {
             document.getElementById('searchInput').value = text;
             handleSearch(text);
@@ -261,7 +265,15 @@
         function handleSearch(query) {
             const searchTerm = query.toLowerCase().trim();
             const cards = document.querySelectorAll('#videoGrid > div');
+            const clearBtn = document.getElementById('clearBtn');
             let matchCount = 0;
+
+            // Yazı varsa X butonunu göster, yoksa gizle
+            if (searchTerm.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
 
             cards.forEach(card => {
                 const title = card.querySelector('h4').textContent.toLowerCase();
@@ -278,12 +290,18 @@
             document.getElementById('resultCount').textContent = matchCount + ' Kayıt';
         }
 
+        function clearSearch() {
+            const input = document.getElementById('searchInput');
+            input.value = '';
+            handleSearch('');
+            input.focus();
+        }
+
         function triggerSearch() {
             const query = document.getElementById('searchInput').value;
             handleSearch(query);
         }
 
-        // 3. Diğer Butonlar
         function startVoiceSearch() {
             alert("Mikrofon dinlemede (Whisper AI entegrasyonu aktif)...");
         }
