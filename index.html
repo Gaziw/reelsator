@@ -33,12 +33,15 @@
         
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         html, body {
             background-color: #0f172a;
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -171,7 +174,7 @@
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadDirectClip('Aykut Elmas - Ne Anlatıyon Ak', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="forceDownloadVideo('Aykut Elmas - Ne Anlatıyon Ak', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -203,7 +206,7 @@
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadDirectClip('Halil İbrahim Göker - Klasik Tartışma', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="forceDownloadVideo('Halil İbrahim Göker - Klasik Tartışma', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -235,7 +238,7 @@
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadDirectClip('Efsane Vine Serisi - Katlanır Plaka', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="forceDownloadVideo('Efsane Vine Serisi - Katlanır Plaka', 'https://www.w3schools.com/html/mov_bbb.mp4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -446,21 +449,41 @@
 
         function downloadFromSheet() {
             closeShareSheet();
-            downloadDirectClip(activeShareTitle, activeVideoUrl);
+            forceDownloadVideo(activeShareTitle, activeVideoUrl);
         }
 
-        // GERÇEK İNDİRME FONKSİYONU
-        function downloadDirectClip(title, videoUrl) {
+        // KESİN VE DOĞRUDAN İNDİRME MEKANİZMASI (Zorunlu İndirme)
+        async function forceDownloadVideo(title, videoUrl) {
             showToast(`"${title}" indirmesi başlatılıyor... 📥`);
             
-            // Gizli indirme a etiketi
-            const a = document.createElement('a');
-            a.href = videoUrl;
-            a.target = '_blank';
-            a.download = title.replace(/[^a-zA-Z0-9]/g, "_") + ".mp4";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            try {
+                // Videoyu arka planda veri olarak çek
+                const response = await fetch(videoUrl);
+                const blob = await response.blob();
+                
+                // İndirme bağlantısı oluştur
+                const blobUrl = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = `${title.replace(/[^a-zA-Z0-9-çğıöşüÇĞİÖŞÜ]/g, "_")}.mp4`;
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Belleği temizle
+                URL.revokeObjectURL(blobUrl);
+                showToast(`"${title}" başarıyla indirildi! ✅`);
+            } catch (err) {
+                // Eğer CORS/Güvenlik engeli olursa yedek indirme yöntemi
+                const link = document.createElement('a');
+                link.href = videoUrl;
+                link.target = '_blank';
+                link.download = `${title}.mp4`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         }
 
         // Video Modal Fonksiyonları
