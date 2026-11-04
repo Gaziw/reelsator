@@ -1161,7 +1161,7 @@
                 <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
                 Tarayıcınız video oynatmayı desteklemiyor.
             </video>
-            <iframe id="youtubeEmbed" class="video-modal__embed" title="YouTube Shorts video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen hidden></iframe>
+            <iframe id="youtubeEmbed" class="video-modal__embed" title="YouTube Shorts video player" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen hidden></iframe>
             <a id="youtubeSourceLink" class="youtube-source" target="_blank" rel="noopener noreferrer" hidden>
                 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"></path><path d="M10 14 21 3"></path><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"></path></svg>
                 YouTube'da izle
@@ -1283,6 +1283,7 @@
                     sampleVideo.hidden = true;
                     youtubeEmbed.hidden = false;
                     youtubeEmbed.title = videoModalTitle.textContent;
+                    youtubeEmbed.referrerPolicy = 'strict-origin-when-cross-origin';
                     youtubeEmbed.src = 'https://www.youtube.com/embed/' + encodeURIComponent(youtubeId) +
                         '?autoplay=' + (autoplay ? '1' : '0') + '&playsinline=1&rel=0';
                     youtubeSourceLink.href = 'https://youtube.com/shorts/' + encodeURIComponent(youtubeId);
