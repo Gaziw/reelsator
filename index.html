@@ -317,6 +317,34 @@
             .video-modal__panel { padding: 13px; border-radius: 18px; }
             .share-drawer__panel { padding-left: 16px; padding-right: 16px; }
         }
+            .video-modal__embed[hidden], .youtube-source[hidden] { display: none; }
+        .video-modal__embed {
+            display: block;
+            width: 100%;
+            flex: 1 1 auto;
+            min-height: 0;
+            aspect-ratio: 9 / 16;
+            border: 0;
+            border-radius: 14px;
+            background: #020617;
+        }
+        .video-modal__video[hidden] { display: none; }
+        .youtube-source {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 10px 13px;
+            color: #fff;
+            background: #ff2d55;
+            border-radius: 11px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .youtube-source:hover { background: #e11d48; }
+        .youtube-source svg { width: 16px; height: 16px; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col selection:bg-accent selection:text-white transition-colors duration-300">
@@ -394,12 +422,43 @@
                 <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center space-x-2">
                     <i data-lucide="film" class="w-5 h-5 text-accent"></i>
                     <span>Eşleşen Videolar</span>
-                    <span id="resultCount" class="text-xs bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-400 px-2.5 py-0.5 rounded-full">3 Kayıt</span>
+                    <span id="resultCount" class="text-xs bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-400 px-2.5 py-0.5 rounded-full">4 Kayıt</span>
                 </h3>
             </div>
 
             <!-- Video Grid -->
             <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- First real video: Nedim abi düşmüş amk -->
+                <div data-youtube-id="TC6F-SKFgvw" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
+                    <div class="relative aspect-[9/16] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
+                        <img src="https://img.youtube.com/vi/TC6F-SKFgvw/hqdefault.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
+                        <div class="absolute inset-0 flex items-center justify-center bg-slate-900/20 dark:bg-slate-900/40 group-hover:bg-slate-900/10 transition-all z-10">
+                            <button type="button" aria-label="Nedim abi düşmüş amk videosunu oynat" class="w-12 h-12 rounded-full bg-accent/90 hover:bg-accent text-white flex items-center justify-center shadow-lg transition-all transform group-hover:scale-110 cursor-pointer">
+                                <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between text-xs text-slate-300">
+                            <span class="bg-slate-900/80 backdrop-blur-md px-2 py-1 rounded-md border border-slate-800 text-white">YouTube Shorts</span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white text-sm line-clamp-1">Nedim abi düşmüş amk</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Nedim abi düşmüş amk"</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                            <button onclick="shareVideo('1', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                                <span>Paylaş</span>
+                            </button>
+                            <a href="https://youtube.com/shorts/TC6F-SKFgvw" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                <span>YouTube'da izle</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <!-- Video Card 1 -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
                     <div class="relative aspect-[9/16] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
@@ -420,11 +479,11 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Sadexe pencereden atlayabiliyorsun aq senn ne anlatıyon ak..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('1', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('2', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadClip('1')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="downloadClip('2')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -452,11 +511,11 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Piyasa bilgin sıfır amk..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('2', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('3', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadClip('2')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="downloadClip('3')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -484,11 +543,11 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Ama ben bundan bahsetmedim ki, katlanır plaka cezasından..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('3', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('4', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
-                            <button onclick="downloadClip('3')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
+                            <button onclick="downloadClip('4')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-lg font-medium transition-all flex items-center space-x-1 cursor-pointer">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>İndir</span>
                             </button>
@@ -734,6 +793,11 @@
                 <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
                 Tarayıcınız video oynatmayı desteklemiyor.
             </video>
+            <iframe id="youtubeEmbed" class="video-modal__embed" title="YouTube Shorts video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen hidden></iframe>
+            <a id="youtubeSourceLink" class="youtube-source" target="_blank" rel="noopener noreferrer" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"></path><path d="M10 14 21 3"></path><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"></path></svg>
+                YouTube'da izle
+            </a>
         </section>
     </div>
 
@@ -803,16 +867,38 @@
                 document.body.style.overflow = (videoModal.hidden && shareDrawer.hidden) ? '' : 'hidden';
             }
 
-            window.openVideoModal = function(id, trigger) {
+            window.openVideoModal = function(id, trigger, autoplay = true) {
                 const card = getCard(id);
                 if (!card) return;
                 lastVideoTrigger = trigger || card.querySelector('.relative button');
                 videoModalTitle.textContent = card.querySelector('h4').textContent;
                 videoModal.hidden = false;
-                sampleVideo.currentTime = 0;
                 updateScrollLock();
-                const playback = sampleVideo.play();
-                if (playback && typeof playback.catch === 'function') playback.catch(() => {});
+
+                const youtubeId = card.dataset.youtubeId;
+                const youtubeEmbed = document.getElementById('youtubeEmbed');
+                const youtubeSourceLink = document.getElementById('youtubeSourceLink');
+
+                if (youtubeId) {
+                    sampleVideo.pause();
+                    sampleVideo.hidden = true;
+                    youtubeEmbed.hidden = false;
+                    youtubeEmbed.title = videoModalTitle.textContent;
+                    youtubeEmbed.src = 'https://www.youtube.com/embed/' + encodeURIComponent(youtubeId) +
+                        '?autoplay=' + (autoplay ? '1' : '0') + '&playsinline=1&rel=0';
+                    youtubeSourceLink.href = 'https://youtube.com/shorts/' + encodeURIComponent(youtubeId);
+                    youtubeSourceLink.hidden = false;
+                } else {
+                    youtubeEmbed.src = 'about:blank';
+                    youtubeEmbed.hidden = true;
+                    youtubeSourceLink.hidden = true;
+                    sampleVideo.hidden = false;
+                    sampleVideo.currentTime = 0;
+                    if (autoplay) {
+                        const playback = sampleVideo.play();
+                        if (playback && typeof playback.catch === 'function') playback.catch(() => {});
+                    }
+                }
                 document.getElementById('videoModalClose').focus();
             };
 
@@ -820,6 +906,10 @@
                 videoModal.hidden = true;
                 sampleVideo.pause();
                 sampleVideo.currentTime = 0;
+                sampleVideo.hidden = false;
+                document.getElementById('youtubeEmbed').src = 'about:blank';
+                document.getElementById('youtubeEmbed').hidden = true;
+                document.getElementById('youtubeSourceLink').hidden = true;
                 updateScrollLock();
                 if (lastVideoTrigger) lastVideoTrigger.focus();
             }
@@ -889,14 +979,7 @@
             });
 
             const sharedVideoId = new URLSearchParams(window.location.search).get('video');
-            if (sharedVideoId) {
-                const sharedCard = getCard(sharedVideoId);
-                if (sharedCard) {
-                    videoModalTitle.textContent = sharedCard.querySelector('h4').textContent;
-                    videoModal.hidden = false;
-                    updateScrollLock();
-                }
-            }
+            if (sharedVideoId && getCard(sharedVideoId)) window.openVideoModal(sharedVideoId, null, false);
 
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
