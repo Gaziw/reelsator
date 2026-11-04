@@ -95,6 +95,73 @@
             border-radius: 10px;
         }
 
+        .mobile-tabbar__item[aria-pressed="true"] {
+            color: #ff2d55;
+        }
+
+        #favoritesTabButton[aria-pressed="true"] svg {
+            fill: currentColor;
+        }
+
+        .favorite-button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 30;
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            color: #475569;
+            background: rgba(255, 255, 255, .94);
+            border: 1px solid rgba(148, 163, 184, .35);
+            border-radius: 9999px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, .2);
+            cursor: pointer;
+            transition: transform .16s ease, color .16s ease, background .16s ease;
+        }
+
+        .favorite-button:hover {
+            transform: scale(1.06);
+        }
+
+        .favorite-button:focus-visible {
+            outline: 3px solid rgba(255, 45, 85, .6);
+            outline-offset: 2px;
+        }
+
+        .favorite-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .favorite-button.is-favorite {
+            color: #ff2d55;
+        }
+
+        .favorite-button.is-favorite svg {
+            fill: currentColor;
+        }
+
+        .dark .favorite-button {
+            color: #e2e8f0;
+            background: rgba(15, 23, 42, .94);
+            border-color: rgba(71, 85, 105, .75);
+        }
+
+        .dark .favorite-button.is-favorite {
+            color: #ff2d55;
+        }
+
+        @media (max-width: 480px) {
+            .favorite-button {
+                top: 10px;
+                right: 10px;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
         .dark .mobile-tabbar {
             border-top-color: rgba(71, 85, 105, .55);
             background: rgba(2, 6, 23, .96);
@@ -597,7 +664,7 @@
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center space-x-2">
                     <i data-lucide="film" class="w-5 h-5 text-accent"></i>
-                    <span>Eşleşen Videolar</span>
+                    <span id="resultHeading">Eşleşen Videolar</span>
                     <span id="resultCount" class="text-xs bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-400 px-2.5 py-0.5 rounded-full">4 Kayıt</span>
                 </h3>
             </div>
@@ -731,6 +798,13 @@
                     </div>
                 </div>
             </div>
+            <div id="favoritesEmptyState" hidden class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-12 text-center shadow-sm">
+                <div class="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-rose-50 dark:bg-rose-950/40 text-accent">
+                    <i data-lucide="heart" class="h-7 w-7" aria-hidden="true"></i>
+                </div>
+                <h4 id="favoritesEmptyTitle" class="text-base font-bold text-slate-900 dark:text-white">Henüz beğenilen video yok</h4>
+                <p id="favoritesEmptyMessage" class="mx-auto mt-2 max-w-sm text-sm text-slate-600 dark:text-slate-400">Beğendiğin videoları kalp simgesine dokunarak burada saklayabilirsin.</p>
+            </div>
         </div>
     </main>
 
@@ -741,7 +815,7 @@
             <i data-lucide="compass" aria-hidden="true"></i>
             <span>Keşfet</span>
         </button>
-        <button class="mobile-tabbar__item" type="button" aria-label="Beğenilenler">
+        <button id="favoritesTabButton" class="mobile-tabbar__item" type="button" aria-label="Beğenilenler" aria-pressed="false">
             <i data-lucide="heart" aria-hidden="true"></i>
             <span>Beğenilenler</span>
         </button>
@@ -799,13 +873,21 @@
             const clearButton = document.getElementById('clearSearchButton');
             if (clearButton) clearButton.classList.toggle('hidden', query.length === 0);
             const cards = document.querySelectorAll('#videoGrid > div');
+            const favoriteIds = window.reelsatorFavoriteIds || new Set();
+            const showOnlyFavorites = window.reelsatorShowFavoritesOnly === true;
             let matchCount = 0;
+            let favoriteCount = 0;
 
             cards.forEach(card => {
                 const title = card.querySelector('h4').textContent.toLowerCase();
                 const description = card.querySelector('p').textContent.toLowerCase();
+                const favoriteId = card.dataset.youtubeId || card.dataset.videoId;
+                const isFavorite = favoriteIds.has(favoriteId);
+                if (isFavorite) favoriteCount++;
+                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                const isVisible = matchesSearch && (!showOnlyFavorites || isFavorite);
 
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                if (isVisible) {
                     card.style.display = 'flex';
                     matchCount++;
                 } else {
@@ -814,6 +896,21 @@
             });
 
             document.getElementById('resultCount').textContent = matchCount + ' Kayıt';
+            const resultHeading = document.getElementById('resultHeading');
+            if (resultHeading) resultHeading.textContent = showOnlyFavorites ? 'Beğenilen Videolar' : 'Eşleşen Videolar';
+
+            const emptyState = document.getElementById('favoritesEmptyState');
+            if (emptyState) {
+                emptyState.hidden = !showOnlyFavorites || matchCount > 0;
+                if (showOnlyFavorites && matchCount === 0) {
+                    document.getElementById('favoritesEmptyTitle').textContent = favoriteCount === 0
+                        ? 'Henüz beğenilen video yok'
+                        : 'Aramana uygun beğenilen video yok';
+                    document.getElementById('favoritesEmptyMessage').textContent = favoriteCount === 0
+                        ? 'Beğendiğin videoları kalp simgesine dokunarak burada saklayabilirsin.'
+                        : 'Arama kelimeni değiştirebilir veya diğer beğenilerini daha sonra bulabilirsin.';
+                }
+            }
         }
 
         function triggerSearch() {
@@ -1064,6 +1161,37 @@
             function getCard(id) {
                 return getCards().find((card) => card.dataset.videoId === String(id));
             }
+
+            const FAVORITES_STORAGE_KEY = 'reelsator-favorite-videos';
+            const favoriteIds = new Set();
+            try {
+                const storedFavorites = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
+                if (Array.isArray(storedFavorites)) {
+                    storedFavorites.forEach((id) => {
+                        if (typeof id === 'string') favoriteIds.add(id);
+                    });
+                }
+            } catch (error) {}
+            window.reelsatorFavoriteIds = favoriteIds;
+            window.reelsatorShowFavoritesOnly = false;
+
+            function getFavoriteKey(card) {
+                return card.dataset.youtubeId || card.dataset.videoId;
+            }
+
+            function updateFavoriteButton(button, isFavorite) {
+                button.classList.toggle('is-favorite', isFavorite);
+                button.setAttribute('aria-pressed', String(isFavorite));
+                button.setAttribute('aria-label', isFavorite ? 'Beğenilenlerden kaldır' : 'Videoyu beğen');
+                button.title = isFavorite ? 'Beğenilenlerden kaldır' : 'Videoyu beğen';
+            }
+
+            function saveFavorites() {
+                try {
+                    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(Array.from(favoriteIds)));
+                } catch (error) {}
+            }
+
             function updateScrollLock() {
                 document.body.style.overflow = (videoModal.hidden && shareDrawer.hidden) ? '' : 'hidden';
             }
@@ -1071,7 +1199,7 @@
             window.openVideoModal = function(id, trigger, autoplay = true) {
                 const card = getCard(id);
                 if (!card) return;
-                lastVideoTrigger = trigger || card.querySelector('.relative button');
+                lastVideoTrigger = trigger || card.querySelector('.relative button:not([data-favorite-toggle])');
                 videoModalTitle.textContent = card.querySelector('h4').textContent;
                 videoModal.hidden = false;
                 updateScrollLock();
@@ -1173,11 +1301,38 @@
             getCards().forEach((card, index) => {
                 const videoId = String(index + 1);
                 card.dataset.videoId = videoId;
-                const playButton = card.querySelector('.relative button');
+
+                const thumbnail = card.querySelector('.relative');
+                const favoriteButton = document.createElement('button');
+                favoriteButton.type = 'button';
+                favoriteButton.className = 'favorite-button';
+                favoriteButton.dataset.favoriteToggle = '';
+                favoriteButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"></path></svg>';
+                thumbnail.appendChild(favoriteButton);
+                updateFavoriteButton(favoriteButton, favoriteIds.has(getFavoriteKey(card)));
+                favoriteButton.addEventListener('click', () => {
+                    const favoriteId = getFavoriteKey(card);
+                    if (favoriteIds.has(favoriteId)) favoriteIds.delete(favoriteId);
+                    else favoriteIds.add(favoriteId);
+                    saveFavorites();
+                    updateFavoriteButton(favoriteButton, favoriteIds.has(favoriteId));
+                    handleSearch(document.getElementById('searchInput').value);
+                });
+
+                const playButton = card.querySelector('.relative button:not([data-favorite-toggle])');
                 if (playButton) {
                     playButton.addEventListener('click', () => window.openVideoModal(videoId, playButton));
                 }
             });
+
+            const favoritesTabButton = document.getElementById('favoritesTabButton');
+            favoritesTabButton.addEventListener('click', () => {
+                window.reelsatorShowFavoritesOnly = !window.reelsatorShowFavoritesOnly;
+                favoritesTabButton.setAttribute('aria-pressed', String(window.reelsatorShowFavoritesOnly));
+                handleSearch(document.getElementById('searchInput').value);
+            });
+
+            handleSearch(document.getElementById('searchInput').value);
 
             const sharedVideoId = new URLSearchParams(window.location.search).get('video');
             if (sharedVideoId && getCard(sharedVideoId)) window.openVideoModal(sharedVideoId, null, false);
