@@ -76,15 +76,14 @@
         }
         .social-dock__button:focus-visible,
         .social-confirm__link:focus-visible,
-        .social-confirm__cancel:focus-visible,
-        .video-modal__close:focus-visible,
-        .share-drawer__close:focus-visible,
-        .share-choice:focus-visible,
-        .share-copy:focus-visible {
+        .social-confirm__cancel:focus-visible {
             outline: 3px solid rgba(255, 45, 85, .55);
             outline-offset: 3px;
         }
-        .social-dock__button svg { width: 22px; height: 22px; }
+        .social-dock__button svg {
+            width: 22px;
+            height: 22px;
+        }
         .dark .social-dock__button {
             color: #e2e8f0;
             background: rgba(15, 23, 42, .96);
@@ -104,15 +103,27 @@
             transform: translateY(-50%);
             backdrop-filter: blur(12px);
         }
-        .social-confirm[hidden], .video-modal[hidden], .share-drawer[hidden] { display: none; }
+        .social-confirm[hidden] {
+            display: none;
+        }
         .dark .social-confirm {
             color: #f1f5f9;
             background: rgba(15, 23, 42, .98);
             border-color: rgba(71, 85, 105, .75);
         }
-        .social-confirm__title { margin: 0 0 12px; font-size: 13px; line-height: 1.45; font-weight: 600; }
-        .social-confirm__actions { display: flex; align-items: center; gap: 8px; }
-        .social-confirm__link, .social-confirm__cancel {
+        .social-confirm__title {
+            margin: 0 0 12px;
+            font-size: 13px;
+            line-height: 1.45;
+            font-weight: 600;
+        }
+        .social-confirm__actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .social-confirm__link,
+        .social-confirm__cancel {
             min-height: 36px;
             display: inline-flex;
             align-items: center;
@@ -124,155 +135,35 @@
             text-decoration: none;
             cursor: pointer;
         }
-        .social-confirm__link { color: white; background: #ff2d55; }
-        .social-confirm__cancel { color: #475569; background: #f1f5f9; border: 0; }
-        .dark .social-confirm__cancel { color: #e2e8f0; background: #1e293b; }
-
-        /* Video popup */
-        .video-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 80;
-            display: grid;
-            place-items: center;
-            padding: 20px;
+        .social-confirm__link {
+            color: white;
+            background: #ff2d55;
         }
-        .video-modal__backdrop, .share-drawer__backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(2, 6, 23, .76);
-            backdrop-filter: blur(4px);
-        }
-        .video-modal__panel {
-            position: relative;
-            width: min(100%, 760px);
-            max-height: 92vh;
-            overflow: auto;
-            padding: 18px;
-            color: #0f172a;
-            background: white;
-            border: 1px solid rgba(148, 163, 184, .25);
-            border-radius: 22px;
-            box-shadow: 0 24px 80px rgba(0, 0, 0, .35);
-        }
-        .dark .video-modal__panel { color: #f1f5f9; background: #0f172a; border-color: #334155; }
-        .video-modal__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
-        .video-modal__eyebrow { margin: 0 0 4px; color: #ff2d55; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
-        .video-modal__title { margin: 0; font-size: 17px; font-weight: 800; }
-        .video-modal__close, .share-drawer__close {
-            width: 38px;
-            height: 38px;
-            flex: 0 0 auto;
-            display: grid;
-            place-items: center;
+        .social-confirm__cancel {
             color: #475569;
             background: #f1f5f9;
             border: 0;
-            border-radius: 12px;
-            cursor: pointer;
         }
-        .dark .video-modal__close, .dark .share-drawer__close { color: #e2e8f0; background: #1e293b; }
-        .video-modal__close svg, .share-drawer__close svg { width: 19px; height: 19px; }
-        .video-modal__video {
-            display: block;
-            width: 100%;
-            max-height: 70vh;
-            aspect-ratio: 16 / 9;
-            background: #020617;
-            border-radius: 14px;
+        .dark .social-confirm__cancel {
+            color: #e2e8f0;
+            background: #1e293b;
         }
-        .video-modal__note { margin: 11px 2px 0; color: #64748b; font-size: 12px; line-height: 1.5; }
-        .dark .video-modal__note { color: #94a3b8; }
-
-        /* Bottom share drawer */
-        .share-drawer {
-            position: fixed;
-            inset: 0;
-            z-index: 90;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-        }
-        .share-drawer__panel {
-            position: relative;
-            width: min(100%, 460px);
-            max-height: 82vh;
-            overflow: auto;
-            padding: 12px 20px calc(22px + env(safe-area-inset-bottom));
-            color: #0f172a;
-            background: #fff;
-            border: 1px solid rgba(148, 163, 184, .25);
-            border-bottom: 0;
-            border-radius: 24px 24px 0 0;
-            box-shadow: 0 -16px 60px rgba(0, 0, 0, .22);
-            animation: shareDrawerUp .2s ease-out;
-        }
-        .dark .share-drawer__panel { color: #f1f5f9; background: #0f172a; border-color: #334155; }
-        .share-drawer__handle { width: 42px; height: 4px; margin: 0 auto 16px; background: #cbd5e1; border-radius: 99px; }
-        .dark .share-drawer__handle { background: #475569; }
-        .share-drawer__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
-        .share-drawer__title { margin: 0; font-size: 18px; font-weight: 800; }
-        .share-drawer__subtitle { margin: 5px 0 18px; color: #64748b; font-size: 13px; line-height: 1.45; }
-        .dark .share-drawer__subtitle { color: #94a3b8; }
-        .share-drawer__choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-        .share-choice {
-            min-height: 72px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            color: inherit;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            font: inherit;
-            text-align: left;
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform .15s ease, border-color .15s ease;
-        }
-        .share-choice:hover { transform: translateY(-2px); border-color: #cbd5e1; }
-        .dark .share-choice { background: #111c30; border-color: #334155; }
-        .share-choice__icon { width: 38px; height: 38px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 12px; background: white; }
-        .dark .share-choice__icon { background: #1e293b; }
-        .share-choice__icon svg { width: 23px; height: 23px; }
-        .share-choice__name { display: block; font-size: 13px; font-weight: 700; }
-        .share-choice__hint { display: block; margin-top: 3px; color: #64748b; font-size: 10px; line-height: 1.35; }
-        .dark .share-choice__hint { color: #94a3b8; }
-        .share-copy-row { display: flex; gap: 8px; margin-top: 13px; }
-        .share-copy-row input {
-            min-width: 0;
-            flex: 1;
-            padding: 0 10px;
-            color: #475569;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 11px;
-        }
-        .dark .share-copy-row input { color: #cbd5e1; background: #111c30; border-color: #334155; }
-        .share-copy {
-            min-height: 38px;
-            padding: 0 12px;
-            color: white;
-            background: #ff2d55;
-            border: 0;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .share-status { min-height: 18px; margin: 8px 0 0; color: #64748b; font-size: 11px; }
-        .dark .share-status { color: #94a3b8; }
-        @keyframes shareDrawerUp { from { opacity: .6; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         @media (max-width: 480px) {
-            .social-dock { right: 8px; gap: 8px; }
-            .social-dock__button { width: 42px; height: 42px; }
-            .social-dock__button svg { width: 20px; height: 20px; }
-            .social-confirm { right: calc(100% + 9px); }
-            .video-modal { padding: 10px; }
-            .video-modal__panel { padding: 13px; border-radius: 18px; }
-            .share-drawer__panel { padding-left: 16px; padding-right: 16px; }
+            .social-dock {
+                right: 8px;
+                gap: 8px;
+            }
+            .social-dock__button {
+                width: 42px;
+                height: 42px;
+            }
+            .social-dock__button svg {
+                width: 20px;
+                height: 20px;
+            }
+            .social-confirm {
+                right: calc(100% + 9px);
+            }
         }
     </style>
 </head>
@@ -322,13 +213,11 @@
                     <i data-lucide="search" class="w-5 h-5"></i>
                 </div>
                 <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Örn: 'Ne anlatıyon ak' veya 'Aykut elmas mutfakta'..." 
-                    class="w-full pl-12 pr-40 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 text-sm sm:text-base shadow-lg dark:shadow-2xl transition-all">
-                <button id="clearSearchButton" type="button" onclick="clearSearch()" title="Aramayı temizle" aria-label="Arama alanını temizle" class="hidden p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white transition-all cursor-pointer">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <path d="m18 6-12 12M6 6l12 12"></path>
-                    </svg>
-                </button>
+                    class="w-full pl-12 pr-36 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 text-sm sm:text-base shadow-lg dark:shadow-2xl transition-all">
                 <div class="absolute inset-y-1.5 right-1.5 flex items-center space-x-1">
+                    <button id="clearSearchButton" type="button" onclick="clearSearch()" title="Aramayı temizle" aria-label="Arama alanını temizle" class="hidden p-2 rounded-xl text-slate-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
                     <button onclick="startVoiceSearch()" title="Sesli Ara" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white transition-all cursor-pointer">
                         <i data-lucide="mic" class="w-4 h-4"></i>
                     </button>
@@ -379,7 +268,7 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Sadexe pencereden atlayabiliyorsun aq senn ne anlatıyon ak..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('1', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('1')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
@@ -411,7 +300,7 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Piyasa bilgin sıfır amk..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('2', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('2')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
@@ -443,7 +332,7 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Ama ben bundan bahsetmedim ki, katlanır plaka cezasından..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('3', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('3')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
@@ -480,23 +369,6 @@
             }
         }
 
-        // Sayfa açıldığında daha önc!-- Scripts -->
-    <script>
-        // İkonları başlat
-        lucide.createIcons();
-
-        // 1. Gerçek Karanlık Mod İşlevi (Sağ üstteki tuş için)
-        function toggleDarkMode() {
-            const htmlTag = document.documentElement;
-            if (htmlTag.classList.contains('dark')) {
-                htmlTag.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlTag.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
         // Sayfa açıldığında daha önceki seçtiğin modu hatırlar
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -513,7 +385,7 @@
         function handleSearch(query) {
             const searchTerm = query.toLowerCase().trim();
             const clearButton = document.getElementById('clearSearchButton');
-            if (clearButton) clearButton.classList.toggle('hidden', !searchTerm);
+            if (clearButton) clearButton.classList.toggle('hidden', query.length === 0);
             const cards = document.querySelectorAll('#videoGrid > div');
             let matchCount = 0;
 
@@ -549,7 +421,9 @@
             alert("Mikrofon dinlemede (Whisper AI entegrasyonu aktif)...");
         }
 
-        function shareVideo(id, trigger) { window.openShareDrawer(id, trigger); }
+        function shareVideo(id) {
+            alert("Video bağlantısı kopyalandı!");
+        }
 
         function downloadClip(id) {
             alert("Klip indirme başlatılıyor...");
@@ -640,199 +514,6 @@
 
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') closeSocialConfirm(true);
-            });
-        })();
-    </script>
-    <!-- Video popup -->
-    <div id="videoModal" class="video-modal" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle" hidden>
-        <div class="video-modal__backdrop" data-close-video></div>
-        <section class="video-modal__panel">
-            <div class="video-modal__header">
-                <div>
-                    <p class="video-modal__eyebrow">Örnek video</p>
-                    <h2 id="videoModalTitle" class="video-modal__title">Video önizlemesi</h2>
-                </div>
-                <button id="videoModalClose" class="video-modal__close" type="button" aria-label="Videoyu kapat">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            <video id="sampleVideo" class="video-modal__video" controls playsinline preload="metadata">
-                <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
-                Tarayıcınız video oynatmayı desteklemiyor.
-            </video>
-            <p class="video-modal__note">Şimdilik oynatılan içerik örnek videodur. Kendi klip dosyaları bağlandığında bu alan gerçek videoyu oynatabilir.</p>
-        </section>
-    </div>
-
-    <!-- Share bottom drawer -->
-    <div id="shareDrawer" class="share-drawer" role="dialog" aria-modal="true" aria-labelledby="shareDrawerTitle" hidden>
-        <div class="share-drawer__backdrop" data-close-share></div>
-        <section class="share-drawer__panel">
-            <div class="share-drawer__handle" aria-hidden="true"></div>
-            <div class="share-drawer__header">
-                <div>
-                    <h2 id="shareDrawerTitle" class="share-drawer__title">Videoyu paylaş</h2>
-                    <p class="share-drawer__subtitle">Bir uygulama seç. Instagram için bağlantı kopyalanır; WhatsApp paylaşım ekranı açılır.</p>
-                </div>
-                <button id="shareDrawerClose" class="share-drawer__close" type="button" aria-label="Paylaşım menüsünü kapat">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            <div class="share-drawer__choices">
-                <a id="instagramShare" class="share-choice" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                    <span class="share-choice__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="#d946a5" stroke-width="2"></rect>
-                            <circle cx="12" cy="12" r="4" stroke="#d946a5" stroke-width="2"></circle>
-                            <circle cx="17.5" cy="6.7" r="1.2" fill="#d946a5"></circle>
-                        </svg>
-                    </span>
-                    <span><span class="share-choice__name">Instagram</span><span class="share-choice__hint">Bağlantıyı kopyala ve Instagram'ı aç</span></span>
-                </a>
-                <a id="whatsappShare" class="share-choice" href="#" target="_blank" rel="noopener noreferrer">
-                    <span class="share-choice__icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M20.4 11.7a8.3 8.3 0 0 1-12.3 7.2L3 20l1.2-4.9a8.3 8.3 0 1 1 16.2-3.4Z" stroke="#25a95b" stroke-width="1.8" stroke-linejoin="round"></path>
-                            <path d="M8.6 8.2c.3-.6.6-.6 1-.6h.4c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4-.1.6.5.9 1.2 1.6 2.1 2.1.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.3.4.5 0 .6-.3 1.3-.8 1.7-.6.5-1.3.7-2.1.5-1.1-.2-2.4-.9-3.7-2.1-1.1-1-2.1-2.5-2.4-3.7-.2-.8.1-1.6.5-2.1Z" fill="#25a95b"></path>
-                        </svg>
-                    </span>
-                    <span><span class="share-choice__name">WhatsApp</span><span class="share-choice__hint">Bağlantıyı mesaj olarak gönder</span></span>
-                </a>
-            </div>
-            <div class="share-copy-row">
-                <input id="shareUrlField" type="text" readonly aria-label="Paylaşılacak video bağlantısı">
-                <button id="copyShareUrl" class="share-copy" type="button">Bağlantıyı kopyala</button>
-            </div>
-            <p id="shareStatus" class="share-status" aria-live="polite"></p>
-        </section>
-    </div>
-
-    <script>
-        (() => {
-            const videoModal = document.getElementById('videoModal');
-            const videoModalTitle = document.getElementById('videoModalTitle');
-            const sampleVideo = document.getElementById('sampleVideo');
-            const videoModalClose = document.getElementById('videoModalClose');
-            const shareDrawer = document.getElementById('shareDrawer');
-            const shareDrawerClose = document.getElementById('shareDrawerClose');
-            const shareUrlField = document.getElementById('shareUrlField');
-            const whatsappShare = document.getElementById('whatsappShare');
-            const instagramShare = document.getElementById('instagramShare');
-            const shareStatus = document.getElementById('shareStatus');
-            const copyShareUrlButton = document.getElementById('copyShareUrl');
-            let lastVideoTrigger = null;
-            let lastShareTrigger = null;
-            let currentShareUrl = '';
-
-            function updateScrollLock() {
-                document.body.style.overflow = (videoModal.hidden && shareDrawer.hidden) ? '' : 'hidden';
-            }
-            function getCard(id) {
-                return Array.from(document.querySelectorAll('#videoGrid > div'))
-                    .find((card, index) => card.dataset.videoId === String(id) || (!card.dataset.videoId && String(index + 1) === String(id)));
-            }
-
-            window.openVideoModal = function(id, card, autoplay = true) {
-                const selectedCard = card || getCard(id);
-                if (!selectedCard) return;
-                lastVideoTrigger = selectedCard;
-                videoModalTitle.textContent = selectedCard.querySelector('h4').textContent;
-                videoModal.hidden = false;
-                sampleVideo.currentTime = 0;
-                updateScrollLock();
-                if (autoplay) {
-                    const playback = sampleVideo.play();
-                    if (playback && typeof playback.catch === 'function') playback.catch(() => {});
-                }
-                videoModalClose.focus();
-            };
-
-            function closeVideoModal() {
-                videoModal.hidden = true;
-                sampleVideo.pause();
-                sampleVideo.currentTime = 0;
-                updateScrollLock();
-                if (lastVideoTrigger) lastVideoTrigger.focus();
-            }
-            videoModalClose.addEventListener('click', closeVideoModal);
-            videoModal.querySelector('[data-close-video]').addEventListener('click', closeVideoModal);
-
-            function makeVideoShareUrl(id) {
-                const url = new URL(window.location.href);
-                url.searchParams.set('video', String(id));
-                url.hash = '';
-                return url.toString();
-            }
-
-            window.openShareDrawer = function(id, trigger) {
-                const card = getCard(id);
-                if (!card) return;
-                lastShareTrigger = trigger || card.querySelector('button[onclick*="shareVideo"]');
-                const title = card.querySelector('h4').textContent;
-                currentShareUrl = makeVideoShareUrl(id);
-                shareUrlField.value = currentShareUrl;
-                shareStatus.textContent = '';
-                whatsappShare.href = 'https://wa.me/?text=' + encodeURIComponent(title + ' ' + currentShareUrl);
-                shareDrawer.hidden = false;
-                updateScrollLock();
-                shareDrawerClose.focus();
-            };
-
-            function closeShareDrawer() {
-                shareDrawer.hidden = true;
-                updateScrollLock();
-                if (lastShareTrigger) lastShareTrigger.focus();
-            }
-            shareDrawerClose.addEventListener('click', closeShareDrawer);
-            shareDrawer.querySelector('[data-close-share]').addEventListener('click', closeShareDrawer);
-
-            async function copyCurrentShareUrl() {
-                try {
-                    if (!navigator.clipboard || !window.isSecureContext) throw new Error('Clipboard unavailable');
-                    await navigator.clipboard.writeText(currentShareUrl);
-                    shareStatus.textContent = 'Bağlantı kopyalandı.';
-                    return true;
-                } catch (error) {
-                    shareUrlField.focus();
-                    shareUrlField.select();
-                    let copied = false;
-                    try { copied = document.execCommand('copy'); } catch (copyError) {}
-                    shareStatus.textContent = copied
-                        ? 'Bağlantı kopyalandı.'
-                        : 'Bağlantıyı kopyalamak için kutuya basılı tutup Kopyala seç.';
-                    return copied;
-                }
-            }
-            copyShareUrlButton.addEventListener('click', copyCurrentShareUrl);
-            instagramShare.addEventListener('click', async () => {
-                const copied = await copyCurrentShareUrl();
-                if (copied) closeShareDrawer();
-            });
-            whatsappShare.addEventListener('click', () => closeShareDrawer());
-
-            document.querySelectorAll('#videoGrid > div').forEach((card, index) => {
-                const videoId = String(index + 1);
-                card.dataset.videoId = videoId;
-                card.style.cursor = 'pointer';
-                card.addEventListener('click', (event) => {
-                    if (event.target.closest('button, a')) return;
-                    window.openVideoModal(videoId, card);
-                });
-                const playButton = card.querySelector('.relative button');
-                if (playButton) playButton.addEventListener('click', () => window.openVideoModal(videoId, card));
-            });
-
-            const sharedVideoId = new URLSearchParams(window.location.search).get('video');
-            if (sharedVideoId) {
-                const sharedCard = getCard(sharedVideoId);
-                if (sharedCard) window.openVideoModal(sharedVideoId, sharedCard, false);
-            }
-
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Escape') {
-                    if (!shareDrawer.hidden) closeShareDrawer();
-                    if (!videoModal.hidden) closeVideoModal();
-                }
             });
         })();
     </script>
