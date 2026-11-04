@@ -575,8 +575,59 @@
 
         function shareVideo(id, trigger) { window.openShareDrawer(id, trigger); }
 
-        function downloadClip(id) {
-            alert("Klip indirme başlatılıyor...");
+        async function downloadClip(id) {
+            const cards = Array.from(document.querySelectorAll('#videoGrid > div'));
+            const card = cards.find((item, index) =>
+                item.dataset.videoId === String(id) || String(index + 1) === String(id)
+            );
+            const sampleVideo = document.getElementById('sampleVideo');
+            const source = sampleVideo && sampleVideo.querySelector('source')
+                ? sampleVideo.querySelector('source').src
+                : sampleVideo.currentSrc;
+
+            if (!source) return;
+
+            const title = card && card.querySelector('h4')
+                ? card.querySelector('h4').textContent
+                : 'reelsator-video';
+            const safeTitle = title
+                .normalize('NFKD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]+/gi, '-')
+                .replace(/^-|-$/g, '')
+                .toLowerCase();
+            const fileName = (safeTitle || 'reelsator-video') + '.mp4';
+
+            try {
+                const videoUrl = new URL(source, window.location.href);
+                if (videoUrl.origin === window.location.origin) {
+                    const directLink = document.createElement('a');
+                    directLink.href = videoUrl.href;
+                    directLink.download = fileName;
+                    document.body.appendChild(directLink);
+                    directLink.click();
+                    directLink.remove();
+                    return;
+                }
+
+                const response = await fetch(videoUrl.href, { mode: 'cors' });
+                if (!response.ok) throw new Error('Video download failed');
+                const videoBlob = await response.blob();
+                const blobUrl = URL.createObjectURL(videoBlob);
+                const downloadLink = document.createElement('a');
+                downloadLink.href = blobUrl;
+                downloadLink.download = fileName;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                downloadLink.remove();
+                window.setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+            } catch (error) {
+                const fallbackLink = document.createElement('a');
+                fallbackLink.href = source;
+                fallbackLink.target = '_blank';
+                fallbackLink.rel = 'noopener noreferrer';
+                fallbackLink.click();
+            }
         }
 
         function openUploadModal() {
