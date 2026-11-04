@@ -636,7 +636,7 @@
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                     <i data-lucide="search" class="w-5 h-5"></i>
                 </div>
-                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Örn: 'Nedim abi düşmüş amk' veya 'Osman Gültekin senmisin'..." 
+                <input type="text" id="searchInput" oninput="updateSearchClearButton(this.value)" placeholder="Örn: 'Nedim abi düşmüş amk' veya 'Osman Gültekin senmisin'..." 
                     class="w-full pl-12 pr-36 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 text-sm sm:text-base shadow-lg dark:shadow-2xl transition-all">
                 <div class="absolute inset-y-1.5 right-1.5 flex items-center space-x-1">
                     <button id="clearSearchButton" type="button" onclick="clearSearch()" title="Aramayı temizle" aria-label="Arama alanını temizle" class="hidden p-2 rounded-xl text-slate-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer">
@@ -884,15 +884,19 @@
             return String(value || '').toLocaleLowerCase('tr-TR').replace(/\s+/g, ' ').trim();
         }
 
+        function updateSearchClearButton(query) {
+            const clearButton = document.getElementById('clearSearchButton');
+            if (clearButton) clearButton.classList.toggle('hidden', query.length === 0);
+        }
+
         function setQuery(text) {
             document.getElementById('searchInput').value = text;
-            handleSearch(text);
+            updateSearchClearButton(text);
         }
 
         function handleSearch(query) {
             const searchTerm = normalizeSearchText(query);
-            const clearButton = document.getElementById('clearSearchButton');
-            if (clearButton) clearButton.classList.toggle('hidden', query.length === 0);
+            updateSearchClearButton(query);
             const cards = document.querySelectorAll('#videoGrid > div');
             const favoriteIds = window.reelsatorFavoriteIds || new Set();
             const showOnlyFavorites = window.reelsatorShowFavoritesOnly === true;
@@ -987,7 +991,7 @@
         function clearSearch() {
             const input = document.getElementById('searchInput');
             input.value = '';
-            handleSearch('');
+            updateSearchClearButton('');
             input.focus();
         }
 
@@ -1382,7 +1386,7 @@
                     else favoriteIds.add(favoriteId);
                     saveFavorites();
                     updateFavoriteButton(favoriteButton, favoriteIds.has(favoriteId));
-                    handleSearch(document.getElementById('searchInput').value);
+                    handleSearch(window.reelsatorSearchResultsOpen ? document.getElementById('searchInput').value : '');
                 });
 
                 const playButton = card.querySelector('.relative button:not([data-favorite-toggle])');
@@ -1410,7 +1414,7 @@
                 window.reelsatorShowFavoritesOnly = true;
                 exploreTabButton.setAttribute('aria-pressed', 'false');
                 favoritesTabButton.setAttribute('aria-pressed', 'true');
-                handleSearch(document.getElementById('searchInput').value);
+                handleSearch(window.reelsatorSearchResultsOpen ? document.getElementById('searchInput').value : '');
             });
 
             handleSearch(document.getElementById('searchInput').value);
