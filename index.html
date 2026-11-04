@@ -572,6 +572,7 @@
             background: #020617;
         }
         .video-modal__video[hidden] { display: none; }
+        #heroSection[hidden], #searchResultsHeader[hidden], #searchNoResults[hidden] { display: none; }
         .youtube-source {
             align-self: flex-start;
             display: inline-flex;
@@ -622,7 +623,7 @@
     <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 flex flex-col space-y-8">
         
         <!-- Hero Search Section -->
-        <div class="text-center space-y-4 py-4">
+        <div id="heroSection" class="text-center space-y-4 py-4">
             <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
                 Aklındaki repliği yaz, <span class="bg-gradient-to-r from-accent to-orange-400 bg-clip-text text-transparent">anında bul!</span>
             </h2>
@@ -661,6 +662,15 @@
 
         <!-- Results Section -->
         <div class="space-y-4">
+            <div id="searchResultsHeader" hidden class="flex items-start justify-between gap-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 shadow-sm">
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-accent">Arama sonuçları</p>
+                    <h2 id="searchQueryText" class="mt-1 break-words text-lg font-bold text-slate-900 dark:text-white sm:text-xl"></h2>
+                </div>
+                <button type="button" onclick="closeSearchResults()" title="Keşfet'e dön" aria-label="Arama sonuçlarını kapat" class="grid h-10 w-10 flex-none place-items-center rounded-xl bg-slate-100 text-slate-600 transition-colors hover:bg-slate-200 hover:text-slate-900 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white">
+                    <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"></path></svg>
+                </button>
+            </div>
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center space-x-2">
                     <i data-lucide="film" class="w-5 h-5 text-accent"></i>
@@ -798,6 +808,13 @@
                     </div>
                 </div>
             </div>
+            <div id="searchNoResults" hidden aria-live="polite" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-12 text-center shadow-sm">
+                <div class="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-rose-50 dark:bg-rose-950/40 text-accent">
+                    <i data-lucide="search" class="h-7 w-7" aria-hidden="true"></i>
+                </div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Bu replikle eşleşen video bulamadık</h4>
+                <p class="mx-auto mt-2 max-w-sm text-sm text-slate-600 dark:text-slate-400">Farklı kelimelerle tekrar aramayı deneyebilirsin.</p>
+            </div>
             <div id="favoritesEmptyState" hidden class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-12 text-center shadow-sm">
                 <div class="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-rose-50 dark:bg-rose-950/40 text-accent">
                     <i data-lucide="heart" class="h-7 w-7" aria-hidden="true"></i>
@@ -863,13 +880,17 @@
         }
 
         // 2. Arama ve Filtreleme
+        function normalizeSearchText(value) {
+            return String(value || '').toLocaleLowerCase('tr-TR').replace(/\s+/g, ' ').trim();
+        }
+
         function setQuery(text) {
             document.getElementById('searchInput').value = text;
             handleSearch(text);
         }
 
         function handleSearch(query) {
-            const searchTerm = query.toLowerCase().trim();
+            const searchTerm = normalizeSearchText(query);
             const clearButton = document.getElementById('clearSearchButton');
             if (clearButton) clearButton.classList.toggle('hidden', query.length === 0);
             const cards = document.querySelectorAll('#videoGrid > div');
@@ -879,12 +900,18 @@
             let favoriteCount = 0;
 
             cards.forEach(card => {
-                const title = card.querySelector('h4').textContent.toLowerCase();
-                const description = card.querySelector('p').textContent.toLowerCase();
+                const title = normalizeSearchText(card.querySelector('h4').textContent);
+                const description = normalizeSearchText(Array.from(card.querySelectorAll('p')).map(item => item.textContent).join(' '));
+                const transcriptText = [
+                    card.dataset.transcript,
+                    card.dataset.replik,
+                    ...Array.from(card.querySelectorAll('[data-transcript], [data-replik], .transcript-text')).map(item => item.textContent)
+                ].filter(Boolean).join(' ');
+                const searchableText = normalizeSearchText([title, description, transcriptText].join(' '));
                 const favoriteId = card.dataset.youtubeId || card.dataset.videoId;
                 const isFavorite = favoriteIds.has(favoriteId);
                 if (isFavorite) favoriteCount++;
-                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                const matchesSearch = searchableText.includes(searchTerm);
                 const isVisible = matchesSearch && (!showOnlyFavorites || isFavorite);
 
                 if (isVisible) {
@@ -911,12 +938,51 @@
                         : 'Arama kelimeni değiştirebilir veya diğer beğenilerini daha sonra bulabilirsin.';
                 }
             }
+
+            const searchNoResults = document.getElementById('searchNoResults');
+            if (searchNoResults) {
+                searchNoResults.hidden = window.reelsatorSearchResultsOpen !== true || matchCount > 0;
+            }
         }
 
         function triggerSearch() {
-            const query = document.getElementById('searchInput').value;
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+            if (!query) {
+                input.focus();
+                return;
+            }
+
+            window.reelsatorShowFavoritesOnly = false;
+            window.reelsatorSearchResultsOpen = true;
+            document.getElementById('exploreTabButton').setAttribute('aria-pressed', 'true');
+            document.getElementById('favoritesTabButton').setAttribute('aria-pressed', 'false');
+            document.getElementById('heroSection').hidden = true;
+            document.getElementById('searchResultsHeader').hidden = false;
+            document.getElementById('searchQueryText').textContent = query;
             handleSearch(query);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelector('#searchResultsHeader button').focus();
         }
+
+        function closeSearchResults() {
+            window.reelsatorSearchResultsOpen = false;
+            window.reelsatorShowFavoritesOnly = false;
+            document.getElementById('searchResultsHeader').hidden = true;
+            document.getElementById('heroSection').hidden = false;
+            document.getElementById('searchInput').value = '';
+            document.getElementById('exploreTabButton').setAttribute('aria-pressed', 'true');
+            document.getElementById('favoritesTabButton').setAttribute('aria-pressed', 'false');
+            handleSearch('');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                triggerSearch();
+            }
+        });
 
         function clearSearch() {
             const input = document.getElementById('searchInput');
@@ -1329,6 +1395,10 @@
             const favoritesTabButton = document.getElementById('favoritesTabButton');
 
             exploreTabButton.addEventListener('click', () => {
+                if (window.reelsatorSearchResultsOpen) {
+                    closeSearchResults();
+                    return;
+                }
                 window.reelsatorShowFavoritesOnly = false;
                 exploreTabButton.setAttribute('aria-pressed', 'true');
                 favoritesTabButton.setAttribute('aria-pressed', 'false');
