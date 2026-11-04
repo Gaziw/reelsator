@@ -44,6 +44,127 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+            /* Social media dock */
+        .social-dock {
+            position: fixed;
+            z-index: 70;
+            top: 50%;
+            right: clamp(8px, 1.5vw, 20px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transform: translateY(-50%);
+        }
+        .social-dock__button {
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(148, 163, 184, .3);
+            border-radius: 9999px;
+            color: #334155;
+            background: rgba(255, 255, 255, .96);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, .16);
+            cursor: pointer;
+            transition: transform .18s ease, box-shadow .18s ease, color .18s ease;
+            backdrop-filter: blur(10px);
+        }
+        .social-dock__button:hover {
+            color: #ff2d55;
+            transform: scale(1.06);
+            box-shadow: 0 10px 28px rgba(15, 23, 42, .22);
+        }
+        .social-dock__button:focus-visible,
+        .social-confirm__link:focus-visible,
+        .social-confirm__cancel:focus-visible {
+            outline: 3px solid rgba(255, 45, 85, .55);
+            outline-offset: 3px;
+        }
+        .social-dock__button svg {
+            width: 22px;
+            height: 22px;
+        }
+        .dark .social-dock__button {
+            color: #e2e8f0;
+            background: rgba(15, 23, 42, .96);
+            border-color: rgba(71, 85, 105, .7);
+        }
+        .social-confirm {
+            position: absolute;
+            top: 50%;
+            right: calc(100% + 12px);
+            width: min(230px, calc(100vw - 76px));
+            padding: 14px;
+            color: #0f172a;
+            background: rgba(255, 255, 255, .98);
+            border: 1px solid rgba(148, 163, 184, .35);
+            border-radius: 16px;
+            box-shadow: 0 14px 38px rgba(15, 23, 42, .2);
+            transform: translateY(-50%);
+            backdrop-filter: blur(12px);
+        }
+        .social-confirm[hidden] {
+            display: none;
+        }
+        .dark .social-confirm {
+            color: #f1f5f9;
+            background: rgba(15, 23, 42, .98);
+            border-color: rgba(71, 85, 105, .75);
+        }
+        .social-confirm__title {
+            margin: 0 0 12px;
+            font-size: 13px;
+            line-height: 1.45;
+            font-weight: 600;
+        }
+        .social-confirm__actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .social-confirm__link,
+        .social-confirm__cancel {
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 11px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .social-confirm__link {
+            color: white;
+            background: #ff2d55;
+        }
+        .social-confirm__cancel {
+            color: #475569;
+            background: #f1f5f9;
+            border: 0;
+        }
+        .dark .social-confirm__cancel {
+            color: #e2e8f0;
+            background: #1e293b;
+        }
+        @media (max-width: 480px) {
+            .social-dock {
+                right: 8px;
+                gap: 8px;
+            }
+            .social-dock__button {
+                width: 42px;
+                height: 42px;
+            }
+            .social-dock__button svg {
+                width: 20px;
+                height: 20px;
+            }
+            .social-confirm {
+                right: calc(100% + 9px);
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col selection:bg-accent selection:text-white transition-colors duration-300">
@@ -299,6 +420,90 @@
         function openUploadModal() {
             alert("Video yükleme paneli açılıyor!");
         }
+    </script>
+    <!-- Sağ kenardaki sosyal medya bağlantıları -->
+    <aside id="socialDock" class="social-dock" aria-label="Sosyal medya hesapları">
+        <div id="socialConfirm" class="social-confirm" role="dialog" aria-labelledby="socialConfirmTitle" hidden>
+            <p id="socialConfirmTitle" class="social-confirm__title"></p>
+            <div class="social-confirm__actions">
+                <a id="socialConfirmLink" class="social-confirm__link" target="_blank" rel="noopener noreferrer">Yeni sekmede aç</a>
+                <button id="socialConfirmCancel" class="social-confirm__cancel" type="button">Vazgeç</button>
+            </div>
+        </div>
+
+        <button class="social-dock__button" type="button" data-social="youtube" aria-label="YouTube bağlantısını göster" title="YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="2.5" y="5" width="19" height="14" rx="4" fill="#ff0033"></rect>
+                <path d="M10 8.7 15.3 12 10 15.3Z" fill="white"></path>
+            </svg>
+        </button>
+        <button class="social-dock__button" type="button" data-social="instagram" aria-label="Instagram bağlantısını göster" title="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="#d946a5" stroke-width="2"></rect>
+                <circle cx="12" cy="12" r="4" stroke="#d946a5" stroke-width="2"></circle>
+                <circle cx="17.5" cy="6.7" r="1.2" fill="#d946a5"></circle>
+            </svg>
+        </button>
+        <button class="social-dock__button" type="button" data-social="tiktok" aria-label="TikTok bağlantısını göster" title="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                <path d="M15 3v11.2a4.1 4.1 0 1 1-3-3.95V7.1c1.4 2.05 3.52 3.3 6.5 3.5V7.4c-2.1-.16-3.5-1.63-3.5-4.4Z" fill="#111827"></path>
+                <path d="M16.2 4.1c.55 1.7 1.65 2.72 3.3 3.05v2.5c-1.2-.08-2.3-.43-3.3-1.02" stroke="#25f4ee" stroke-width="1.3" stroke-linecap="round"></path>
+                <path d="M12 10.25v3.95a4.1 4.1 0 0 0-2.05-.55 4.1 4.1 0 1 0 4.1 4.1V8.6c.86 1.08 2.05 1.77 3.5 2V7.9c-2.27-.5-3.7-1.78-4.2-3.8" stroke="#fe2c55" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
+    </aside>
+
+    <script>
+        (() => {
+            const profiles = {
+                youtube: {
+                    name: 'YouTube kanalına',
+                    url: 'https://www.youtube.com/@Reelsatör'
+                },
+                instagram: {
+                    name: 'Instagram hesabına',
+                    url: 'https://www.instagram.com/reelsatorr'
+                },
+                tiktok: {
+                    name: 'TikTok hesabına',
+                    url: 'https://www.tiktok.com/@reelsator'
+                }
+            };
+
+            const dock = document.getElementById('socialDock');
+            const confirmBox = document.getElementById('socialConfirm');
+            const confirmTitle = document.getElementById('socialConfirmTitle');
+            const confirmLink = document.getElementById('socialConfirmLink');
+            const cancelButton = document.getElementById('socialConfirmCancel');
+
+            dock.querySelectorAll('[data-social]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const profile = profiles[button.dataset.social];
+                    confirmTitle.textContent = profile.name + ' gitmek istiyor musun?';
+                    confirmLink.href = profile.url;
+                    confirmLink.setAttribute('aria-label', profile.name + ' yeni sekmede aç');
+                    confirmBox.hidden = false;
+                    cancelButton.dataset.returnTo = button.dataset.social;
+                });
+            });
+
+            function closeSocialConfirm(returnFocus = false) {
+                confirmBox.hidden = true;
+                if (returnFocus && cancelButton.dataset.returnTo) {
+                    dock.querySelector('[data-social="' + cancelButton.dataset.returnTo + '"]').focus();
+                }
+            }
+
+            cancelButton.addEventListener('click', () => closeSocialConfirm(true));
+
+            document.addEventListener('click', (event) => {
+                if (!dock.contains(event.target)) closeSocialConfirm();
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') closeSocialConfirm(true);
+            });
+        })();
     </script>
 </body>
 </html>
