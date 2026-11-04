@@ -811,7 +811,7 @@
     <!-- Mobil alt navigasyon: şimdilik görsel menü, sekmeler işlem yapmaz -->
     <nav class="mobile-tabbar" aria-label="Mobil gezinme">
         <div class="mobile-tabbar__inner">
-        <button class="mobile-tabbar__item" type="button" aria-label="Keşfet">
+        <button id="exploreTabButton" class="mobile-tabbar__item" type="button" aria-label="Keşfet" aria-pressed="true">
             <i data-lucide="compass" aria-hidden="true"></i>
             <span>Keşfet</span>
         </button>
@@ -1325,10 +1325,21 @@
                 }
             });
 
+            const exploreTabButton = document.getElementById('exploreTabButton');
             const favoritesTabButton = document.getElementById('favoritesTabButton');
+
+            exploreTabButton.addEventListener('click', () => {
+                window.reelsatorShowFavoritesOnly = false;
+                exploreTabButton.setAttribute('aria-pressed', 'true');
+                favoritesTabButton.setAttribute('aria-pressed', 'false');
+                document.getElementById('searchInput').value = '';
+                handleSearch('');
+            });
+
             favoritesTabButton.addEventListener('click', () => {
-                window.reelsatorShowFavoritesOnly = !window.reelsatorShowFavoritesOnly;
-                favoritesTabButton.setAttribute('aria-pressed', String(window.reelsatorShowFavoritesOnly));
+                window.reelsatorShowFavoritesOnly = true;
+                exploreTabButton.setAttribute('aria-pressed', 'false');
+                favoritesTabButton.setAttribute('aria-pressed', 'true');
                 handleSearch(document.getElementById('searchInput').value);
             });
 
