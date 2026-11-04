@@ -36,6 +36,104 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* Mobile bottom navigation */
+        .mobile-tabbar {
+            display: none;
+        }
+
+        @media (max-width: 639px) {
+            body {
+                padding-bottom: calc(76px + env(safe-area-inset-bottom));
+            }
+
+            .mobile-tabbar {
+                position: fixed;
+                inset-inline: 0;
+                bottom: 0;
+                z-index: 65;
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                align-items: end;
+                gap: 2px;
+                padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+                border-top: 1px solid rgba(148, 163, 184, .28);
+                background: rgba(255, 255, 255, .96);
+                box-shadow: 0 -8px 24px rgba(15, 23, 42, .08);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+            }
+
+            .mobile-tabbar__item {
+                min-width: 0;
+                min-height: 48px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                padding: 3px 1px;
+                border: 0;
+                color: #64748b;
+                background: transparent;
+                font: inherit;
+                font-size: 10px;
+                font-weight: 600;
+                line-height: 1.1;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .mobile-tabbar__item svg {
+                width: 19px;
+                height: 19px;
+                flex: 0 0 auto;
+                stroke-width: 2;
+            }
+
+            .mobile-tabbar__item:focus-visible {
+                outline: 2px solid #ff2d55;
+                outline-offset: 2px;
+                border-radius: 10px;
+            }
+
+            .dark .mobile-tabbar {
+                border-top-color: rgba(71, 85, 105, .55);
+                background: rgba(2, 6, 23, .96);
+                box-shadow: 0 -8px 24px rgba(0, 0, 0, .2);
+            }
+
+            .dark .mobile-tabbar__item {
+                color: #cbd5e1;
+            }
+
+            .mobile-tabbar__item--send {
+                gap: 3px;
+            }
+
+            .mobile-tabbar__send-icon {
+                width: 36px;
+                height: 36px;
+                display: grid;
+                place-items: center;
+                margin-top: -19px;
+                border: 4px solid #fff;
+                border-radius: 9999px;
+                color: #fff;
+                background: #ff2d55;
+                box-shadow: 0 4px 12px rgba(255, 45, 85, .28);
+            }
+
+            .mobile-tabbar__send-icon svg {
+                width: 18px;
+                height: 18px;
+                stroke-width: 2.5;
+            }
+
+            .dark .mobile-tabbar__send-icon {
+                border-color: #020617;
+                color: #fff;
+            }
+        }
         /* Custom Scrollbar */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -558,6 +656,29 @@
         </div>
     </main>
 
+    <!-- Mobil alt navigasyon: şimdilik görsel menü, sekmeler işlem yapmaz -->
+    <nav class="mobile-tabbar" aria-label="Mobil gezinme">
+        <button class="mobile-tabbar__item" type="button" aria-label="Keşfet">
+            <i data-lucide="compass" aria-hidden="true"></i>
+            <span>Keşfet</span>
+        </button>
+        <button class="mobile-tabbar__item" type="button" aria-label="Beğenilenler">
+            <i data-lucide="heart" aria-hidden="true"></i>
+            <span>Beğenilenler</span>
+        </button>
+        <button class="mobile-tabbar__item mobile-tabbar__item--send" type="button" aria-label="Video Gönder">
+            <span class="mobile-tabbar__send-icon"><i data-lucide="plus" aria-hidden="true"></i></span>
+            <span>Video Gönder</span>
+        </button>
+        <button class="mobile-tabbar__item" type="button" aria-label="Topluluk">
+            <i data-lucide="users-round" aria-hidden="true"></i>
+            <span>Topluluk</span>
+        </button>
+        <button class="mobile-tabbar__item" type="button" aria-label="Hesabım">
+            <i data-lucide="user-round" aria-hidden="true"></i>
+            <span>Hesabım</span>
+        </button>
+    </nav>
     <!-- Footer -->
     <footer class="border-t border-slate-200 dark:border-slate-900 py-6 text-center text-xs text-slate-500 mt-auto transition-colors duration-300">
         <p>Reelsatör © 2026 — Yapay Zeka Destekli Replik Arama Motoru</p>
