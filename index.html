@@ -76,14 +76,15 @@
         }
         .social-dock__button:focus-visible,
         .social-confirm__link:focus-visible,
-        .social-confirm__cancel:focus-visible {
+        .social-confirm__cancel:focus-visible,
+        .video-modal__close:focus-visible,
+        .share-drawer__close:focus-visible,
+        .share-choice:focus-visible,
+        .share-copy:focus-visible {
             outline: 3px solid rgba(255, 45, 85, .55);
             outline-offset: 3px;
         }
-        .social-dock__button svg {
-            width: 22px;
-            height: 22px;
-        }
+        .social-dock__button svg { width: 22px; height: 22px; }
         .dark .social-dock__button {
             color: #e2e8f0;
             background: rgba(15, 23, 42, .96);
@@ -103,27 +104,15 @@
             transform: translateY(-50%);
             backdrop-filter: blur(12px);
         }
-        .social-confirm[hidden] {
-            display: none;
-        }
+        .social-confirm[hidden], .video-modal[hidden], .share-drawer[hidden] { display: none; }
         .dark .social-confirm {
             color: #f1f5f9;
             background: rgba(15, 23, 42, .98);
             border-color: rgba(71, 85, 105, .75);
         }
-        .social-confirm__title {
-            margin: 0 0 12px;
-            font-size: 13px;
-            line-height: 1.45;
-            font-weight: 600;
-        }
-        .social-confirm__actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .social-confirm__link,
-        .social-confirm__cancel {
+        .social-confirm__title { margin: 0 0 12px; font-size: 13px; line-height: 1.45; font-weight: 600; }
+        .social-confirm__actions { display: flex; align-items: center; gap: 8px; }
+        .social-confirm__link, .social-confirm__cancel {
             min-height: 36px;
             display: inline-flex;
             align-items: center;
@@ -135,35 +124,155 @@
             text-decoration: none;
             cursor: pointer;
         }
-        .social-confirm__link {
-            color: white;
-            background: #ff2d55;
+        .social-confirm__link { color: white; background: #ff2d55; }
+        .social-confirm__cancel { color: #475569; background: #f1f5f9; border: 0; }
+        .dark .social-confirm__cancel { color: #e2e8f0; background: #1e293b; }
+
+        /* Video popup */
+        .video-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: grid;
+            place-items: center;
+            padding: 20px;
         }
-        .social-confirm__cancel {
+        .video-modal__backdrop, .share-drawer__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 6, 23, .76);
+            backdrop-filter: blur(4px);
+        }
+        .video-modal__panel {
+            position: relative;
+            width: min(100%, 760px);
+            max-height: 92vh;
+            overflow: auto;
+            padding: 18px;
+            color: #0f172a;
+            background: white;
+            border: 1px solid rgba(148, 163, 184, .25);
+            border-radius: 22px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .35);
+        }
+        .dark .video-modal__panel { color: #f1f5f9; background: #0f172a; border-color: #334155; }
+        .video-modal__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+        .video-modal__eyebrow { margin: 0 0 4px; color: #ff2d55; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+        .video-modal__title { margin: 0; font-size: 17px; font-weight: 800; }
+        .video-modal__close, .share-drawer__close {
+            width: 38px;
+            height: 38px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
             color: #475569;
             background: #f1f5f9;
             border: 0;
+            border-radius: 12px;
+            cursor: pointer;
         }
-        .dark .social-confirm__cancel {
-            color: #e2e8f0;
-            background: #1e293b;
+        .dark .video-modal__close, .dark .share-drawer__close { color: #e2e8f0; background: #1e293b; }
+        .video-modal__close svg, .share-drawer__close svg { width: 19px; height: 19px; }
+        .video-modal__video {
+            display: block;
+            width: 100%;
+            max-height: 70vh;
+            aspect-ratio: 16 / 9;
+            background: #020617;
+            border-radius: 14px;
         }
+        .video-modal__note { margin: 11px 2px 0; color: #64748b; font-size: 12px; line-height: 1.5; }
+        .dark .video-modal__note { color: #94a3b8; }
+
+        /* Bottom share drawer */
+        .share-drawer {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .share-drawer__panel {
+            position: relative;
+            width: min(100%, 460px);
+            max-height: 82vh;
+            overflow: auto;
+            padding: 12px 20px calc(22px + env(safe-area-inset-bottom));
+            color: #0f172a;
+            background: #fff;
+            border: 1px solid rgba(148, 163, 184, .25);
+            border-bottom: 0;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -16px 60px rgba(0, 0, 0, .22);
+            animation: shareDrawerUp .2s ease-out;
+        }
+        .dark .share-drawer__panel { color: #f1f5f9; background: #0f172a; border-color: #334155; }
+        .share-drawer__handle { width: 42px; height: 4px; margin: 0 auto 16px; background: #cbd5e1; border-radius: 99px; }
+        .dark .share-drawer__handle { background: #475569; }
+        .share-drawer__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+        .share-drawer__title { margin: 0; font-size: 18px; font-weight: 800; }
+        .share-drawer__subtitle { margin: 5px 0 18px; color: #64748b; font-size: 13px; line-height: 1.45; }
+        .dark .share-drawer__subtitle { color: #94a3b8; }
+        .share-drawer__choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .share-choice {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: inherit;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            font: inherit;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .15s ease, border-color .15s ease;
+        }
+        .share-choice:hover { transform: translateY(-2px); border-color: #cbd5e1; }
+        .dark .share-choice { background: #111c30; border-color: #334155; }
+        .share-choice__icon { width: 38px; height: 38px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 12px; background: white; }
+        .dark .share-choice__icon { background: #1e293b; }
+        .share-choice__icon svg { width: 23px; height: 23px; }
+        .share-choice__name { display: block; font-size: 13px; font-weight: 700; }
+        .share-choice__hint { display: block; margin-top: 3px; color: #64748b; font-size: 10px; line-height: 1.35; }
+        .dark .share-choice__hint { color: #94a3b8; }
+        .share-copy-row { display: flex; gap: 8px; margin-top: 13px; }
+        .share-copy-row input {
+            min-width: 0;
+            flex: 1;
+            padding: 0 10px;
+            color: #475569;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 11px;
+        }
+        .dark .share-copy-row input { color: #cbd5e1; background: #111c30; border-color: #334155; }
+        .share-copy {
+            min-height: 38px;
+            padding: 0 12px;
+            color: white;
+            background: #ff2d55;
+            border: 0;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .share-status { min-height: 18px; margin: 8px 0 0; color: #64748b; font-size: 11px; }
+        .dark .share-status { color: #94a3b8; }
+        @keyframes shareDrawerUp { from { opacity: .6; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         @media (max-width: 480px) {
-            .social-dock {
-                right: 8px;
-                gap: 8px;
-            }
-            .social-dock__button {
-                width: 42px;
-                height: 42px;
-            }
-            .social-dock__button svg {
-                width: 20px;
-                height: 20px;
-            }
-            .social-confirm {
-                right: calc(100% + 9px);
-            }
+            .social-dock { right: 8px; gap: 8px; }
+            .social-dock__button { width: 42px; height: 42px; }
+            .social-dock__button svg { width: 20px; height: 20px; }
+            .social-confirm { right: calc(100% + 9px); }
+            .video-modal { padding: 10px; }
+            .video-modal__panel { padding: 13px; border-radius: 18px; }
+            .share-drawer__panel { padding-left: 16px; padding-right: 16px; }
         }
     </style>
 </head>
@@ -213,7 +322,12 @@
                     <i data-lucide="search" class="w-5 h-5"></i>
                 </div>
                 <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Örn: 'Ne anlatıyon ak' veya 'Aykut elmas mutfakta'..." 
-                    class="w-full pl-12 pr-24 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 text-sm sm:text-base shadow-lg dark:shadow-2xl transition-all">
+                    class="w-full pl-12 pr-40 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 text-sm sm:text-base shadow-lg dark:shadow-2xl transition-all">
+                <button id="clearSearchButton" type="button" onclick="clearSearch()" title="Aramayı temizle" aria-label="Arama alanını temizle" class="hidden p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white transition-all cursor-pointer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="m18 6-12 12M6 6l12 12"></path>
+                    </svg>
+                </button>
                 <div class="absolute inset-y-1.5 right-1.5 flex items-center space-x-1">
                     <button onclick="startVoiceSearch()" title="Sesli Ara" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white transition-all cursor-pointer">
                         <i data-lucide="mic" class="w-4 h-4"></i>
@@ -265,7 +379,7 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Sadexe pencereden atlayabiliyorsun aq senn ne anlatıyon ak..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('1')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('1', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
@@ -297,7 +411,7 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Piyasa bilgin sıfır amk..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('2')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('2', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
@@ -329,7 +443,7 @@
                             <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2">"Ama ben bundan bahsetmedim ki, katlanır plaka cezasından..."</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <button onclick="shareVideo('3')" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
+                            <button onclick="shareVideo('3', this)" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5 transition-all cursor-pointer">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                 <span>Paylaş</span>
                             </button>
@@ -366,144 +480,4 @@
             }
         }
 
-        // Sayfa açıldığında daha önceki seçtiğin modu hatırlar
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-
-        // 2. Arama ve Filtreleme
-        function setQuery(text) {
-            document.getElementById('searchInput').value = text;
-            handleSearch(text);
-        }
-
-        function handleSearch(query) {
-            const searchTerm = query.toLowerCase().trim();
-            const cards = document.querySelectorAll('#videoGrid > div');
-            let matchCount = 0;
-
-            cards.forEach(card => {
-                const title = card.querySelector('h4').textContent.toLowerCase();
-                const description = card.querySelector('p').textContent.toLowerCase();
-
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    card.style.display = 'flex';
-                    matchCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            document.getElementById('resultCount').textContent = matchCount + ' Kayıt';
-        }
-
-        function triggerSearch() {
-            const query = document.getElementById('searchInput').value;
-            handleSearch(query);
-        }
-
-        // 3. Diğer Butonlar
-        function startVoiceSearch() {
-            alert("Mikrofon dinlemede (Whisper AI entegrasyonu aktif)...");
-        }
-
-        function shareVideo(id) {
-            alert("Video bağlantısı kopyalandı!");
-        }
-
-        function downloadClip(id) {
-            alert("Klip indirme başlatılıyor...");
-        }
-
-        function openUploadModal() {
-            alert("Video yükleme paneli açılıyor!");
-        }
-    </script>
-    <!-- Sağ kenardaki sosyal medya bağlantıları -->
-    <aside id="socialDock" class="social-dock" aria-label="Sosyal medya hesapları">
-        <div id="socialConfirm" class="social-confirm" role="dialog" aria-labelledby="socialConfirmTitle" hidden>
-            <p id="socialConfirmTitle" class="social-confirm__title"></p>
-            <div class="social-confirm__actions">
-                <a id="socialConfirmLink" class="social-confirm__link" target="_blank" rel="noopener noreferrer">Yeni sekmede aç</a>
-                <button id="socialConfirmCancel" class="social-confirm__cancel" type="button">Vazgeç</button>
-            </div>
-        </div>
-
-        <button class="social-dock__button" type="button" data-social="youtube" aria-label="YouTube bağlantısını göster" title="YouTube">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="2.5" y="5" width="19" height="14" rx="4" fill="#ff0033"></rect>
-                <path d="M10 8.7 15.3 12 10 15.3Z" fill="white"></path>
-            </svg>
-        </button>
-        <button class="social-dock__button" type="button" data-social="instagram" aria-label="Instagram bağlantısını göster" title="Instagram">
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
-                <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="#d946a5" stroke-width="2"></rect>
-                <circle cx="12" cy="12" r="4" stroke="#d946a5" stroke-width="2"></circle>
-                <circle cx="17.5" cy="6.7" r="1.2" fill="#d946a5"></circle>
-            </svg>
-        </button>
-        <button class="social-dock__button" type="button" data-social="tiktok" aria-label="TikTok bağlantısını göster" title="TikTok">
-            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
-                <path d="M15 3v11.2a4.1 4.1 0 1 1-3-3.95V7.1c1.4 2.05 3.52 3.3 6.5 3.5V7.4c-2.1-.16-3.5-1.63-3.5-4.4Z" fill="#111827"></path>
-                <path d="M16.2 4.1c.55 1.7 1.65 2.72 3.3 3.05v2.5c-1.2-.08-2.3-.43-3.3-1.02" stroke="#25f4ee" stroke-width="1.3" stroke-linecap="round"></path>
-                <path d="M12 10.25v3.95a4.1 4.1 0 0 0-2.05-.55 4.1 4.1 0 1 0 4.1 4.1V8.6c.86 1.08 2.05 1.77 3.5 2V7.9c-2.27-.5-3.7-1.78-4.2-3.8" stroke="#fe2c55" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-        </button>
-    </aside>
-
-    <script>
-        (() => {
-            const profiles = {
-                youtube: {
-                    name: 'YouTube kanalına',
-                    url: 'https://www.youtube.com/@Reelsatör'
-                },
-                instagram: {
-                    name: 'Instagram hesabına',
-                    url: 'https://www.instagram.com/reelsatorr'
-                },
-                tiktok: {
-                    name: 'TikTok hesabına',
-                    url: 'https://www.tiktok.com/@reelsator'
-                }
-            };
-
-            const dock = document.getElementById('socialDock');
-            const confirmBox = document.getElementById('socialConfirm');
-            const confirmTitle = document.getElementById('socialConfirmTitle');
-            const confirmLink = document.getElementById('socialConfirmLink');
-            const cancelButton = document.getElementById('socialConfirmCancel');
-
-            dock.querySelectorAll('[data-social]').forEach((button) => {
-                button.addEventListener('click', () => {
-                    const profile = profiles[button.dataset.social];
-                    confirmTitle.textContent = profile.name + ' gitmek istiyor musun?';
-                    confirmLink.href = profile.url;
-                    confirmLink.setAttribute('aria-label', profile.name + ' yeni sekmede aç');
-                    confirmBox.hidden = false;
-                    cancelButton.dataset.returnTo = button.dataset.social;
-                });
-            });
-
-            function closeSocialConfirm(returnFocus = false) {
-                confirmBox.hidden = true;
-                if (returnFocus && cancelButton.dataset.returnTo) {
-                    dock.querySelector('[data-social="' + cancelButton.dataset.returnTo + '"]').focus();
-                }
-            }
-
-            cancelButton.addEventListener('click', () => closeSocialConfirm(true));
-
-            document.addEventListener('click', (event) => {
-                if (!dock.contains(event.target)) closeSocialConfirm();
-            });
-
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Escape') closeSocialConfirm(true);
-            });
-        })();
-    </script>
-</body>
-</html>
+        // Sayfa açıldığında daha önc
