@@ -189,6 +189,28 @@
             background: #1e293b;
         }
 
+        .video-card {
+            border: 1px solid transparent;
+            background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(135deg, rgba(255, 45, 85, .58), rgba(244, 63, 94, .28) 58%, rgba(251, 146, 60, .38)) border-box;
+            box-shadow: 0 4px 16px rgba(255, 45, 85, .08), 0 1px 3px rgba(15, 23, 42, .04);
+            transition: box-shadow .2s ease, transform .2s ease;
+        }
+
+        .video-card:hover {
+            box-shadow: 0 8px 22px rgba(255, 45, 85, .17), 0 0 14px rgba(255, 45, 85, .11);
+        }
+
+        .dark .video-card {
+            background: linear-gradient(#0f172a, #0f172a) padding-box,
+                linear-gradient(135deg, rgba(255, 45, 85, .62), rgba(244, 63, 94, .34) 58%, rgba(251, 146, 60, .42)) border-box;
+            box-shadow: 0 4px 18px rgba(255, 45, 85, .1);
+        }
+
+        .dark .video-card:hover {
+            box-shadow: 0 8px 25px rgba(255, 45, 85, .24), 0 0 15px rgba(255, 45, 85, .16);
+        }
+
         @media (max-width: 480px) {
             .favorite-button {
                 top: 10px;
@@ -656,7 +678,7 @@
         
         <!-- Hero Search Section -->
         <div id="heroSection" class="text-center space-y-4 py-4">
-            <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
+            <h2 class="text-2xl sm:text-3xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
                 Aklındaki repliği yaz, <span class="bg-gradient-to-r from-accent to-orange-400 bg-clip-text text-transparent">anında bul!</span>
             </h2>
             <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
@@ -704,7 +726,7 @@
                 </button>
             </div>
             <div class="flex items-center justify-between">
-                <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center space-x-2">
+                <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
                     <i data-lucide="film" class="w-5 h-5 text-accent"></i>
                     <span id="resultHeading">Eşleşen Videolar</span>
                     <span id="resultCount" class="text-xs bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-400 px-2.5 py-0.5 rounded-full">4 Kayıt</span>
@@ -714,7 +736,7 @@
             <!-- Video Grid -->
             <div id="videoGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                 <!-- First real video: Nedim abi düşmüş amk -->
-                <div data-youtube-id="TC6F-SKFgvw" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
+                <div data-youtube-id="TC6F-SKFgvw" class="video-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden group flex flex-col">
                     <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
                         <img src="https://img.youtube.com/vi/TC6F-SKFgvw/hqdefault.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
@@ -730,7 +752,7 @@
                     <div class="p-3 flex flex-1 flex-col gap-2">
                         <div class="flex min-w-0 items-start gap-2">
                             <h4 class="sr-only">Nedim abi düşmüş amk</h4>
-                            <p class="line-clamp-2 min-w-0 flex-1 text-xs font-semibold leading-4 text-slate-700 dark:text-slate-200">"Nedim abi düşmüş amk"</p>
+                            <p class="line-clamp-2 min-w-0 flex-1 text-[13px] font-semibold leading-5 text-slate-700 dark:text-slate-200 sm:text-sm">"Nedim abi düşmüş amk"</p>
                             <a data-video-source-link href="https://youtube.com/shorts/TC6F-SKFgvw" target="_blank" rel="noopener noreferrer" aria-label="YouTube videosunu aç" title="YouTube videosunu aç" class="video-source-link">
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4" fill="#ff0033"></rect><path d="M10 8.7 15.3 12 10 15.3Z" fill="white"></path></svg>
                             </a>
@@ -744,7 +766,7 @@
                     </div>
                 </div>
                 <!-- Video Card 1 -->
-                <div data-youtube-id="nlUjoldDYZ0" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
+                <div data-youtube-id="nlUjoldDYZ0" class="video-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden group flex flex-col">
                     <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
                         <img src="https://img.youtube.com/vi/nlUjoldDYZ0/hqdefault.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
@@ -760,7 +782,7 @@
                     <div class="p-3 flex flex-1 flex-col gap-2">
                         <div class="flex min-w-0 items-start gap-2">
                             <h4 class="sr-only">He gettim onu ben goyemmi</h4>
-                            <p class="line-clamp-2 min-w-0 flex-1 text-xs font-semibold leading-4 text-slate-700 dark:text-slate-200">HE GETTİM ONU BEN GOYEMMİ</p>
+                            <p class="line-clamp-2 min-w-0 flex-1 text-[13px] font-semibold leading-5 text-slate-700 dark:text-slate-200 sm:text-sm">HE GETTİM ONU BEN GOYEMMİ</p>
                             <a data-video-source-link href="https://youtube.com/shorts/nlUjoldDYZ0" target="_blank" rel="noopener noreferrer" aria-label="YouTube videosunu aç" title="YouTube videosunu aç" class="video-source-link">
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4" fill="#ff0033"></rect><path d="M10 8.7 15.3 12 10 15.3Z" fill="white"></path></svg>
                             </a>
@@ -775,7 +797,7 @@
                 </div>
 
                 <!-- Video Card 2 -->
-                <div data-youtube-id="ipfulO0pzRg" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
+                <div data-youtube-id="ipfulO0pzRg" class="video-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden group flex flex-col">
                     <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
                         <img src="https://img.youtube.com/vi/ipfulO0pzRg/hqdefault.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
@@ -791,7 +813,7 @@
                     <div class="p-3 flex flex-1 flex-col gap-2">
                         <div class="flex min-w-0 items-start gap-2">
                             <h4 class="sr-only">Osman Gültekin senmisin</h4>
-                            <p class="line-clamp-2 min-w-0 flex-1 text-xs font-semibold leading-4 text-slate-700 dark:text-slate-200">OSMAN GÜLTEKİN SENMİSİN</p>
+                            <p class="line-clamp-2 min-w-0 flex-1 text-[13px] font-semibold leading-5 text-slate-700 dark:text-slate-200 sm:text-sm">OSMAN GÜLTEKİN SENMİSİN</p>
                             <a data-video-source-link href="https://youtube.com/shorts/ipfulO0pzRg" target="_blank" rel="noopener noreferrer" aria-label="YouTube videosunu aç" title="YouTube videosunu aç" class="video-source-link">
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4" fill="#ff0033"></rect><path d="M10 8.7 15.3 12 10 15.3Z" fill="white"></path></svg>
                             </a>
@@ -806,7 +828,7 @@
                 </div>
 
                 <!-- Video Card 3 -->
-                <div data-youtube-id="4-Mi9YL5q5Q" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition-all group flex flex-col shadow-sm dark:shadow-none">
+                <div data-youtube-id="4-Mi9YL5q5Q" class="video-card bg-white dark:bg-slate-900 rounded-2xl overflow-hidden group flex flex-col">
                     <div class="relative aspect-[4/5] bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-hidden">
                         <img src="https://img.youtube.com/vi/4-Mi9YL5q5Q/hqdefault.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10"></div>
@@ -822,7 +844,7 @@
                     <div class="p-3 flex flex-1 flex-col gap-2">
                         <div class="flex min-w-0 items-start gap-2">
                             <h4 class="sr-only">Abi bokunuzu yiyim abi</h4>
-                            <p class="line-clamp-2 min-w-0 flex-1 text-xs font-semibold leading-4 text-slate-700 dark:text-slate-200">ABİ BOKUNUZU YİYİM ABİ</p>
+                            <p class="line-clamp-2 min-w-0 flex-1 text-[13px] font-semibold leading-5 text-slate-700 dark:text-slate-200 sm:text-sm">ABİ BOKUNUZU YİYİM ABİ</p>
                             <a data-video-source-link href="https://youtube.com/shorts/4-Mi9YL5q5Q" target="_blank" rel="noopener noreferrer" aria-label="YouTube videosunu aç" title="YouTube videosunu aç" class="video-source-link">
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4" fill="#ff0033"></rect><path d="M10 8.7 15.3 12 10 15.3Z" fill="white"></path></svg>
                             </a>
