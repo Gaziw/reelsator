@@ -211,6 +211,18 @@
             box-shadow: 0 9px 24px rgba(255, 45, 85, .23), 0 0 18px rgba(255, 45, 85, .18);
         }
 
+        .explore-heading {
+            background: linear-gradient(90deg, #e1306c, #c13584, #833ab4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #resultCount[hidden] {
+            display: none;
+        }
+
         @media (max-width: 480px) {
             .favorite-button {
                 top: 10px;
@@ -728,8 +740,8 @@
             <div class="flex items-center justify-between">
                 <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
                     <i data-lucide="film" class="w-5 h-5 text-accent"></i>
-                    <span id="resultHeading">Eşleşen Videolar</span>
-                    <span id="resultCount" class="text-xs bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-400 px-2.5 py-0.5 rounded-full">4 Kayıt</span>
+                    <span id="resultHeading" class="explore-heading">Keşfet</span>
+                    <span id="resultCount" hidden class="text-xs bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-400 px-2.5 py-0.5 rounded-full">4 Kayıt</span>
                 </h3>
             </div>
 
@@ -976,9 +988,17 @@
                 }
             });
 
-            document.getElementById('resultCount').textContent = matchCount + ' Kayıt';
+            const resultCount = document.getElementById('resultCount');
+            resultCount.textContent = matchCount + ' Kayıt';
+            const isSearchResults = window.reelsatorSearchResultsOpen === true;
+            resultCount.hidden = !showOnlyFavorites && !isSearchResults;
             const resultHeading = document.getElementById('resultHeading');
-            if (resultHeading) resultHeading.textContent = showOnlyFavorites ? 'Beğenilen Videolar' : 'Eşleşen Videolar';
+            if (resultHeading) {
+                resultHeading.textContent = showOnlyFavorites
+                    ? 'Beğenilen Videolar'
+                    : isSearchResults ? 'Eşleşen Videolar' : 'Keşfet';
+                resultHeading.classList.toggle('explore-heading', !showOnlyFavorites && !isSearchResults);
+            }
 
             const emptyState = document.getElementById('favoritesEmptyState');
             if (emptyState) {
