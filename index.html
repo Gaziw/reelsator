@@ -97,6 +97,20 @@
 
         .mobile-tabbar__item[aria-pressed="true"] {
             color: #ff2d55;
+            background: rgba(255, 45, 85, .075);
+            border-radius: 14px;
+            box-shadow: inset 0 0 0 1px rgba(255, 45, 85, .12), 0 3px 14px rgba(255, 45, 85, .12);
+            font-weight: 750;
+        }
+
+        .mobile-tabbar__item[aria-pressed="true"] svg {
+            filter: drop-shadow(0 0 5px rgba(255, 45, 85, .35));
+            stroke-width: 2.3;
+        }
+
+        .mobile-tabbar__item--send[aria-pressed="true"] .mobile-tabbar__send-icon {
+            box-shadow: 0 0 0 4px rgba(255, 45, 85, .12), 0 5px 16px rgba(255, 45, 85, .4);
+            transform: translateY(-1px) scale(1.04);
         }
 
         #favoritesTabButton[aria-pressed="true"] svg {
@@ -412,6 +426,20 @@
 
         .dark .mobile-tabbar__item {
             color: #cbd5e1;
+        }
+
+        .dark .mobile-tabbar__item[aria-pressed="true"] {
+            color: #ff7188;
+            background: rgba(255, 45, 85, .16);
+            box-shadow: inset 0 0 0 1px rgba(255, 113, 136, .22), 0 0 18px rgba(255, 45, 85, .2);
+        }
+
+        .dark .mobile-tabbar__item[aria-pressed="true"] svg {
+            filter: drop-shadow(0 0 6px rgba(255, 113, 136, .48));
+        }
+
+        .dark .mobile-tabbar__item--send[aria-pressed="true"] .mobile-tabbar__send-icon {
+            box-shadow: 0 0 0 4px rgba(255, 113, 136, .16), 0 5px 18px rgba(255, 45, 85, .48);
         }
 
         .mobile-tabbar__item--send {
@@ -1119,11 +1147,11 @@
             <span class="mobile-tabbar__send-icon"><i data-lucide="plus" aria-hidden="true"></i></span>
             <span>Video Gönder</span>
         </button>
-        <button class="mobile-tabbar__item" type="button" aria-label="Topluluk">
+        <button id="communityTabButton" class="mobile-tabbar__item" type="button" aria-label="Topluluk" aria-pressed="false">
             <i data-lucide="users-round" aria-hidden="true"></i>
             <span>Topluluk</span>
         </button>
-        <button class="mobile-tabbar__item" type="button" aria-label="Hesabım">
+        <button id="accountTabButton" class="mobile-tabbar__item" type="button" aria-label="Hesabım" aria-pressed="false">
             <i data-lucide="user-round" aria-hidden="true"></i>
             <span>Hesabım</span>
         </button>
@@ -1269,9 +1297,7 @@
             window.reelsatorShowFavoritesOnly = false;
             window.reelsatorSearchResultsOpen = true;
             window.reelsatorCurrentPage = 'explore';
-            document.getElementById('exploreTabButton').setAttribute('aria-pressed', 'true');
-            document.getElementById('favoritesTabButton').setAttribute('aria-pressed', 'false');
-            document.getElementById('sendTabButton').setAttribute('aria-pressed', 'false');
+            setActiveMainTab('explore');
             document.getElementById('heroSection').hidden = false;
             document.getElementById('heroTitle').hidden = true;
             document.getElementById('heroDescription').hidden = true;
@@ -1292,9 +1318,7 @@
             document.getElementById('heroDescription').hidden = false;
             document.getElementById('popularQueries').hidden = false;
             document.getElementById('searchInput').value = '';
-            document.getElementById('exploreTabButton').setAttribute('aria-pressed', 'true');
-            document.getElementById('favoritesTabButton').setAttribute('aria-pressed', 'false');
-            document.getElementById('sendTabButton').setAttribute('aria-pressed', 'false');
+            setActiveMainTab('explore');
             window.reelsatorCurrentPage = 'explore';
             handleSearch('');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1304,7 +1328,9 @@
             const tabs = {
                 explore: document.getElementById('exploreTabButton'),
                 favorites: document.getElementById('favoritesTabButton'),
-                send: document.getElementById('sendTabButton')
+                send: document.getElementById('sendTabButton'),
+                community: document.getElementById('communityTabButton'),
+                account: document.getElementById('accountTabButton')
             };
             Object.entries(tabs).forEach(([name, button]) => {
                 button.setAttribute('aria-pressed', String(name === activeTab));
@@ -1815,9 +1841,7 @@
                 }
                 window.reelsatorShowFavoritesOnly = false;
                 window.reelsatorCurrentPage = 'explore';
-                exploreTabButton.setAttribute('aria-pressed', 'true');
-                favoritesTabButton.setAttribute('aria-pressed', 'false');
-                sendTabButton.setAttribute('aria-pressed', 'false');
+                setActiveMainTab('explore');
                 document.getElementById('searchInput').value = '';
                 handleSearch('');
             });
@@ -1829,13 +1853,13 @@
                 }
                 window.reelsatorCurrentPage = 'favorites';
                 window.reelsatorShowFavoritesOnly = true;
-                exploreTabButton.setAttribute('aria-pressed', 'false');
-                favoritesTabButton.setAttribute('aria-pressed', 'true');
-                sendTabButton.setAttribute('aria-pressed', 'false');
+                setActiveMainTab('favorites');
                 handleSearch(window.reelsatorSearchResultsOpen ? document.getElementById('searchInput').value : '');
             });
 
             sendTabButton.addEventListener('click', openVideoSubmitPage);
+            document.getElementById('communityTabButton').addEventListener('click', () => setActiveMainTab('community'));
+            document.getElementById('accountTabButton').addEventListener('click', () => setActiveMainTab('account'));
 
             handleSearch(document.getElementById('searchInput').value);
 
