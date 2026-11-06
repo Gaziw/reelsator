@@ -223,6 +223,171 @@
             display: none;
         }
 
+        .video-send-help-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 40px;
+            padding: 0 10px;
+            border: 1px solid rgba(225, 48, 108, .22);
+            border-radius: 12px;
+            background: rgba(225, 48, 108, .06);
+            cursor: pointer;
+            transition: background .2s ease, border-color .2s ease, transform .2s ease;
+        }
+        .video-send-help-trigger:hover {
+            border-color: rgba(131, 58, 180, .45);
+            background: rgba(225, 48, 108, .1);
+            transform: translateY(-1px);
+        }
+        .video-send-help-trigger__label {
+            background: linear-gradient(90deg, #e1306c, #c13584, #833ab4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            font-size: 12px;
+            font-weight: 750;
+            white-space: nowrap;
+        }
+        .dark .video-send-help-trigger {
+            border-color: rgba(225, 48, 108, .34);
+            background: rgba(225, 48, 108, .1);
+        }
+        .video-send-help-trigger:focus-visible,
+        .video-send-help-modal__close:focus-visible,
+        .video-send-help-modal__action:focus-visible {
+            outline: 3px solid rgba(225, 48, 108, .45);
+            outline-offset: 3px;
+        }
+        .video-send-help-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: grid;
+            place-items: center;
+            padding: 18px;
+        }
+        .video-send-help-modal[hidden], #catalogSection[hidden], #videoSubmitPage[hidden] {
+            display: none !important;
+        }
+        .video-send-help-modal__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 6, 23, .68);
+            backdrop-filter: blur(4px);
+        }
+        .video-send-help-modal__panel {
+            position: relative;
+            width: min(100%, 440px);
+            padding: 22px;
+            color: #0f172a;
+            background: #fff;
+            border: 1px solid rgba(148, 163, 184, .3);
+            border-radius: 22px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .32);
+        }
+        .dark .video-send-help-modal__panel {
+            color: #f1f5f9;
+            background: #0f172a;
+            border-color: #334155;
+        }
+        .video-send-help-modal__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        .video-send-help-modal__title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #e1306c, #c13584, #833ab4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+        .video-send-help-modal__close {
+            width: 36px;
+            height: 36px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            color: #475569;
+            background: #f1f5f9;
+            border: 0;
+            border-radius: 11px;
+            cursor: pointer;
+        }
+        .dark .video-send-help-modal__close { color: #e2e8f0; background: #1e293b; }
+        .video-send-help-modal__close svg { width: 18px; height: 18px; }
+        .video-send-help-modal__steps {
+            margin: 0;
+            padding-left: 22px;
+            color: #334155;
+            font-size: 14px;
+            line-height: 1.65;
+        }
+        .dark .video-send-help-modal__steps { color: #cbd5e1; }
+        .video-send-help-modal__steps li + li { margin-top: 6px; }
+        .video-send-help-modal__note {
+            margin: 16px 0 18px;
+            padding: 12px 14px;
+            border: 1px solid rgba(225, 48, 108, .18);
+            border-radius: 14px;
+            color: #475569;
+            background: rgba(225, 48, 108, .06);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .dark .video-send-help-modal__note { color: #cbd5e1; }
+        .video-send-help-modal__action {
+            width: 100%;
+            min-height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 0;
+            border-radius: 14px;
+            color: #fff;
+            background: linear-gradient(100deg, #e1306c, #c13584, #833ab4);
+            box-shadow: 0 8px 20px rgba(193, 53, 132, .24);
+            font: inherit;
+            font-size: 14px;
+            font-weight: 750;
+            cursor: pointer;
+        }
+        .video-send-help-modal__action svg { width: 18px; height: 18px; }
+        .video-submit-placeholder {
+            min-height: 34vh;
+            display: grid;
+            place-items: center;
+            padding: 30px 18px;
+            border: 1px solid rgba(225, 48, 108, .2);
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(225, 48, 108, .045), rgba(131, 58, 180, .055));
+            text-align: center;
+        }
+        .video-submit-placeholder__icon {
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 14px;
+            border-radius: 17px;
+            color: #fff;
+            background: linear-gradient(135deg, #e1306c, #833ab4);
+            box-shadow: 0 8px 24px rgba(193, 53, 132, .2);
+        }
+        .video-submit-placeholder__icon svg { width: 25px; height: 25px; }
+        .video-submit-placeholder__title { margin: 0; font-size: 21px; font-weight: 800; }
+        .video-submit-placeholder__text { margin: 8px 0 0; color: #64748b; font-size: 14px; }
+        .dark .video-submit-placeholder__text { color: #94a3b8; }
+
         @media (max-width: 480px) {
             .favorite-button {
                 top: 10px;
@@ -230,6 +395,13 @@
                 width: 38px;
                 height: 38px;
             }
+            .video-send-help-trigger {
+                min-height: 38px;
+                gap: 4px;
+                padding: 0 7px;
+            }
+            .video-send-help-trigger__label { font-size: 10px; }
+            .video-send-help-modal__panel { padding: 19px; }
         }
 
         .dark .mobile-tabbar {
@@ -681,6 +853,11 @@
                     <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
                     <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
                 </button>
+                <button id="videoSendHelpButton" type="button" onclick="openVideoSendHelp()" aria-haspopup="dialog" aria-controls="videoSendHelpModal" class="video-send-help-trigger">
+                    <i data-lucide="circle-help" class="h-4 w-4 flex-none text-[#e1306c]" aria-hidden="true"></i>
+                    <span class="video-send-help-trigger__label hidden sm:inline">Nasıl Video Gönderilir?</span>
+                    <span class="video-send-help-trigger__label sm:hidden">Nasıl gönderilir?</span>
+                </button>
             </div>
         </div>
     </header>
@@ -727,7 +904,7 @@
         </div>
 
         <!-- Results Section -->
-        <div class="space-y-4">
+        <div id="catalogSection" class="space-y-4">
             <div id="searchResultsHeader" hidden class="flex items-start justify-between gap-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 shadow-sm">
                 <div class="min-w-0">
                     <p class="text-xs font-semibold uppercase tracking-wide text-accent">Arama sonuçları</p>
@@ -915,10 +1092,20 @@
                 <p id="favoritesEmptyMessage" class="mx-auto mt-2 max-w-sm text-sm text-slate-600 dark:text-slate-400">Beğendiğin videoları kalp simgesine dokunarak burada saklayabilirsin.</p>
             </div>
         </div>
+
+        <section id="videoSubmitPage" hidden aria-labelledby="videoSubmitTitle" class="w-full">
+            <div class="video-submit-placeholder">
+                <div>
+                    <div class="video-submit-placeholder__icon" aria-hidden="true"><i data-lucide="upload-cloud"></i></div>
+                    <h2 id="videoSubmitTitle" tabindex="-1" class="video-submit-placeholder__title">Video Gönder</h2>
+                    <p class="video-submit-placeholder__text">Video gönderme alanı hazırlanıyor.</p>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Mobil alt navigasyon: şimdilik görsel menü, sekmeler işlem yapmaz -->
-    <nav class="mobile-tabbar" aria-label="Mobil gezinme">
+    <!-- Mevcut alt navigasyon -->
+    <nav class="mobile-tabbar" aria-label="Ana gezinme">
         <div class="mobile-tabbar__inner">
         <button id="exploreTabButton" class="mobile-tabbar__item" type="button" aria-label="Keşfet" aria-pressed="true">
             <i data-lucide="compass" aria-hidden="true"></i>
@@ -928,7 +1115,7 @@
             <i data-lucide="heart" aria-hidden="true"></i>
             <span>Beğenilenler</span>
         </button>
-        <button class="mobile-tabbar__item mobile-tabbar__item--send" type="button" aria-label="Video Gönder">
+        <button id="sendTabButton" class="mobile-tabbar__item mobile-tabbar__item--send" type="button" aria-label="Video Gönder" aria-pressed="false">
             <span class="mobile-tabbar__send-icon"><i data-lucide="plus" aria-hidden="true"></i></span>
             <span>Video Gönder</span>
         </button>
@@ -942,6 +1129,27 @@
         </button>
             </div>
     </nav>
+    <div id="videoSendHelpModal" class="video-send-help-modal" role="dialog" aria-modal="true" aria-labelledby="videoSendHelpTitle" hidden>
+        <div class="video-send-help-modal__backdrop" data-close-video-send-help></div>
+        <section class="video-send-help-modal__panel">
+            <div class="video-send-help-modal__header">
+                <h2 id="videoSendHelpTitle" class="video-send-help-modal__title">Nasıl Video Gönderilir?</h2>
+                <button id="videoSendHelpClose" class="video-send-help-modal__close" type="button" aria-label="Bilgilendirme penceresini kapat">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <ol class="video-send-help-modal__steps">
+                <li>Video bağlantısını kopyala.</li>
+                <li>Video başlığını ve platformunu seç.</li>
+                <li>İstersen açıklama ekle ve gönder.</li>
+            </ol>
+            <p class="video-send-help-modal__note">Gönderdiğin video incelendikten sonra kataloğa eklenebilir.</p>
+            <button id="videoSendHelpAction" class="video-send-help-modal__action" type="button">
+                <i data-lucide="plus" aria-hidden="true"></i>
+                <span>Video Gönder</span>
+            </button>
+        </section>
+    </div>
     <!-- Footer -->
     <footer class="border-t border-slate-200 dark:border-slate-900 py-6 text-center text-xs text-slate-500 mt-auto transition-colors duration-300">
         <p>Reelsatör © 2026 — Yapay Zeka Destekli Replik Arama Motoru</p>
@@ -951,6 +1159,7 @@
     <script>
         // İkonları başlat
         lucide.createIcons();
+        window.reelsatorCurrentPage = 'explore';
 
         // 1. Gerçek Karanlık Mod İşlevi (Sağ üstteki tuş için)
         function toggleDarkMode() {
@@ -1059,8 +1268,10 @@
 
             window.reelsatorShowFavoritesOnly = false;
             window.reelsatorSearchResultsOpen = true;
+            window.reelsatorCurrentPage = 'explore';
             document.getElementById('exploreTabButton').setAttribute('aria-pressed', 'true');
             document.getElementById('favoritesTabButton').setAttribute('aria-pressed', 'false');
+            document.getElementById('sendTabButton').setAttribute('aria-pressed', 'false');
             document.getElementById('heroSection').hidden = false;
             document.getElementById('heroTitle').hidden = true;
             document.getElementById('heroDescription').hidden = true;
@@ -1083,9 +1294,73 @@
             document.getElementById('searchInput').value = '';
             document.getElementById('exploreTabButton').setAttribute('aria-pressed', 'true');
             document.getElementById('favoritesTabButton').setAttribute('aria-pressed', 'false');
+            document.getElementById('sendTabButton').setAttribute('aria-pressed', 'false');
+            window.reelsatorCurrentPage = 'explore';
             handleSearch('');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        function setActiveMainTab(activeTab) {
+            const tabs = {
+                explore: document.getElementById('exploreTabButton'),
+                favorites: document.getElementById('favoritesTabButton'),
+                send: document.getElementById('sendTabButton')
+            };
+            Object.entries(tabs).forEach(([name, button]) => {
+                button.setAttribute('aria-pressed', String(name === activeTab));
+            });
+        }
+
+        function showCatalogPage(page) {
+            window.reelsatorCurrentPage = page;
+            window.reelsatorSearchResultsOpen = false;
+            window.reelsatorShowFavoritesOnly = page === 'favorites';
+            document.getElementById('videoSubmitPage').hidden = true;
+            document.getElementById('catalogSection').hidden = false;
+            document.getElementById('heroSection').hidden = false;
+            document.getElementById('heroTitle').hidden = false;
+            document.getElementById('heroDescription').hidden = false;
+            document.getElementById('popularQueries').hidden = false;
+            document.getElementById('searchResultsHeader').hidden = true;
+            document.getElementById('searchInput').value = '';
+            updateSearchClearButton('');
+            setActiveMainTab(page);
+            handleSearch('');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openVideoSubmitPage() {
+            window.reelsatorCurrentPage = 'send';
+            document.getElementById('heroSection').hidden = true;
+            document.getElementById('catalogSection').hidden = true;
+            document.getElementById('videoSubmitPage').hidden = false;
+            setActiveMainTab('send');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('videoSubmitTitle').focus();
+        }
+
+        function openVideoSendHelp() {
+            const modal = document.getElementById('videoSendHelpModal');
+            modal.hidden = false;
+            document.getElementById('videoSendHelpClose').focus();
+        }
+
+        function closeVideoSendHelp(returnFocus = true) {
+            document.getElementById('videoSendHelpModal').hidden = true;
+            if (returnFocus) document.getElementById('videoSendHelpButton').focus();
+        }
+
+        document.getElementById('videoSendHelpClose').addEventListener('click', () => closeVideoSendHelp());
+        document.querySelector('#videoSendHelpModal [data-close-video-send-help]').addEventListener('click', () => closeVideoSendHelp());
+        document.getElementById('videoSendHelpAction').addEventListener('click', () => {
+            closeVideoSendHelp(false);
+            openVideoSubmitPage();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !document.getElementById('videoSendHelpModal').hidden) {
+                closeVideoSendHelp();
+            }
+        });
 
         document.getElementById('searchInput').addEventListener('keydown', event => {
             if (event.key === 'Enter') {
@@ -1527,25 +1802,40 @@
 
             const exploreTabButton = document.getElementById('exploreTabButton');
             const favoritesTabButton = document.getElementById('favoritesTabButton');
+            const sendTabButton = document.getElementById('sendTabButton');
 
             exploreTabButton.addEventListener('click', () => {
+                if (window.reelsatorCurrentPage === 'send') {
+                    showCatalogPage('explore');
+                    return;
+                }
                 if (window.reelsatorSearchResultsOpen) {
                     closeSearchResults();
                     return;
                 }
                 window.reelsatorShowFavoritesOnly = false;
+                window.reelsatorCurrentPage = 'explore';
                 exploreTabButton.setAttribute('aria-pressed', 'true');
                 favoritesTabButton.setAttribute('aria-pressed', 'false');
+                sendTabButton.setAttribute('aria-pressed', 'false');
                 document.getElementById('searchInput').value = '';
                 handleSearch('');
             });
 
             favoritesTabButton.addEventListener('click', () => {
+                if (window.reelsatorCurrentPage === 'send') {
+                    showCatalogPage('favorites');
+                    return;
+                }
+                window.reelsatorCurrentPage = 'favorites';
                 window.reelsatorShowFavoritesOnly = true;
                 exploreTabButton.setAttribute('aria-pressed', 'false');
                 favoritesTabButton.setAttribute('aria-pressed', 'true');
+                sendTabButton.setAttribute('aria-pressed', 'false');
                 handleSearch(window.reelsatorSearchResultsOpen ? document.getElementById('searchInput').value : '');
             });
+
+            sendTabButton.addEventListener('click', openVideoSubmitPage);
 
             handleSearch(document.getElementById('searchInput').value);
 
