@@ -690,10 +690,10 @@
         
         <!-- Hero Search Section -->
         <div id="heroSection" class="text-center space-y-4 py-4">
-            <h2 class="text-2xl sm:text-3xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
+            <h2 id="heroTitle" class="text-2xl sm:text-3xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
                 Aklındaki repliği yaz, <span class="bg-gradient-to-r from-accent to-orange-400 bg-clip-text text-transparent">anında bul!</span>
             </h2>
-            <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
+            <p id="heroDescription" class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
                 Yüzlerce Vine ve Instagram Reels kaydı arasından yapay zeka ile sesli arama yap, saniyesinde yakala.
             </p>
 
@@ -718,11 +718,11 @@
             </div>
 
             <!-- Quick Tags -->
-            <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+            <div id="popularQueries" class="flex flex-wrap items-center justify-center gap-2 pt-2">
                 <span class="text-[11px] text-slate-500 font-medium mr-1">Popüler:</span>
-                <button onclick="setQuery('HE GETTİM ONU BEN GOYEMMİ')" class="text-[11px] bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-lg transition-all cursor-pointer">"He gettim onu ben goyemmi"</button>
-                <button onclick="setQuery('OSMAN GÜLTEKİN SENMİSİN')" class="text-[11px] bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-lg transition-all cursor-pointer">"Osman Gültekin senmisin"</button>
-                <button onclick="setQuery('ABİ BOKUNUZU YİYİM ABİ')" class="text-[11px] bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-lg transition-all cursor-pointer">"Abi bokunuzu yiyim abi"</button>
+                <button onclick="setQuery('He gettim onu ben goyemmi')" class="text-[11px] bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-lg transition-all cursor-pointer">"He gettim onu ben goyemmi"</button>
+                <button onclick="setQuery('Osman Gültekin senmisin')" class="text-[11px] bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-lg transition-all cursor-pointer">"Osman Gültekin senmisin"</button>
+                <button onclick="setQuery('Abi bokunuzu yiyim abi')" class="text-[11px] bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-lg transition-all cursor-pointer">"Abi bokunuzu yiyim abi"</button>
             </div>
         </div>
 
@@ -1061,7 +1061,10 @@
             window.reelsatorSearchResultsOpen = true;
             document.getElementById('exploreTabButton').setAttribute('aria-pressed', 'true');
             document.getElementById('favoritesTabButton').setAttribute('aria-pressed', 'false');
-            document.getElementById('heroSection').hidden = true;
+            document.getElementById('heroSection').hidden = false;
+            document.getElementById('heroTitle').hidden = true;
+            document.getElementById('heroDescription').hidden = true;
+            document.getElementById('popularQueries').hidden = true;
             document.getElementById('searchResultsHeader').hidden = false;
             document.getElementById('searchQueryText').textContent = query;
             handleSearch(query);
@@ -1074,6 +1077,9 @@
             window.reelsatorShowFavoritesOnly = false;
             document.getElementById('searchResultsHeader').hidden = true;
             document.getElementById('heroSection').hidden = false;
+            document.getElementById('heroTitle').hidden = false;
+            document.getElementById('heroDescription').hidden = false;
+            document.getElementById('popularQueries').hidden = false;
             document.getElementById('searchInput').value = '';
             document.getElementById('exploreTabButton').setAttribute('aria-pressed', 'true');
             document.getElementById('favoritesTabButton').setAttribute('aria-pressed', 'false');
