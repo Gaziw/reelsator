@@ -96,25 +96,21 @@
         }
 
         .mobile-tabbar__item[aria-pressed="true"] {
-            color: #ff2d55;
-            background: rgba(255, 45, 85, .075);
-            border-radius: 14px;
-            box-shadow: inset 0 0 0 1px rgba(255, 45, 85, .12), 0 3px 14px rgba(255, 45, 85, .12);
-            font-weight: 750;
+            color: #d94663;
+            font-weight: 700;
         }
 
         .mobile-tabbar__item[aria-pressed="true"] svg {
-            filter: drop-shadow(0 0 5px rgba(255, 45, 85, .35));
-            stroke-width: 2.3;
+            filter: none;
+            stroke-width: 2;
         }
 
         .mobile-tabbar__item--send[aria-pressed="true"] .mobile-tabbar__send-icon {
-            box-shadow: 0 0 0 4px rgba(255, 45, 85, .12), 0 5px 16px rgba(255, 45, 85, .4);
-            transform: translateY(-1px) scale(1.04);
-        }
-
-        #favoritesTabButton[aria-pressed="true"] svg {
-            fill: currentColor;
+            color: #d94663;
+            background: transparent;
+            border-color: transparent;
+            box-shadow: none;
+            transform: none;
         }
 
         .favorite-button {
@@ -429,17 +425,19 @@
         }
 
         .dark .mobile-tabbar__item[aria-pressed="true"] {
-            color: #ff7188;
-            background: rgba(255, 45, 85, .16);
-            box-shadow: inset 0 0 0 1px rgba(255, 113, 136, .22), 0 0 18px rgba(255, 45, 85, .2);
+            color: #fb7185;
         }
 
         .dark .mobile-tabbar__item[aria-pressed="true"] svg {
-            filter: drop-shadow(0 0 6px rgba(255, 113, 136, .48));
+            filter: none;
         }
 
         .dark .mobile-tabbar__item--send[aria-pressed="true"] .mobile-tabbar__send-icon {
-            box-shadow: 0 0 0 4px rgba(255, 113, 136, .16), 0 5px 18px rgba(255, 45, 85, .48);
+            color: #fb7185;
+            background: transparent;
+            border-color: transparent;
+            box-shadow: none;
+            transform: none;
         }
 
         .mobile-tabbar__item--send {
