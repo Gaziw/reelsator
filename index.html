@@ -857,7 +857,38 @@
         }
         .youtube-source:hover { background: #e11d48; }
         .youtube-source svg { width: 16px; height: 16px; }
-    </style>
+    
+        .video-send-help-modal__restart { width:100%; margin-top:10px; padding:8px; border:0; border-radius:10px; color:#be3d75; background:transparent; font:inherit; font-size:12px; font-weight:650; cursor:pointer; }
+        .video-send-help-modal__restart:hover { background:rgba(225,48,108,.07); }
+        .dark .video-send-help-modal__restart { color:#f08ab0; }
+        .site-tour[hidden] { display:none !important; }
+        .site-tour { position:fixed; inset:0; z-index:110; pointer-events:none; }
+        .site-tour__panel { position:fixed; width:min(320px,calc(100vw - 24px)); padding:14px; color:#0f172a; background:#fff; border:1px solid rgba(148,163,184,.3); border-radius:18px; box-shadow:0 16px 44px rgba(15,23,42,.2); pointer-events:auto; }
+        .dark .site-tour__panel { color:#f1f5f9; background:#0f172a; border-color:#475569; box-shadow:0 16px 44px rgba(0,0,0,.45); }
+        .site-tour__panel::after { content:""; position:absolute; left:var(--site-tour-arrow-x,50%); bottom:-8px; width:14px; height:14px; background:#fff; border-right:1px solid rgba(148,163,184,.3); border-bottom:1px solid rgba(148,163,184,.3); transform:translateX(-50%) rotate(45deg); }
+        .dark .site-tour__panel::after { background:#0f172a; border-color:#475569; }
+        .site-tour__top,.site-tour__controls { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+        .site-tour__progress { color:#c13584; font-size:11px; font-weight:750; letter-spacing:.04em; }
+        .dark .site-tour__progress { color:#f08ab0; }
+        .site-tour__close { width:30px; height:30px; display:grid; place-items:center; margin:-5px -5px 0 0; padding:0; border:0; border-radius:9px; color:#64748b; background:transparent; cursor:pointer; }
+        .site-tour__close:hover { background:#f1f5f9; color:#0f172a; }
+        .dark .site-tour__close { color:#cbd5e1; }
+        .dark .site-tour__close:hover { background:#1e293b; color:#fff; }
+        .site-tour__close svg { width:17px; height:17px; }
+        .site-tour__title { margin:5px 0 4px; font-size:16px; font-weight:800; }
+        .site-tour__description { min-height:42px; margin:0 0 12px; color:#475569; font-size:13px; line-height:1.5; }
+        .dark .site-tour__description { color:#cbd5e1; }
+        .site-tour__controls { justify-content:flex-start; }
+        .site-tour__spacer { flex:1; }
+        .site-tour__button { min-height:34px; padding:0 11px; border:1px solid #e2e8f0; border-radius:10px; color:#475569; background:#fff; font:inherit; font-size:12px; font-weight:650; cursor:pointer; }
+        .dark .site-tour__button { color:#cbd5e1; background:#1e293b; border-color:#334155; }
+        .site-tour__button:disabled { opacity:.45; cursor:default; }
+        .site-tour__button--primary { border-color:transparent; color:#fff; background:linear-gradient(100deg,#e1306c,#c13584); }
+        .site-tour__button:focus-visible,.site-tour__close:focus-visible,.video-send-help-modal__restart:focus-visible { outline:3px solid rgba(225,48,108,.4); outline-offset:2px; }
+        .mobile-tabbar__item.tour-highlighted { position:relative; border-radius:12px; color:#d94663; background:rgba(255,45,85,.07); box-shadow:inset 0 0 0 1px rgba(255,45,85,.17),0 0 12px rgba(255,45,85,.1); }
+        .dark .mobile-tabbar__item.tour-highlighted { color:#fb7185; background:rgba(255,45,85,.13); box-shadow:inset 0 0 0 1px rgba(255,113,136,.24),0 0 14px rgba(255,45,85,.16); }
+        @media (max-width:420px) { .site-tour__panel { padding:12px; } .site-tour__description { min-height:0; } }
+</style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col selection:bg-accent selection:text-white transition-colors duration-300">
 
@@ -1174,6 +1205,14 @@
                 <i data-lucide="plus" aria-hidden="true"></i>
                 <span>Video Gönder</span>
             </button>
+            <button id="restartTourFromHelpButton" class="video-send-help-modal__restart" type="button">Site tanıtımını yeniden başlat</button>
+        </section>
+    </div>
+    <div id="siteTour" class="site-tour" hidden>
+        <section id="siteTourPanel" class="site-tour__panel" role="dialog" aria-modal="false" aria-labelledby="siteTourTitle" aria-describedby="siteTourDescription" aria-live="polite">
+            <div class="site-tour__top"><span id="siteTourProgress" class="site-tour__progress">1/5</span><button id="siteTourClose" class="site-tour__close" type="button" aria-label="Tanıtımı kapat"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"></path></svg></button></div>
+            <h2 id="siteTourTitle" class="site-tour__title"></h2><p id="siteTourDescription" class="site-tour__description"></p>
+            <div class="site-tour__controls"><button id="siteTourPrevious" class="site-tour__button" type="button">Önceki</button><span class="site-tour__spacer"></span><button id="siteTourSkip" class="site-tour__button" type="button">Atla</button><button id="siteTourNext" class="site-tour__button site-tour__button--primary" type="button">Sonraki</button><button id="siteTourFinish" class="site-tour__button site-tour__button--primary" type="button" hidden>Bitir</button></div>
         </section>
     </div>
     <!-- Footer -->
@@ -1870,6 +1909,53 @@
                     if (!videoModal.hidden) closeVideoModal();
                 }
             });
+        })();
+    </script>
+    <script>
+        (() => {
+            const seenKey='reelsator-site-tour-seen', root=document.getElementById('siteTour'), panel=document.getElementById('siteTourPanel');
+            const steps=[
+                {id:'exploreTabButton',title:'Keşfet',text:'Aklındaki repliği arayıp Bul’a dokunarak eşleşen videoları bulabilirsin.'},
+                {id:'favoritesTabButton',title:'Beğenilenler',text:'Kalp simgesine dokunarak videoları kaydedebilir, sonra burada bulabilirsin.'},
+                {id:'sendTabButton',title:'Video Gönder',text:'Bu alan yeni video önerileri için. Gönderim formu henüz kullanıma açık değil.'},
+                {id:'communityTabButton',title:'Topluluk',text:'Topluluk alanı hazırlanıyor; henüz kullanıma açık değil.'},
+                {id:'accountTabButton',title:'Hesabım',text:'Üyelik ve profil alanı planlanıyor; henüz kullanıma açık değil.'}
+            ];
+            let currentStep=0, active=false, highlighted=null, automaticTimer=null;
+            function wasSeen(){try{return localStorage.getItem(seenKey)==='1';}catch(error){return false;}}
+            function markSeen(){try{localStorage.setItem(seenKey,'1');}catch(error){}}
+            function closeTour(){active=false;if(highlighted)highlighted.classList.remove('tour-highlighted');highlighted=null;root.hidden=true;markSeen();document.getElementById('videoSendHelpButton').focus();}
+            function positionTour(){
+                if(!active||root.hidden)return;
+                const target=document.getElementById(steps[currentStep].id), nav=document.querySelector('.mobile-tabbar'); if(!target||!nav)return;
+                const tr=target.getBoundingClientRect(), nr=nav.getBoundingClientRect(), width=panel.getBoundingClientRect().width, center=tr.left+tr.width/2;
+                const left=Math.max(12,Math.min(window.innerWidth-width-12,center-width/2));
+                panel.style.left=left+'px'; panel.style.bottom=Math.max(12,window.innerHeight-nr.top+12)+'px';
+                panel.style.setProperty('--site-tour-arrow-x',Math.max(18,Math.min(width-18,center-left))+'px');
+            }
+            function renderStep(){
+                if(highlighted)highlighted.classList.remove('tour-highlighted');
+                const step=steps[currentStep]; highlighted=document.getElementById(step.id); if(highlighted)highlighted.classList.add('tour-highlighted');
+                document.getElementById('siteTourProgress').textContent=(currentStep+1)+'/'+steps.length;
+                document.getElementById('siteTourTitle').textContent=step.title; document.getElementById('siteTourDescription').textContent=step.text;
+                document.getElementById('siteTourPrevious').disabled=currentStep===0;
+                document.getElementById('siteTourNext').hidden=currentStep===steps.length-1;
+                document.getElementById('siteTourSkip').hidden=currentStep===steps.length-1;
+                document.getElementById('siteTourFinish').hidden=currentStep!==steps.length-1;
+                root.hidden=false; window.requestAnimationFrame(positionTour);
+                document.getElementById(currentStep===steps.length-1?'siteTourFinish':'siteTourNext').focus();
+            }
+            function startTour(){if(automaticTimer!==null)window.clearTimeout(automaticTimer);currentStep=0;active=true;renderStep();}
+            window.startReelsatorTour=startTour;
+            document.getElementById('siteTourPrevious').addEventListener('click',()=>{if(currentStep>0){currentStep--;renderStep();}});
+            document.getElementById('siteTourNext').addEventListener('click',()=>{if(currentStep<steps.length-1){currentStep++;renderStep();}});
+            document.getElementById('siteTourSkip').addEventListener('click',closeTour);
+            document.getElementById('siteTourFinish').addEventListener('click',closeTour);
+            document.getElementById('siteTourClose').addEventListener('click',closeTour);
+            document.getElementById('restartTourFromHelpButton').addEventListener('click',()=>{closeVideoSendHelp(false);startTour();});
+            document.addEventListener('keydown',event=>{if(active&&event.key==='Escape')closeTour();});
+            window.addEventListener('resize',positionTour); window.addEventListener('orientationchange',positionTour);
+            if(!wasSeen())automaticTimer=window.setTimeout(()=>{if(!wasSeen())startTour();},650);
         })();
     </script>
 </body>
