@@ -464,6 +464,84 @@
         .dark .video-suggestion-new { color: #f0a3c1; border-color: rgba(217, 70, 165, .38); }
         @media (min-width: 640px) { .video-suggestion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
+        .account-page { width: 100%; max-width: 980px; margin: 0 auto; padding-bottom: 18px; }
+        .account-page[hidden] { display: none !important; }
+        .account-intro { margin: 0 auto 22px; text-align: center; }
+        .account-intro__eyebrow { display: inline-flex; align-items: center; gap: 7px; color: #c13584; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+        .account-intro__eyebrow svg { width: 15px; height: 15px; }
+        .dark .account-intro__eyebrow { color: #f08ab0; }
+        .account-intro h2 { margin: 9px 0 0; color: #0f172a; font-size: clamp(24px, 4vw, 32px); font-weight: 850; line-height: 1.15; letter-spacing: -.035em; }
+        .dark .account-intro h2 { color: #f8fafc; }
+        .account-intro p { margin: 8px auto 0; color: #64748b; font-size: 14px; line-height: 1.55; }
+        .dark .account-intro p { color: #94a3b8; }
+        .account-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); overflow: hidden; border: 1px solid rgba(148, 163, 184, .24); border-radius: 26px; background: #fff; box-shadow: 0 16px 42px rgba(15, 23, 42, .07); }
+        .dark .account-layout { border-color: #263449; background: #0f172a; box-shadow: 0 18px 48px rgba(0, 0, 0, .2); }
+        .account-welcome { position: relative; display: flex; min-height: 100%; flex-direction: column; justify-content: space-between; gap: 28px; overflow: hidden; padding: clamp(24px, 4vw, 40px); color: #fff; background: linear-gradient(145deg, #e1306c 0%, #c13584 48%, #833ab4 100%); }
+        .account-welcome::after { position: absolute; right: -70px; bottom: -110px; width: 260px; height: 260px; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; content: ""; box-shadow: 0 0 0 28px rgba(255,255,255,.06), 0 0 0 60px rgba(255,255,255,.035); }
+        .account-welcome__brand { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 850; }
+        .account-welcome__logo { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(255,255,255,.28); border-radius: 13px; background: rgba(255,255,255,.16); }
+        .account-welcome__logo svg { width: 19px; height: 19px; }
+        .account-welcome__copy { position: relative; z-index: 1; }
+        .account-welcome__copy h3 { max-width: 360px; margin: 0; font-size: clamp(22px, 3vw, 30px); font-weight: 850; line-height: 1.15; letter-spacing: -.03em; }
+        .account-welcome__copy p { max-width: 370px; margin: 12px 0 0; color: rgba(255,255,255,.84); font-size: 13px; line-height: 1.65; }
+        .account-welcome__note { position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,.86); font-size: 11px; line-height: 1.4; }
+        .account-welcome__note svg { width: 16px; height: 16px; flex: 0 0 auto; }
+        .account-auth-card { min-width: 0; padding: clamp(20px, 4vw, 38px); }
+        .account-auth-card [hidden] { display: none !important; }
+        .account-auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 24px; padding: 5px; border: 1px solid #e2e8f0; border-radius: 14px; background: #f8fafc; }
+        .dark .account-auth-tabs { border-color: #334155; background: #111c30; }
+        .account-auth-tab { min-height: 40px; border: 0; border-radius: 10px; color: #64748b; background: transparent; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: color .15s ease, background .15s ease, box-shadow .15s ease; }
+        .account-auth-tab[aria-selected="true"] { color: #a52b70; background: #fff; box-shadow: 0 2px 8px rgba(15, 23, 42, .08); }
+        .dark .account-auth-tab[aria-selected="true"] { color: #f0a3c1; background: #1e293b; box-shadow: 0 2px 8px rgba(0, 0, 0, .2); }
+        .account-form-title { margin: 0; color: #0f172a; font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+        .dark .account-form-title { color: #f8fafc; }
+        .account-form-subtitle { margin: 6px 0 20px; color: #64748b; font-size: 12px; line-height: 1.5; }
+        .dark .account-form-subtitle { color: #94a3b8; }
+        .account-form { display: flex; flex-direction: column; gap: 14px; }
+        .account-field label { display: block; margin-bottom: 7px; color: #334155; font-size: 12px; font-weight: 700; }
+        .dark .account-field label { color: #cbd5e1; }
+        .account-control { width: 100%; min-height: 46px; padding: 11px 13px; border: 1px solid #dbe2ea; border-radius: 12px; outline: none; color: #0f172a; background: #fff; font: inherit; font-size: 13px; transition: border-color .15s ease, box-shadow .15s ease; }
+        .account-control:focus { border-color: #c13584; box-shadow: 0 0 0 3px rgba(193, 53, 132, .12); }
+        .account-control[aria-invalid="true"] { border-color: #ef4444; }
+        .dark .account-control { border-color: #334155; color: #f1f5f9; background: #111c30; }
+        .dark .account-control::placeholder { color: #64748b; }
+        .account-forgot-row { display: flex; justify-content: flex-end; margin-top: -4px; }
+        .account-text-button { padding: 0; border: 0; color: #b83280; background: transparent; font: inherit; font-size: 11px; font-weight: 700; text-decoration: none; cursor: pointer; }
+        .account-text-button:hover { color: #833ab4; text-decoration: underline; }
+        .dark .account-text-button { color: #f08ab0; }
+        .account-submit { display: inline-flex; width: 100%; min-height: 47px; align-items: center; justify-content: center; gap: 8px; margin-top: 3px; border: 0; border-radius: 13px; color: #fff; background: linear-gradient(100deg, #e1306c, #c13584, #833ab4); box-shadow: 0 8px 18px rgba(193, 53, 132, .2); font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+        .account-submit:hover { transform: translateY(-1px); box-shadow: 0 11px 22px rgba(193, 53, 132, .25); }
+        .account-submit:disabled { opacity: .65; cursor: wait; transform: none; }
+        .account-submit svg { width: 17px; height: 17px; }
+        .account-message { margin: 0 0 16px; padding: 11px 13px; border: 1px solid #cbd5e1; border-radius: 12px; color: #475569; background: #f8fafc; font-size: 12px; line-height: 1.5; }
+        .account-message[data-tone="error"] { border-color: #fecaca; color: #b91c1c; background: #fef2f2; }
+        .account-message[data-tone="success"] { border-color: #bbf7d0; color: #166534; background: #f0fdf4; }
+        .account-message[data-tone="setup"] { border-color: #fed7aa; color: #9a3412; background: #fff7ed; }
+        .dark .account-message { border-color: #334155; color: #cbd5e1; background: #111c30; }
+        .dark .account-message[data-tone="error"] { border-color: #7f1d1d; color: #fecaca; background: rgba(127, 29, 29, .22); }
+        .dark .account-message[data-tone="success"] { border-color: #14532d; color: #bbf7d0; background: rgba(20, 83, 45, .22); }
+        .dark .account-message[data-tone="setup"] { border-color: #7c2d12; color: #fed7aa; background: rgba(124, 45, 18, .22); }
+        .account-profile { text-align: center; }
+        .account-profile__avatar { display: grid; width: 66px; height: 66px; place-items: center; margin: 0 auto 15px; border: 1px solid rgba(193, 53, 132, .18); border-radius: 22px; color: #b83280; background: linear-gradient(135deg, rgba(225,48,108,.12), rgba(131,58,180,.12)); }
+        .dark .account-profile__avatar { color: #f0a3c1; border-color: rgba(217,70,165,.28); background: rgba(225,48,108,.12); }
+        .account-profile__avatar svg { width: 28px; height: 28px; }
+        .account-profile h3 { margin: 0; color: #0f172a; font-size: 21px; font-weight: 850; }
+        .dark .account-profile h3 { color: #f8fafc; }
+        .account-profile__email { margin: 6px 0 0; color: #64748b; font-size: 13px; overflow-wrap: anywhere; }
+        .dark .account-profile__email { color: #94a3b8; }
+        .account-signout { margin-top: 23px; padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 12px; color: #475569; background: transparent; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .account-signout:hover { border-color: #fda4af; color: #be123c; background: rgba(255, 45, 85, .045); }
+        .dark .account-signout { border-color: #334155; color: #cbd5e1; }
+        .account-auth-card [role="tabpanel"] { outline: none; }
+        @media (max-width: 700px) {
+            .account-page { padding-bottom: 8px; }
+            .account-layout { grid-template-columns: 1fr; border-radius: 22px; }
+            .account-welcome { min-height: unset; gap: 20px; padding: 22px; }
+            .account-welcome__copy h3 { max-width: 500px; font-size: 22px; }
+            .account-welcome__note { display: none; }
+            .account-auth-card { padding: 22px; }
+        }
+
         @media (max-width: 480px) {
             .favorite-button {
                 top: 10px;
@@ -1308,6 +1386,104 @@
                 </div>
             </div>
         </section>
+
+        <section id="accountPage" class="account-page" hidden aria-labelledby="accountPageTitle">
+            <header class="account-intro">
+                <span class="account-intro__eyebrow"><i data-lucide="sparkles" aria-hidden="true"></i> Reelsatör hesabı</span>
+                <h2 id="accountPageTitle" tabindex="-1">Hesabım</h2>
+                <p>Beğendiğin videoları ve Reelsatör deneyimini hesabınla kişiselleştir.</p>
+            </header>
+
+            <div class="account-layout">
+                <aside class="account-welcome">
+                    <div class="account-welcome__brand">
+                        <span class="account-welcome__logo" aria-hidden="true"><i data-lucide="play"></i></span>
+                        <span>Reelsatör</span>
+                    </div>
+                    <div class="account-welcome__copy">
+                        <h3>Repliklerin peşinden birlikte gidelim.</h3>
+                        <p>Hesap açarak Reelsatör yolculuğuna katıl. Giriş ve kayıt bilgilerin Supabase Auth üzerinden güvenli şekilde doğrulanır.</p>
+                    </div>
+                    <div class="account-welcome__note"><i data-lucide="shield-check" aria-hidden="true"></i><span>Şifreni bu sitede saklamıyoruz.</span></div>
+                </aside>
+
+                <div class="account-auth-card">
+                    <div id="accountSetupNotice" class="account-message" data-tone="setup" role="status" aria-live="polite" hidden></div>
+                    <div id="accountAuthMessage" class="account-message" role="status" aria-live="polite" hidden></div>
+
+                    <div id="accountAuthPanel">
+                        <div class="account-auth-tabs" role="tablist" aria-label="Üyelik işlemi">
+                            <button id="accountSignupTab" class="account-auth-tab" type="button" role="tab" aria-selected="true" aria-controls="accountSignupPanel">Kayıt Ol</button>
+                            <button id="accountLoginTab" class="account-auth-tab" type="button" role="tab" aria-selected="false" aria-controls="accountLoginPanel">Giriş Yap</button>
+                        </div>
+
+                        <section id="accountSignupPanel" role="tabpanel" aria-labelledby="accountSignupTab">
+                            <h3 class="account-form-title">Aramıza katıl</h3>
+                            <p class="account-form-subtitle">Hesabını oluşturmak için bilgilerini gir.</p>
+                            <form id="accountSignupForm" class="account-form" novalidate>
+                                <div class="account-field">
+                                    <label for="accountSignupName">Ad</label>
+                                    <input id="accountSignupName" class="account-control" type="text" name="name" autocomplete="name" maxlength="80" placeholder="Adın" required>
+                                </div>
+                                <div class="account-field">
+                                    <label for="accountSignupEmail">E-posta</label>
+                                    <input id="accountSignupEmail" class="account-control" type="email" name="email" autocomplete="email" placeholder="ornek@eposta.com" required>
+                                </div>
+                                <div class="account-field">
+                                    <label for="accountSignupPassword">Şifre</label>
+                                    <input id="accountSignupPassword" class="account-control" type="password" name="password" autocomplete="new-password" minlength="8" placeholder="En az 8 karakter" required>
+                                </div>
+                                <div class="account-field">
+                                    <label for="accountSignupPasswordConfirm">Şifre tekrarı</label>
+                                    <input id="accountSignupPasswordConfirm" class="account-control" type="password" name="passwordConfirm" autocomplete="new-password" minlength="8" placeholder="Şifreni tekrar yaz" required>
+                                </div>
+                                <button id="accountSignupSubmit" class="account-submit" type="submit"><i data-lucide="user-round-plus" aria-hidden="true"></i><span>Hesap oluştur</span></button>
+                            </form>
+                        </section>
+
+                        <section id="accountLoginPanel" role="tabpanel" aria-labelledby="accountLoginTab" hidden>
+                            <h3 class="account-form-title">Tekrar hoş geldin</h3>
+                            <p class="account-form-subtitle">Hesabına giriş yapmak için bilgilerini gir.</p>
+                            <form id="accountLoginForm" class="account-form" novalidate>
+                                <div class="account-field">
+                                    <label for="accountLoginEmail">E-posta</label>
+                                    <input id="accountLoginEmail" class="account-control" type="email" name="email" autocomplete="email" placeholder="ornek@eposta.com" required>
+                                </div>
+                                <div class="account-field">
+                                    <label for="accountLoginPassword">Şifre</label>
+                                    <input id="accountLoginPassword" class="account-control" type="password" name="password" autocomplete="current-password" placeholder="Şifren" required>
+                                </div>
+                                <div class="account-forgot-row"><button id="accountForgotPassword" class="account-text-button" type="button">Şifremi Unuttum</button></div>
+                                <button id="accountLoginSubmit" class="account-submit" type="submit"><i data-lucide="log-in" aria-hidden="true"></i><span>Giriş yap</span></button>
+                            </form>
+                        </section>
+                    </div>
+
+                    <section id="accountRecoveryPanel" role="region" aria-labelledby="accountRecoveryTitle" hidden>
+                        <h3 id="accountRecoveryTitle" class="account-form-title">Yeni şifre belirle</h3>
+                        <p class="account-form-subtitle">E-postadaki bağlantıdan sonra yeni şifreni belirleyebilirsin.</p>
+                        <form id="accountRecoveryForm" class="account-form" novalidate>
+                            <div class="account-field">
+                                <label for="accountRecoveryPassword">Yeni şifre</label>
+                                <input id="accountRecoveryPassword" class="account-control" type="password" autocomplete="new-password" minlength="8" placeholder="En az 8 karakter" required>
+                            </div>
+                            <div class="account-field">
+                                <label for="accountRecoveryPasswordConfirm">Yeni şifre tekrarı</label>
+                                <input id="accountRecoveryPasswordConfirm" class="account-control" type="password" autocomplete="new-password" minlength="8" placeholder="Yeni şifreni tekrar yaz" required>
+                            </div>
+                            <button class="account-submit" type="submit"><i data-lucide="key-round" aria-hidden="true"></i><span>Şifremi güncelle</span></button>
+                        </form>
+                    </section>
+
+                    <section id="accountSignedInPanel" class="account-profile" aria-labelledby="accountProfileName" hidden>
+                        <div class="account-profile__avatar" aria-hidden="true"><i data-lucide="user-round"></i></div>
+                        <h3 id="accountProfileName">Hesabım</h3>
+                        <p id="accountProfileEmail" class="account-profile__email"></p>
+                        <button id="accountSignOut" class="account-signout" type="button"><i data-lucide="log-out" aria-hidden="true"></i> Çıkış yap</button>
+                    </section>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Mevcut alt navigasyon -->
@@ -1528,6 +1704,7 @@
             window.reelsatorSearchResultsOpen = false;
             window.reelsatorShowFavoritesOnly = page === 'favorites';
             document.getElementById('videoSubmitPage').hidden = true;
+            document.getElementById('accountPage').hidden = true;
             document.getElementById('catalogSection').hidden = false;
             document.getElementById('heroSection').hidden = false;
             document.getElementById('heroTitle').hidden = false;
@@ -1546,9 +1723,23 @@
             document.getElementById('heroSection').hidden = true;
             document.getElementById('catalogSection').hidden = true;
             document.getElementById('videoSubmitPage').hidden = false;
+            document.getElementById('accountPage').hidden = true;
             setActiveMainTab('send');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             document.getElementById('videoSubmitTitle').focus();
+        }
+
+        function openAccountPage() {
+            window.reelsatorCurrentPage = 'account';
+            window.reelsatorSearchResultsOpen = false;
+            window.reelsatorShowFavoritesOnly = false;
+            document.getElementById('heroSection').hidden = true;
+            document.getElementById('catalogSection').hidden = true;
+            document.getElementById('videoSubmitPage').hidden = true;
+            document.getElementById('accountPage').hidden = false;
+            setActiveMainTab('account');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('accountPageTitle').focus();
         }
 
         function openVideoSendHelp() {
@@ -2040,7 +2231,7 @@
             const sendTabButton = document.getElementById('sendTabButton');
 
             exploreTabButton.addEventListener('click', () => {
-                if (window.reelsatorCurrentPage === 'send') {
+                if (window.reelsatorCurrentPage === 'send' || window.reelsatorCurrentPage === 'account') {
                     showCatalogPage('explore');
                     return;
                 }
@@ -2056,7 +2247,7 @@
             });
 
             favoritesTabButton.addEventListener('click', () => {
-                if (window.reelsatorCurrentPage === 'send') {
+                if (window.reelsatorCurrentPage === 'send' || window.reelsatorCurrentPage === 'account') {
                     showCatalogPage('favorites');
                     return;
                 }
@@ -2068,7 +2259,7 @@
 
             sendTabButton.addEventListener('click', openVideoSubmitPage);
             document.getElementById('communityTabButton').addEventListener('click', () => setActiveMainTab('community'));
-            document.getElementById('accountTabButton').addEventListener('click', () => setActiveMainTab('account'));
+            document.getElementById('accountTabButton').addEventListener('click', openAccountPage);
 
             handleSearch(document.getElementById('searchInput').value);
 
@@ -2091,7 +2282,7 @@
                 {id:'favoritesTabButton',title:'Beğenilenler',text:'Kalp simgesine dokunarak videoları kaydedebilir, sonra burada bulabilirsin.'},
                 {id:'sendTabButton',title:'Video Gönder',text:'Bu formu kullanarak yeni bir video önerisi hazırlayabilirsin. Sunucu bağlantısı henüz olmadığı için öneriler şu an kaydedilmiyor.'},
                 {id:'communityTabButton',title:'Topluluk',text:'Topluluk alanı hazırlanıyor; henüz kullanıma açık değil.'},
-                {id:'accountTabButton',title:'Hesabım',text:'Üyelik ve profil alanı planlanıyor; henüz kullanıma açık değil.'}
+                {id:'accountTabButton',title:'Hesabım',text:'Kayıt olabilir veya hesabına giriş yapabilirsin. Supabase bağlantısı kurulana kadar üyelik işlemleri çalışmaz.'}
             ];
             let currentStep=0, active=false, highlighted=null, automaticTimer=null;
             function wasSeen(){try{return localStorage.getItem(seenKey)==='1';}catch(error){return false;}}
@@ -2324,6 +2515,316 @@
             });
 
             fillCurrentUser();
+        })();
+    </script>
+    <script>
+        // Add the Supabase project URL and browser-safe publishable key here when the project is ready.
+        // Never place an sb_secret_ or service_role key in this page.
+        window.REELSATOR_SUPABASE_CONFIG = window.REELSATOR_SUPABASE_CONFIG || {
+            projectUrl: '',
+            publishableKey: ''
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (() => {
+            const config = window.REELSATOR_SUPABASE_CONFIG || {};
+            const projectUrl = String(config.projectUrl || config.url || '').trim();
+            const publishableKey = String(config.publishableKey || config.anonKey || '').trim();
+            const setupNotice = document.getElementById('accountSetupNotice');
+            const messageBox = document.getElementById('accountAuthMessage');
+            const authPanel = document.getElementById('accountAuthPanel');
+            const recoveryPanel = document.getElementById('accountRecoveryPanel');
+            const signedInPanel = document.getElementById('accountSignedInPanel');
+            const signupTab = document.getElementById('accountSignupTab');
+            const loginTab = document.getElementById('accountLoginTab');
+            const signupPanel = document.getElementById('accountSignupPanel');
+            const loginPanel = document.getElementById('accountLoginPanel');
+            let authClient = null;
+
+            const isSecretKey = publishableKey.startsWith('sb_secret_');
+            if (projectUrl && publishableKey && !isSecretKey && window.supabase && typeof window.supabase.createClient === 'function') {
+                try {
+                    authClient = window.supabase.createClient(projectUrl, publishableKey, {
+                        auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true }
+                    });
+                } catch (error) {
+                    authClient = null;
+                }
+            }
+
+            if (authClient) {
+                setupNotice.hidden = true;
+            } else {
+                setupNotice.hidden = false;
+                if (isSecretKey) {
+                    setupNotice.textContent = 'Güvenlik için bu sayfa gizli anahtar kabul etmiyor. Supabase panelinden yalnızca Publishable (veya eski anon) anahtarını kullan.';
+                } else if (projectUrl && publishableKey && !window.supabase) {
+                    setupNotice.textContent = 'Supabase kitaplığı yüklenemedi. İnternet bağlantısını kontrol edip yeniden dene.';
+                } else {
+                    setupNotice.textContent = 'Supabase bağlantısı henüz kurulmadı. Gerçek kayıt ve giriş için Project URL ile Publishable key ayarlanmalı. Bu alan şu an hiçbir şifreyi göndermiyor veya saklamıyor.';
+                }
+            }
+
+            function setMessage(message, tone = 'info') {
+                messageBox.textContent = message;
+                messageBox.dataset.tone = tone;
+                messageBox.hidden = !message;
+            }
+            function clearMessage() { setMessage(''); }
+            function setBusy(button, busy, busyLabel, normalLabel) {
+                button.disabled = busy;
+                const label = button.querySelector('span');
+                if (label) label.textContent = busy ? busyLabel : normalLabel;
+            }
+            function friendlyError(error) {
+                const code = error && error.code ? error.code : '';
+                if (code === 'invalid_credentials') return 'E-posta veya şifre doğru değil.';
+                if (code === 'email_not_confirmed') return 'Önce e-posta adresine gelen doğrulama bağlantısına dokun.';
+                if (code === 'weak_password') return 'Daha güçlü bir şifre seç.';
+                if (code === 'user_already_exists' || code === 'email_exists') return 'Bu e-posta ile daha önce hesap açılmış olabilir. Giriş yapmayı dene.';
+                if (code === 'over_email_send_rate_limit') return 'Çok kısa sürede fazla e-posta istendi. Biraz bekleyip tekrar dene.';
+                if (code === 'invalid_email') return 'E-posta adresini kontrol et.';
+                if (error && error.message) return error.message;
+                return 'İşlem tamamlanamadı. Bağlantını kontrol edip tekrar dene.';
+            }
+            function setCurrentUser(user) {
+                if (!user) {
+                    window.reelsatorCurrentUser = null;
+                    signedInPanel.hidden = true;
+                    authPanel.hidden = false;
+                    recoveryPanel.hidden = true;
+                    return;
+                }
+                const fullName = user.user_metadata && (user.user_metadata.full_name || user.user_metadata.name);
+                const displayName = typeof fullName === 'string' && fullName.trim()
+                    ? fullName.trim()
+                    : String(user.email || '').split('@')[0];
+                document.getElementById('accountProfileName').textContent = displayName || 'Reelsatör kullanıcısı';
+                document.getElementById('accountProfileEmail').textContent = user.email || '';
+                window.reelsatorCurrentUser = { username: displayName, displayName };
+                const suggestionName = document.getElementById('suggestionUsername');
+                if (suggestionName && !suggestionName.value.trim()) suggestionName.value = displayName;
+                signedInPanel.hidden = false;
+                authPanel.hidden = true;
+                recoveryPanel.hidden = true;
+            }
+            function showAuthTab(tab) {
+                const signupSelected = tab === 'signup';
+                signupTab.setAttribute('aria-selected', String(signupSelected));
+                loginTab.setAttribute('aria-selected', String(!signupSelected));
+                signupPanel.hidden = !signupSelected;
+                loginPanel.hidden = signupSelected;
+                clearMessage();
+            }
+            function showRecovery() {
+                authPanel.hidden = true;
+                signedInPanel.hidden = true;
+                recoveryPanel.hidden = false;
+                setMessage('E-postadaki güvenli bağlantı açıldı. Yeni şifreni belirle.', 'success');
+                openAccountPage();
+                document.getElementById('accountRecoveryPassword').focus();
+            }
+
+            signupTab.addEventListener('click', () => showAuthTab('signup'));
+            loginTab.addEventListener('click', () => showAuthTab('login'));
+
+            document.getElementById('accountSignupForm').addEventListener('submit', async event => {
+                event.preventDefault();
+                clearMessage();
+                if (!authClient) {
+                    setMessage('Kayıt sistemi henüz bağlı değil. Supabase bağlantı bilgileri eklenmeden gerçek hesap oluşturulamaz.', 'setup');
+                    return;
+                }
+                const name = document.getElementById('accountSignupName').value.trim();
+                const email = document.getElementById('accountSignupEmail').value.trim();
+                const password = document.getElementById('accountSignupPassword').value;
+                const passwordConfirm = document.getElementById('accountSignupPasswordConfirm').value;
+                if (!name || !email || !password || !passwordConfirm) {
+                    setMessage('Lütfen tüm kayıt alanlarını doldur.', 'error');
+                    return;
+                }
+                if (!document.getElementById('accountSignupEmail').checkValidity()) {
+                    setMessage('Geçerli bir e-posta adresi yaz.', 'error');
+                    document.getElementById('accountSignupEmail').focus();
+                    return;
+                }
+                if (password.length < 8) {
+                    setMessage('Şifren en az 8 karakter olmalı.', 'error');
+                    document.getElementById('accountSignupPassword').focus();
+                    return;
+                }
+                if (password !== passwordConfirm) {
+                    setMessage('Şifre alanları birbiriyle eşleşmiyor.', 'error');
+                    document.getElementById('accountSignupPasswordConfirm').focus();
+                    return;
+                }
+
+                const button = document.getElementById('accountSignupSubmit');
+                setBusy(button, true, 'Hesap oluşturuluyor…', 'Hesap oluştur');
+                try {
+                    const { data, error } = await authClient.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: { full_name: name },
+                            emailRedirectTo: window.location.origin + window.location.pathname
+                        }
+                    });
+                    if (error) {
+                        setMessage(friendlyError(error), 'error');
+                    } else if (data && data.session && data.user) {
+                        setCurrentUser(data.user);
+                        setMessage('Hesabın oluşturuldu ve giriş yaptın.', 'success');
+                        openAccountPage();
+                    } else if (data && data.user) {
+                        setMessage('Kayıt isteği yanıtlandı. E-posta onayı açıksa gelen kutunu kontrol et; oturum açılana kadar hesabını aktif kabul etmiyoruz.', 'info');
+                    } else {
+                        setMessage('İstek yanıtlandı. E-posta onayı gerekiyorsa gelen kutunu kontrol et; oturum açılmadan hesap aktif sayılmaz.', 'info');
+                    }
+                } catch (error) {
+                    setMessage(friendlyError(error), 'error');
+                } finally {
+                    setBusy(button, false, 'Hesap oluşturuluyor…', 'Hesap oluştur');
+                }
+            });
+
+            document.getElementById('accountLoginForm').addEventListener('submit', async event => {
+                event.preventDefault();
+                clearMessage();
+                if (!authClient) {
+                    setMessage('Giriş sistemi henüz bağlı değil. Supabase bağlantı bilgileri eklenmeden oturum açılamaz.', 'setup');
+                    return;
+                }
+                const emailInput = document.getElementById('accountLoginEmail');
+                const passwordInput = document.getElementById('accountLoginPassword');
+                const email = emailInput.value.trim();
+                if (!email || !passwordInput.value) {
+                    setMessage('E-posta ve şifre alanlarını doldur.', 'error');
+                    return;
+                }
+                if (!emailInput.checkValidity()) {
+                    setMessage('Geçerli bir e-posta adresi yaz.', 'error');
+                    emailInput.focus();
+                    return;
+                }
+                const button = document.getElementById('accountLoginSubmit');
+                setBusy(button, true, 'Giriş yapılıyor…', 'Giriş yap');
+                try {
+                    const { data, error } = await authClient.auth.signInWithPassword({ email, password: passwordInput.value });
+                    if (error) {
+                        setMessage(friendlyError(error), 'error');
+                    } else if (data && data.session && data.user) {
+                        setCurrentUser(data.user);
+                        setMessage('Giriş yaptın. Hesabın açıldı.', 'success');
+                        openAccountPage();
+                    } else {
+                        setMessage('Oturum açılamadı. E-posta doğrulamasını kontrol edip tekrar dene.', 'error');
+                    }
+                } catch (error) {
+                    setMessage(friendlyError(error), 'error');
+                } finally {
+                    setBusy(button, false, 'Giriş yapılıyor…', 'Giriş yap');
+                }
+            });
+
+            document.getElementById('accountForgotPassword').addEventListener('click', async () => {
+                clearMessage();
+                if (!authClient) {
+                    setMessage('Şifre yenileme bağlantısı henüz kurulmadı. Önce Supabase bağlantı bilgileri eklenmeli.', 'setup');
+                    return;
+                }
+                const emailInput = document.getElementById('accountLoginEmail');
+                const email = emailInput.value.trim();
+                if (!email || !emailInput.checkValidity()) {
+                    setMessage('Şifre yenileme bağlantısını göndermek için geçerli e-posta adresini yaz.', 'error');
+                    emailInput.focus();
+                    return;
+                }
+                const button = document.getElementById('accountForgotPassword');
+                button.disabled = true;
+                try {
+                    const { error } = await authClient.auth.resetPasswordForEmail(email, {
+                        redirectTo: window.location.origin + window.location.pathname
+                    });
+                    if (error) setMessage(friendlyError(error), 'error');
+                    else setMessage('Bu e-posta Supabase’de kayıtlıysa şifre yenileme bağlantısı gönderildi. Gelen kutunu kontrol et.', 'success');
+                } catch (error) {
+                    setMessage(friendlyError(error), 'error');
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            document.getElementById('accountRecoveryForm').addEventListener('submit', async event => {
+                event.preventDefault();
+                clearMessage();
+                if (!authClient) {
+                    setMessage('Supabase bağlantısı kurulmadığı için şifre güncellenemedi.', 'setup');
+                    return;
+                }
+                const password = document.getElementById('accountRecoveryPassword').value;
+                const confirmation = document.getElementById('accountRecoveryPasswordConfirm').value;
+                if (password.length < 8) {
+                    setMessage('Yeni şifren en az 8 karakter olmalı.', 'error');
+                    document.getElementById('accountRecoveryPassword').focus();
+                    return;
+                }
+                if (password !== confirmation) {
+                    setMessage('Yeni şifre alanları birbiriyle eşleşmiyor.', 'error');
+                    document.getElementById('accountRecoveryPasswordConfirm').focus();
+                    return;
+                }
+                try {
+                    const { data, error } = await authClient.auth.updateUser({ password });
+                    if (error) setMessage(friendlyError(error), 'error');
+                    else {
+                        document.getElementById('accountRecoveryForm').reset();
+                        setMessage('Şifren güncellendi. Hesabın açık.', 'success');
+                        if (data && data.user) setCurrentUser(data.user);
+                        openAccountPage();
+                    }
+                } catch (error) {
+                    setMessage(friendlyError(error), 'error');
+                }
+            });
+
+            document.getElementById('accountSignOut').addEventListener('click', async () => {
+                clearMessage();
+                if (!authClient) return;
+                const button = document.getElementById('accountSignOut');
+                button.disabled = true;
+                try {
+                    const { error } = await authClient.auth.signOut({ scope: 'local' });
+                    if (error) setMessage(friendlyError(error), 'error');
+                    else {
+                        setCurrentUser(null);
+                        showAuthTab('login');
+                        setMessage('Çıkış yaptın.', 'success');
+                    }
+                } catch (error) {
+                    setMessage(friendlyError(error), 'error');
+                } finally {
+                    button.disabled = false;
+                }
+            });
+
+            if (authClient) {
+                authClient.auth.onAuthStateChange((event, session) => {
+                    if (event === 'PASSWORD_RECOVERY') {
+                        showRecovery();
+                    } else if (event === 'SIGNED_IN' && session && session.user) {
+                        setCurrentUser(session.user);
+                        openAccountPage();
+                    } else if (event === 'SIGNED_OUT') {
+                        setCurrentUser(null);
+                    }
+                });
+                authClient.auth.getSession().then(({ data, error }) => {
+                    if (error) setMessage('Mevcut oturum kontrol edilemedi. Giriş yapmayı deneyebilirsin.', 'error');
+                    else if (data && data.session && data.session.user) setCurrentUser(data.session.user);
+                }).catch(() => setMessage('Mevcut oturum kontrol edilemedi. Giriş yapmayı deneyebilirsin.', 'error'));
+            }
         })();
     </script>
 </body>
