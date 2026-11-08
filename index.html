@@ -175,6 +175,10 @@
             transition: transform .16s ease, background .16s ease;
         }
 
+        .video-source-link[hidden] {
+            display: none !important;
+        }
+
         .video-source-link:hover {
             transform: translateY(-1px);
             background: #f1f5f9;
@@ -1680,12 +1684,24 @@
                 const link = card.querySelector('[data-video-source-link]');
                 if (!link) return;
 
-                const hostname = new URL(link.href, window.location.href).hostname.toLowerCase();
-                const platform = hostname.includes('instagram.com')
-                    ? 'instagram'
-                    : hostname.includes('tiktok.com')
-                        ? 'tiktok'
-                        : 'youtube';
+                let hostname = '';
+                try {
+                    hostname = new URL(link.href, window.location.href).hostname.toLowerCase();
+                } catch (error) {
+                    link.hidden = true;
+                    link.setAttribute('aria-hidden', 'true');
+                    link.tabIndex = -1;
+                    link.innerHTML = '';
+                    return;
+                }
+                const isDomain = domain => hostname === domain || hostname.endsWith('.' + domain);
+                const platform = isDomain('youtube.com') || isDomain('youtu.be') || isDomain('youtube-nocookie.com')
+                    ? 'youtube'
+                    : isDomain('instagram.com')
+                        ? 'instagram'
+                        : isDomain('tiktok.com')
+                            ? 'tiktok'
+                            : null;
                 const icons = {
                     youtube: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4" fill="#ff0033"></rect><path d="M10 8.7 15.3 12 10 15.3Z" fill="white"></path></svg>',
                     instagram: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="#d946a5" stroke-width="2"></rect><circle cx="12" cy="12" r="4" stroke="#d946a5" stroke-width="2"></circle><circle cx="17.5" cy="6.7" r="1.2" fill="#d946a5"></circle></svg>',
@@ -1693,6 +1709,17 @@
                 };
                 const names = { youtube: 'YouTube', instagram: 'Instagram', tiktok: 'TikTok' };
 
+                if (!platform) {
+                    link.hidden = true;
+                    link.setAttribute('aria-hidden', 'true');
+                    link.tabIndex = -1;
+                    link.innerHTML = '';
+                    return;
+                }
+
+                link.hidden = false;
+                link.removeAttribute('aria-hidden');
+                link.removeAttribute('tabindex');
                 link.innerHTML = icons[platform];
                 link.setAttribute('aria-label', names[platform] + ' videosunu aç');
                 link.title = names[platform] + ' videosunu aç';
