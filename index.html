@@ -2541,6 +2541,14 @@
             const signupPanel = document.getElementById('accountSignupPanel');
             const loginPanel = document.getElementById('accountLoginPanel');
             let authClient = null;
+            const callbackQuery = new URLSearchParams(window.location.search);
+            const callbackHash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+            let isEmailConfirmationCallback = callbackQuery.has('code')
+                || callbackHash.get('type') === 'signup' || callbackHash.get('type') === 'email'
+                || (callbackQuery.get('auth') === 'confirmed' && callbackHash.has('access_token'));
+            const callbackErrorCode = callbackQuery.get('error_code') || callbackHash.get('error_code')
+                || callbackQuery.get('error') || callbackHash.get('error') || '';
+            const callbackErrorDescription = callbackQuery.get('error_description') || callbackHash.get('error_description') || '';
 
             const isSecretKey = publishableKey.startsWith('sb_secret_');
             if (projectUrl && publishableKey && !isSecretKey && window.supabase && typeof window.supabase.createClient === 'function') {
@@ -2572,6 +2580,19 @@
                 messageBox.hidden = !message;
             }
             function clearMessage() { setMessage(''); }
+            function getAuthRedirectUrl(flow) {
+                const appRoot = window.location.origin && window.location.origin !== 'null'
+                    ? new URL('/', window.location.origin)
+                    : new URL('https://reelsatorrapps.vercel.app/');
+                appRoot.searchParams.set('auth', flow);
+                return appRoot.href;
+            }
+            function clearAuthCallbackUrl() {
+                const cleanUrl = window.location.origin && window.location.origin !== 'null'
+                    ? new URL(window.location.pathname, window.location.origin).href
+                    : window.location.pathname;
+                window.history.replaceState(window.history.state, document.title, cleanUrl);
+            }
             function setBusy(button, busy, busyLabel, normalLabel) {
                 button.disabled = busy;
                 const label = button.querySelector('span');
@@ -2587,6 +2608,23 @@
                 if (code === 'invalid_email') return 'E-posta adresini kontrol et.';
                 if (error && error.message) return error.message;
                 return 'İşlem tamamlanamadı. Bağlantını kontrol edip tekrar dene.';
+            }
+            function showAuthCallbackError() {
+                const code = callbackErrorCode;
+                const description = callbackErrorDescription;
+                const confirmationMarkerWithoutToken = callbackQuery.get('auth') === 'confirmed' && !isEmailConfirmationCallback;
+                if (!code && !description && !confirmationMarkerWithoutToken) return false;
+
+                const expired = /expired|invalid|otp_expired|token_not_found/i.test(code + ' ' + description);
+                showAuthTab('login');
+                setMessage(confirmationMarkerWithoutToken && !code && !description
+                    ? 'Doğrulama bağlantısında gerekli bilgiler bulunamadı. En son gelen doğrulama e-postasındaki bağlantıyı yeniden aç.'
+                    : expired
+                    ? 'Bu doğrulama bağlantısı geçersiz, süresi dolmuş veya daha önce kullanılmış. En son gelen doğrulama e-postasındaki bağlantıyı kullan.'
+                    : 'E-posta doğrulaması tamamlanamadı. Bağlantı ayarlarını kontrol edip yeni bir doğrulama e-postası iste.', 'error');
+                openAccountPage();
+                clearAuthCallbackUrl();
+                return true;
             }
             function setCurrentUser(user) {
                 if (!user) {
@@ -2618,11 +2656,13 @@
                 clearMessage();
             }
             function showRecovery() {
+                isEmailConfirmationCallback = false;
                 authPanel.hidden = true;
                 signedInPanel.hidden = true;
                 recoveryPanel.hidden = false;
                 setMessage('E-postadaki güvenli bağlantı açıldı. Yeni şifreni belirle.', 'success');
                 openAccountPage();
+                clearAuthCallbackUrl();
                 document.getElementById('accountRecoveryPassword').focus();
             }
 
@@ -2668,7 +2708,7 @@
                         password,
                         options: {
                             data: { full_name: name },
-                            emailRedirectTo: window.location.origin + window.location.pathname
+                            emailRedirectTo: getAuthRedirectUrl('confirmed')
                         }
                     });
                     if (error) {
@@ -2745,7 +2785,7 @@
                 button.disabled = true;
                 try {
                     const { error } = await authClient.auth.resetPasswordForEmail(email, {
-                        redirectTo: window.location.origin + window.location.pathname
+                        redirectTo: getAuthRedirectUrl('recovery')
                     });
                     if (error) setMessage(friendlyError(error), 'error');
                     else setMessage('Bu e-posta Supabase’de kayıtlıysa şifre yenileme bağlantısı gönderildi. Gelen kutunu kontrol et.', 'success');
@@ -2815,6 +2855,11 @@
                         showRecovery();
                     } else if (event === 'SIGNED_IN' && session && session.user) {
                         setCurrentUser(session.user);
+                        if (isEmailConfirmationCallback) {
+                            isEmailConfirmationCallback = false;
+                            setMessage('E-posta adresin doğrulandı. Reelsatör hesabın açıldı.', 'success');
+                            clearAuthCallbackUrl();
+                        }
                         openAccountPage();
                     } else if (event === 'SIGNED_OUT') {
                         setCurrentUser(null);
@@ -2825,6 +2870,7 @@
                     else if (data && data.session && data.session.user) setCurrentUser(data.session.user);
                 }).catch(() => setMessage('Mevcut oturum kontrol edilemedi. Giriş yapmayı deneyebilirsin.', 'error'));
             }
+            showAuthCallbackError();
         })();
     </script>
 </body>
