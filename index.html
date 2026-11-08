@@ -521,6 +521,12 @@
         .dark .account-message[data-tone="error"] { border-color: #7f1d1d; color: #fecaca; background: rgba(127, 29, 29, .22); }
         .dark .account-message[data-tone="success"] { border-color: #14532d; color: #bbf7d0; background: rgba(20, 83, 45, .22); }
         .dark .account-message[data-tone="setup"] { border-color: #7c2d12; color: #fed7aa; background: rgba(124, 45, 18, .22); }
+        .auth-callback-notice { position: fixed; z-index: 120; top: calc(76px + env(safe-area-inset-top)); left: 50%; width: min(560px, calc(100vw - 24px)); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 13px 15px; transform: translateX(-50%); border: 1px solid #bbf7d0; border-radius: 15px; color: #166534; background: #f0fdf4; box-shadow: 0 12px 30px rgba(15, 23, 42, .14); font-size: 13px; font-weight: 650; line-height: 1.5; }
+        .auth-callback-notice[hidden] { display: none !important; }
+        .dark .auth-callback-notice { border-color: #14532d; color: #bbf7d0; background: #10251c; box-shadow: 0 12px 30px rgba(0, 0, 0, .3); }
+        .auth-callback-notice__close { display: grid; width: 26px; height: 26px; flex: 0 0 auto; place-items: center; margin: -3px -5px 0 0; border: 0; border-radius: 8px; color: inherit; background: transparent; font: inherit; font-size: 20px; line-height: 1; cursor: pointer; }
+        .auth-callback-notice__close:hover { background: rgba(22, 101, 52, .09); }
+        .auth-callback-notice__close:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
         .account-profile { text-align: center; }
         .account-profile__avatar { display: grid; width: 66px; height: 66px; place-items: center; margin: 0 auto 15px; border: 1px solid rgba(193, 53, 132, .18); border-radius: 22px; color: #b83280; background: linear-gradient(135deg, rgba(225,48,108,.12), rgba(131,58,180,.12)); }
         .dark .account-profile__avatar { color: #f0a3c1; border-color: rgba(217,70,165,.28); background: rgba(225,48,108,.12); }
@@ -1062,6 +1068,11 @@
             </div>
         </div>
     </header>
+
+    <div id="authCallbackNotice" class="auth-callback-notice" role="status" aria-live="polite" hidden>
+        <span id="authCallbackNoticeText"></span>
+        <button id="authCallbackNoticeClose" class="auth-callback-notice__close" type="button" aria-label="Mesajı kapat">×</button>
+    </div>
 
     <!-- Main Content Area -->
     <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 flex flex-col space-y-8">
@@ -2593,6 +2604,13 @@
                     : window.location.pathname;
                 window.history.replaceState(window.history.state, document.title, cleanUrl);
             }
+            function showHomeAuthNotice(message) {
+                document.getElementById('authCallbackNoticeText').textContent = message;
+                document.getElementById('authCallbackNotice').hidden = false;
+            }
+            document.getElementById('authCallbackNoticeClose').addEventListener('click', () => {
+                document.getElementById('authCallbackNotice').hidden = true;
+            });
             function setBusy(button, busy, busyLabel, normalLabel) {
                 button.disabled = busy;
                 const label = button.querySelector('span');
@@ -2615,6 +2633,7 @@
                 const confirmationMarkerWithoutToken = callbackQuery.get('auth') === 'confirmed' && !isEmailConfirmationCallback;
                 if (!code && !description && !confirmationMarkerWithoutToken) return false;
 
+                isEmailConfirmationCallback = false;
                 const expired = /expired|invalid|otp_expired|token_not_found/i.test(code + ' ' + description);
                 showAuthTab('login');
                 setMessage(confirmationMarkerWithoutToken && !code && !description
@@ -2855,10 +2874,12 @@
                         showRecovery();
                     } else if (event === 'SIGNED_IN' && session && session.user) {
                         setCurrentUser(session.user);
-                        if (isEmailConfirmationCallback) {
+                        if (isEmailConfirmationCallback && !callbackErrorCode && !callbackErrorDescription) {
                             isEmailConfirmationCallback = false;
-                            setMessage('E-posta adresin doğrulandı. Reelsatör hesabın açıldı.', 'success');
                             clearAuthCallbackUrl();
+                            showCatalogPage('explore');
+                            showHomeAuthNotice('E-posta adresin doğrulandı. Reelsatör hesabın açıldı.');
+                            return;
                         }
                         openAccountPage();
                     } else if (event === 'SIGNED_OUT') {
