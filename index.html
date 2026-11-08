@@ -376,31 +376,93 @@
             cursor: pointer;
         }
         .video-send-help-modal__action svg { width: 18px; height: 18px; }
-        .video-submit-placeholder {
-            min-height: 34vh;
-            display: grid;
-            place-items: center;
-            padding: 30px 18px;
-            border: 1px solid rgba(225, 48, 108, .2);
-            border-radius: 24px;
-            background: linear-gradient(135deg, rgba(225, 48, 108, .045), rgba(131, 58, 180, .055));
-            text-align: center;
+        .video-submit-page { width: 100%; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+        .video-submit-intro { padding: 4px 10px 0; text-align: center; }
+        .video-submit-eyebrow {
+            display: inline-flex; align-items: center; gap: 6px; color: #c13584;
+            font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
         }
-        .video-submit-placeholder__icon {
-            width: 54px;
-            height: 54px;
-            display: grid;
-            place-items: center;
-            margin: 0 auto 14px;
-            border-radius: 17px;
-            color: #fff;
-            background: linear-gradient(135deg, #e1306c, #833ab4);
-            box-shadow: 0 8px 24px rgba(193, 53, 132, .2);
+        .video-submit-eyebrow svg { width: 14px; height: 14px; }
+        .dark .video-submit-eyebrow { color: #f08ab0; }
+        .video-submit-intro h2 { margin: 8px 0 0; font-size: clamp(24px, 4vw, 32px); font-weight: 850; line-height: 1.12; letter-spacing: -.035em; }
+        .video-submit-intro p { max-width: 540px; margin: 9px auto 0; color: #64748b; font-size: 14px; line-height: 1.55; }
+        .dark .video-submit-intro p { color: #94a3b8; }
+        .video-suggestion-form { display: flex; flex-direction: column; gap: 14px; }
+        .video-suggestion-card {
+            padding: clamp(16px, 3vw, 24px); border: 1px solid rgba(148, 163, 184, .24); border-radius: 22px;
+            background: #fff; box-shadow: 0 10px 28px rgba(15, 23, 42, .045);
         }
-        .video-submit-placeholder__icon svg { width: 25px; height: 25px; }
-        .video-submit-placeholder__title { margin: 0; font-size: 21px; font-weight: 800; }
-        .video-submit-placeholder__text { margin: 8px 0 0; color: #64748b; font-size: 14px; }
-        .dark .video-submit-placeholder__text { color: #94a3b8; }
+        .dark .video-suggestion-card { border-color: #263449; background: #0f172a; box-shadow: 0 12px 30px rgba(0, 0, 0, .13); }
+        .video-suggestion-section-title { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+        .video-suggestion-section-title span {
+            width: 28px; height: 28px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 9px;
+            color: #c13584; background: rgba(225, 48, 108, .09); font-size: 11px; font-weight: 800;
+        }
+        .dark .video-suggestion-section-title span { color: #f08ab0; background: rgba(225, 48, 108, .16); }
+        .video-suggestion-section-title h3 { margin: 0; font-size: 15px; font-weight: 750; }
+        .video-suggestion-field + .video-suggestion-field { margin-top: 15px; }
+        .video-suggestion-field label { display: flex; align-items: center; gap: 7px; margin-bottom: 7px; font-size: 13px; font-weight: 700; }
+        .video-suggestion-required { color: #d94663; font-size: 10px; font-weight: 700; }
+        .video-suggestion-input-wrap { position: relative; }
+        .video-suggestion-input-wrap > svg { position: absolute; top: 14px; left: 13px; width: 17px; height: 17px; color: #94a3b8; pointer-events: none; }
+        .video-suggestion-control {
+            width: 100%; min-height: 46px; padding: 11px 13px; border: 1px solid #dbe2ea; border-radius: 13px;
+            color: #0f172a; background: #fff; font: inherit; font-size: 14px; line-height: 1.4; outline: none;
+            transition: border-color .16s ease, box-shadow .16s ease;
+        }
+        .video-suggestion-input-wrap .video-suggestion-control { padding-left: 40px; }
+        textarea.video-suggestion-control { min-height: 96px; resize: vertical; }
+        .video-suggestion-control:focus { border-color: #d946a5; box-shadow: 0 0 0 3px rgba(217, 70, 165, .12); }
+        .video-suggestion-control[aria-invalid="true"] { border-color: #ef4444; }
+        .dark .video-suggestion-control { border-color: #334155; color: #f1f5f9; background: #111c30; }
+        .dark .video-suggestion-control::placeholder { color: #64748b; }
+        .video-suggestion-help { margin: 7px 0 0; color: #64748b; font-size: 11px; line-height: 1.45; }
+        .dark .video-suggestion-help { color: #94a3b8; }
+        .video-suggestion-error { margin: 6px 0 0; color: #dc2626; font-size: 12px; line-height: 1.4; }
+        .dark .video-suggestion-error { color: #fca5a5; }
+        .video-suggestion-platform {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 7px 10px;
+            border: 1px solid rgba(217, 70, 165, .16); border-radius: 12px; color: #7e315f;
+            background: rgba(225, 48, 108, .055); font-size: 11px; font-weight: 700;
+        }
+        .dark .video-suggestion-platform { border-color: rgba(217, 70, 165, .27); color: #f0a3c1; background: rgba(225, 48, 108, .09); }
+        .video-suggestion-platform[hidden], .video-suggestion-error[hidden], .video-suggestion-alert[hidden],
+        #videoSuggestionThanks[hidden], #videoSuggestionFormView[hidden] { display: none !important; }
+        .video-suggestion-platform svg { width: 19px; height: 19px; }
+        .video-suggestion-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .video-suggestion-alert {
+            padding: 12px 14px; border: 1px solid #fecaca; border-radius: 14px; color: #b91c1c;
+            background: #fef2f2; font-size: 13px; line-height: 1.5;
+        }
+        .dark .video-suggestion-alert { border-color: #7f1d1d; color: #fecaca; background: rgba(127, 29, 29, .22); }
+        .video-suggestion-honesty {
+            display: flex; align-items: flex-start; gap: 9px; margin: 14px 2px 0; color: #64748b; font-size: 11px; line-height: 1.5;
+        }
+        .video-suggestion-honesty svg { width: 15px; height: 15px; flex: 0 0 auto; margin-top: 1px; color: #c13584; }
+        .dark .video-suggestion-honesty { color: #94a3b8; }
+        .video-suggestion-submit {
+            width: 100%; min-height: 49px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            margin-top: 14px; padding: 0 18px; border: 0; border-radius: 14px; color: #fff;
+            background: linear-gradient(100deg, #e1306c, #c13584, #833ab4); box-shadow: 0 8px 20px rgba(193, 53, 132, .2);
+            font: inherit; font-size: 14px; font-weight: 750; cursor: pointer; transition: transform .16s ease, box-shadow .16s ease;
+        }
+        .video-suggestion-submit:hover { transform: translateY(-1px); box-shadow: 0 11px 24px rgba(193, 53, 132, .25); }
+        .video-suggestion-submit:disabled { opacity: .7; cursor: wait; transform: none; }
+        .video-suggestion-submit svg { width: 18px; height: 18px; }
+        .video-suggestion-thanks { max-width: 620px; margin: 18px auto; padding: clamp(22px, 5vw, 40px); border: 1px solid rgba(225, 48, 108, .18); border-radius: 26px; background: #fff; box-shadow: 0 16px 44px rgba(15, 23, 42, .08); text-align: center; }
+        .dark .video-suggestion-thanks { border-color: #334155; background: #0f172a; box-shadow: 0 18px 46px rgba(0, 0, 0, .22); }
+        .video-suggestion-thanks__icon { width: 58px; height: 58px; display: grid; place-items: center; margin: 0 auto 14px; border-radius: 18px; color: #fff; background: linear-gradient(135deg, #e1306c, #833ab4); box-shadow: 0 8px 22px rgba(193, 53, 132, .22); }
+        .video-suggestion-thanks__icon svg { width: 27px; height: 27px; }
+        .video-suggestion-thanks h2 { margin: 0; font-size: clamp(21px, 4vw, 27px); font-weight: 850; line-height: 1.2; }
+        .video-suggestion-thanks__message { margin: 10px 0 0; color: #64748b; font-size: 14px; line-height: 1.6; }
+        .dark .video-suggestion-thanks__message { color: #cbd5e1; }
+        .video-suggestion-thanks__status { margin-top: 16px; padding: 12px 14px; border: 1px solid rgba(225, 48, 108, .17); border-radius: 14px; color: #7e315f; background: rgba(225, 48, 108, .055); font-size: 12px; line-height: 1.5; text-align: left; }
+        .dark .video-suggestion-thanks__status { border-color: rgba(217, 70, 165, .27); color: #f0a3c1; background: rgba(225, 48, 108, .09); }
+        .video-suggestion-thanks__title { display: block; margin-top: 5px; font-weight: 750; overflow-wrap: anywhere; }
+        .video-suggestion-new { margin-top: 18px; padding: 10px 15px; border: 1px solid rgba(193, 53, 132, .28); border-radius: 12px; color: #a73575; background: transparent; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .video-suggestion-new:hover { background: rgba(225, 48, 108, .06); }
+        .dark .video-suggestion-new { color: #f0a3c1; border-color: rgba(217, 70, 165, .38); }
+        @media (min-width: 640px) { .video-suggestion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
         @media (max-width: 480px) {
             .favorite-button {
@@ -1155,11 +1217,94 @@
         </div>
 
         <section id="videoSubmitPage" hidden aria-labelledby="videoSubmitTitle" class="w-full">
-            <div class="video-submit-placeholder">
-                <div>
-                    <div class="video-submit-placeholder__icon" aria-hidden="true"><i data-lucide="upload-cloud"></i></div>
-                    <h2 id="videoSubmitTitle" tabindex="-1" class="video-submit-placeholder__title">Video Gönder</h2>
-                    <p class="video-submit-placeholder__text">Video gönderme alanı hazırlanıyor.</p>
+            <div class="video-submit-page">
+                <div id="videoSuggestionFormView">
+                    <header class="video-submit-intro">
+                        <span class="video-submit-eyebrow"><i data-lucide="sparkles" aria-hidden="true"></i> Reelsatör topluluğundan</span>
+                        <h2 id="videoSubmitTitle" tabindex="-1">Yeni video öner</h2>
+                        <p>Aklında kalan bir replik mi var? Video bağlantısını ve repliği paylaş; kataloğu birlikte büyütelim.</p>
+                    </header>
+
+                    <div id="videoSuggestionAlert" class="video-suggestion-alert" role="alert" aria-live="polite" tabindex="-1" hidden></div>
+
+                    <form id="videoSuggestionForm" class="video-suggestion-form" novalidate>
+                        <section class="video-suggestion-card" aria-labelledby="suggestionVideoSectionTitle">
+                            <div class="video-suggestion-section-title">
+                                <span>01</span>
+                                <h3 id="suggestionVideoSectionTitle">Video bağlantısı</h3>
+                            </div>
+                            <div class="video-suggestion-field">
+                                <label for="suggestionVideoUrl">Video bağlantısı <span class="video-suggestion-required">Zorunlu</span></label>
+                                <div class="video-suggestion-input-wrap">
+                                    <i data-lucide="link-2" aria-hidden="true"></i>
+                                    <input id="suggestionVideoUrl" name="videoUrl" class="video-suggestion-control" type="url" inputmode="url" autocomplete="url" placeholder="https://www.youtube.com/shorts/..." aria-describedby="suggestionVideoUrlHelp suggestionVideoUrlError" required>
+                                </div>
+                                <p id="suggestionVideoUrlHelp" class="video-suggestion-help">YouTube, Instagram veya TikTok video bağlantısı ekle.</p>
+                                <div id="suggestionPlatform" class="video-suggestion-platform" aria-live="polite" hidden>
+                                    <span id="suggestionPlatformIcon" aria-hidden="true"></span>
+                                    <span id="suggestionPlatformName"></span>
+                                </div>
+                                <p id="suggestionVideoUrlError" class="video-suggestion-error" hidden></p>
+                            </div>
+                        </section>
+
+                        <section class="video-suggestion-card" aria-labelledby="suggestionDetailsSectionTitle">
+                            <div class="video-suggestion-section-title">
+                                <span>02</span>
+                                <h3 id="suggestionDetailsSectionTitle">Video detayları</h3>
+                            </div>
+                            <div class="video-suggestion-field">
+                                <label for="suggestionTitle">Replik / video başlığı <span class="video-suggestion-required">Zorunlu</span></label>
+                                <div class="video-suggestion-input-wrap">
+                                    <i data-lucide="quote" aria-hidden="true"></i>
+                                    <input id="suggestionTitle" name="title" class="video-suggestion-control" type="text" maxlength="120" placeholder="Videoda akılda kalan replik" aria-describedby="suggestionTitleError" required>
+                                </div>
+                                <p id="suggestionTitleError" class="video-suggestion-error" hidden></p>
+                            </div>
+                            <div class="video-suggestion-field">
+                                <label for="suggestionDescription">Kısa açıklama <span class="text-slate-400 font-normal">İsteğe bağlı</span></label>
+                                <textarea id="suggestionDescription" name="description" class="video-suggestion-control" maxlength="300" placeholder="Videoyu bulmayı kolaylaştıracak kısa bir not ekleyebilirsin."></textarea>
+                                <p class="video-suggestion-help">En fazla 300 karakter.</p>
+                            </div>
+                            <div class="video-suggestion-grid">
+                                <div class="video-suggestion-field">
+                                    <label for="suggestionCategory">Kategori</label>
+                                    <div class="video-suggestion-input-wrap">
+                                        <i data-lucide="tags" aria-hidden="true"></i>
+                                        <select id="suggestionCategory" name="category" class="video-suggestion-control">
+                                            <option value="">Kategori seç</option>
+                                            <option value="Komedi">Komedi</option>
+                                            <option value="Diyalog">Diyalog</option>
+                                            <option value="Vine">Vine</option>
+                                            <option value="Müzik">Müzik</option>
+                                            <option value="Gündem">Gündem</option>
+                                            <option value="Diğer">Diğer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="video-suggestion-field">
+                                    <label for="suggestionUsername">Kullanıcı adı</label>
+                                    <div class="video-suggestion-input-wrap">
+                                        <i data-lucide="user-round" aria-hidden="true"></i>
+                                        <input id="suggestionUsername" name="username" class="video-suggestion-control" type="text" maxlength="40" autocomplete="nickname" placeholder="İsmin (isteğe bağlı)">
+                                    </div>
+                                    <p class="video-suggestion-help">Hesap bağlantısı olduğunda otomatik doldurulur.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="video-suggestion-honesty"><i data-lucide="info" aria-hidden="true"></i><span>Öneri formu şu an sunucuya bağlı değil. Bilgilerin bu aşamada gönderilmez veya kalıcı olarak kaydedilmez.</span></div>
+                        <button id="videoSuggestionSubmit" class="video-suggestion-submit" type="submit"><i data-lucide="send" aria-hidden="true"></i><span>Video önerisini hazırla</span></button>
+                    </form>
+                </div>
+
+                <div id="videoSuggestionThanks" class="video-suggestion-thanks" aria-live="polite" hidden>
+                    <div class="video-suggestion-thanks__icon" aria-hidden="true"><i data-lucide="check"></i></div>
+                    <h2 id="videoSuggestionThanksTitle">Teşekkürler, önerin hazır!</h2>
+                    <p id="videoSuggestionThanksMessage" class="video-suggestion-thanks__message">Form bilgilerini gözden geçirdin. Önerinin incelenip kataloğa eklenebilmesi için sunucu bağlantısı gerektiğini unutma.</p>
+                    <div id="videoSuggestionThanksStatus" class="video-suggestion-thanks__status"></div>
+                    <div class="video-suggestion-thanks__title"><span>Önerdiğin başlık:</span><span id="videoSuggestionThanksVideoTitle"></span></div>
+                    <button id="newVideoSuggestionButton" class="video-suggestion-new" type="button">Yeni video öner</button>
                 </div>
             </div>
         </section>
@@ -1200,11 +1345,11 @@
                 </button>
             </div>
             <ol class="video-send-help-modal__steps">
-                <li>Video bağlantısını kopyala.</li>
-                <li>Video başlığını ve platformunu seç.</li>
-                <li>İstersen açıklama ekle ve gönder.</li>
+                <li>Video bağlantısını yapıştır; platform otomatik tanınsın.</li>
+                <li>Repliği veya başlığı yaz, istersen kategori ve açıklama ekle.</li>
+                <li>Formu hazırla; sunucu bağlantısı geldiğinde öneriler gönderilebilecek.</li>
             </ol>
-            <p class="video-send-help-modal__note">Gönderdiğin video incelendikten sonra kataloğa eklenebilir.</p>
+            <p class="video-send-help-modal__note">Veri tabanı bağlantısı henüz yok; bilgiler şu an sunucuya gönderilmez veya kaydedilmez.</p>
             <button id="videoSendHelpAction" class="video-send-help-modal__action" type="button">
                 <i data-lucide="plus" aria-hidden="true"></i>
                 <span>Video Gönder</span>
@@ -1944,7 +2089,7 @@
             const steps=[
                 {id:'exploreTabButton',title:'Keşfet',text:'Aklındaki repliği arayıp Bul’a dokunarak eşleşen videoları bulabilirsin.'},
                 {id:'favoritesTabButton',title:'Beğenilenler',text:'Kalp simgesine dokunarak videoları kaydedebilir, sonra burada bulabilirsin.'},
-                {id:'sendTabButton',title:'Video Gönder',text:'Bu alan yeni video önerileri için. Gönderim formu henüz kullanıma açık değil.'},
+                {id:'sendTabButton',title:'Video Gönder',text:'Bu formu kullanarak yeni bir video önerisi hazırlayabilirsin. Sunucu bağlantısı henüz olmadığı için öneriler şu an kaydedilmiyor.'},
                 {id:'communityTabButton',title:'Topluluk',text:'Topluluk alanı hazırlanıyor; henüz kullanıma açık değil.'},
                 {id:'accountTabButton',title:'Hesabım',text:'Üyelik ve profil alanı planlanıyor; henüz kullanıma açık değil.'}
             ];
@@ -1983,6 +2128,202 @@
             document.addEventListener('keydown',event=>{if(active&&event.key==='Escape')closeTour();});
             window.addEventListener('resize',positionTour); window.addEventListener('orientationchange',positionTour);
             if(!wasSeen())automaticTimer=window.setTimeout(()=>{if(!wasSeen())startTour();},650);
+        })();
+    </script>
+    <script>
+        (() => {
+            const form = document.getElementById('videoSuggestionForm');
+            if (!form) return;
+
+            const urlInput = document.getElementById('suggestionVideoUrl');
+            const titleInput = document.getElementById('suggestionTitle');
+            const descriptionInput = document.getElementById('suggestionDescription');
+            const categoryInput = document.getElementById('suggestionCategory');
+            const usernameInput = document.getElementById('suggestionUsername');
+            const platformBadge = document.getElementById('suggestionPlatform');
+            const alertBox = document.getElementById('videoSuggestionAlert');
+            const thanksView = document.getElementById('videoSuggestionThanks');
+            const formView = document.getElementById('videoSuggestionFormView');
+            const submitButton = document.getElementById('videoSuggestionSubmit');
+            const platformInfo = {
+                youtube: {
+                    name: 'YouTube bağlantısı tanındı',
+                    icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4" fill="#ff0033"></rect><path d="M10 8.7 15.3 12 10 15.3Z" fill="white"></path></svg>'
+                },
+                instagram: {
+                    name: 'Instagram bağlantısı tanındı',
+                    icon: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="#d946a5" stroke-width="2"></rect><circle cx="12" cy="12" r="4" stroke="#d946a5" stroke-width="2"></circle><circle cx="17.5" cy="6.7" r="1.2" fill="#d946a5"></circle></svg>'
+                },
+                tiktok: {
+                    name: 'TikTok bağlantısı tanındı',
+                    icon: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M15 3v11.2a4.1 4.1 0 1 1-3-3.95V7.1c1.4 2.05 3.52 3.3 6.5 3.5V7.4c-2.1-.16-3.5-1.63-3.5-4.4Z" fill="#111827"></path><path d="M16.2 4.1c.55 1.7 1.65 2.72 3.3 3.05v2.5c-1.2-.08-2.3-.43-3.3-1.02" stroke="#25f4ee" stroke-width="1.3" stroke-linecap="round"></path><path d="M12 10.25v3.95a4.1 4.1 0 0 0-2.05-.55 4.1 4.1 0 1 0 4.1 4.1V8.6c.86 1.08 2.05 1.77 3.5 2V7.9c-2.27-.5-3.7-1.78-4.2-3.8" stroke="#fe2c55" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>'
+                }
+            };
+
+            function identifyVideoUrl(value) {
+                const raw = value.trim();
+                let url;
+                try {
+                    url = new URL(raw);
+                } catch (error) {
+                    return { error: raw ? 'Bağlantı biçimi doğru görünmüyor. Tam video bağlantısını yapıştır.' : 'Video bağlantısını ekle.' };
+                }
+                if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+                    return { error: 'Bağlantı http:// veya https:// ile başlamalı.' };
+                }
+
+                const hostname = url.hostname.toLowerCase().replace(/\.$/, '');
+                const isDomain = domain => hostname === domain || hostname.endsWith('.' + domain);
+                let platform = null;
+                let isVideoLink = false;
+                if (isDomain('youtube.com') || isDomain('youtu.be') || isDomain('youtube-nocookie.com')) {
+                    platform = 'youtube';
+                    isVideoLink = isDomain('youtu.be')
+                        ? url.pathname.split('/').filter(Boolean).length >= 1
+                        : (url.pathname === '/watch' && Boolean(url.searchParams.get('v')))
+                            || /^\/(shorts|embed|live)\/[^/]+/.test(url.pathname);
+                } else if (isDomain('instagram.com')) {
+                    platform = 'instagram';
+                    isVideoLink = /^\/(reel|reels|p|tv)\/[^/]+/i.test(url.pathname);
+                } else if (isDomain('tiktok.com')) {
+                    platform = 'tiktok';
+                    isVideoLink = /^\/@[^/]+\/video\/\d+/i.test(url.pathname)
+                        || /^\/t\/[^/]+/i.test(url.pathname)
+                        || ((hostname === 'vm.tiktok.com' || hostname === 'vt.tiktok.com') && /^\/[^/]+/.test(url.pathname));
+                }
+
+                if (!platform) return { error: 'Bu bağlantı tanınmadı. YouTube, Instagram veya TikTok video bağlantısı kullan.' };
+                if (!isVideoLink) return { error: 'Bu, desteklenen bir platform adresi; ancak video bağlantısı gibi görünmüyor. Videonun paylaşım bağlantısını kullan.' };
+                return { platform, url: url.href };
+            }
+
+            function setFieldError(input, errorElement, message) {
+                input.setAttribute('aria-invalid', 'true');
+                errorElement.textContent = message;
+                errorElement.hidden = false;
+            }
+            function clearFieldError(input, errorElement) {
+                input.removeAttribute('aria-invalid');
+                errorElement.textContent = '';
+                errorElement.hidden = true;
+            }
+            function showUrlState(result) {
+                const errorElement = document.getElementById('suggestionVideoUrlError');
+                if (result.platform) {
+                    const info = platformInfo[result.platform];
+                    document.getElementById('suggestionPlatformIcon').innerHTML = info.icon;
+                    document.getElementById('suggestionPlatformName').textContent = info.name;
+                    platformBadge.hidden = false;
+                    clearFieldError(urlInput, errorElement);
+                } else {
+                    platformBadge.hidden = true;
+                    document.getElementById('suggestionPlatformIcon').innerHTML = '';
+                    document.getElementById('suggestionPlatformName').textContent = '';
+                    if (urlInput.value.trim()) setFieldError(urlInput, errorElement, result.error);
+                    else clearFieldError(urlInput, errorElement);
+                }
+                return result;
+            }
+            function clearAllErrors() {
+                clearFieldError(urlInput, document.getElementById('suggestionVideoUrlError'));
+                clearFieldError(titleInput, document.getElementById('suggestionTitleError'));
+                alertBox.hidden = true;
+                alertBox.textContent = '';
+            }
+            function fillCurrentUser() {
+                // The future login integration can expose { username, displayName } here.
+                const user = window.reelsatorCurrentUser;
+                if (!user || usernameInput.value.trim()) return;
+                const name = user.username || user.displayName || user.name;
+                if (typeof name === 'string') usernameInput.value = name.trim();
+            }
+
+            urlInput.addEventListener('input', () => {
+                const value = urlInput.value.trim();
+                if (!value || /^https?:\/\//i.test(value)) showUrlState(identifyVideoUrl(value));
+                else {
+                    platformBadge.hidden = true;
+                    clearFieldError(urlInput, document.getElementById('suggestionVideoUrlError'));
+                }
+            });
+            urlInput.addEventListener('blur', () => {
+                if (urlInput.value.trim()) showUrlState(identifyVideoUrl(urlInput.value));
+            });
+            titleInput.addEventListener('input', () => clearFieldError(titleInput, document.getElementById('suggestionTitleError')));
+
+            form.addEventListener('submit', async event => {
+                event.preventDefault();
+                clearAllErrors();
+                const urlResult = showUrlState(identifyVideoUrl(urlInput.value));
+                const title = titleInput.value.trim();
+                let hasError = false;
+                if (urlResult.error) hasError = true;
+                if (!title) {
+                    setFieldError(titleInput, document.getElementById('suggestionTitleError'), 'Repliği veya video başlığını yaz.');
+                    hasError = true;
+                }
+                if (hasError) {
+                    alertBox.textContent = 'Devam etmeden önce işaretli alanları kontrol et.';
+                    alertBox.hidden = false;
+                    (urlResult.error ? urlInput : titleInput).focus();
+                    return;
+                }
+
+                const payload = {
+                    videoUrl: urlResult.url,
+                    platform: urlResult.platform,
+                    title,
+                    description: descriptionInput.value.trim(),
+                    category: categoryInput.value,
+                    username: usernameInput.value.trim()
+                };
+                submitButton.disabled = true;
+                submitButton.querySelector('span').textContent = 'Hazırlanıyor…';
+                try {
+                    const api = window.reelsatorApi;
+                    const result = api && typeof api.submitVideoSuggestion === 'function'
+                        ? await api.submitVideoSuggestion(payload)
+                        : null;
+                    if (api && typeof api.submitVideoSuggestion === 'function' && (!result || result.accepted !== true)) {
+                        throw new Error('Öneri sunucu tarafından onaylanmadı. Bilgilerin kaydedildiğini varsaymıyoruz; daha sonra tekrar deneyebilirsin.');
+                    }
+
+                    document.getElementById('videoSuggestionThanksVideoTitle').textContent = payload.title;
+                    if (result && result.accepted === true) {
+                        document.getElementById('videoSuggestionThanksTitle').textContent = 'Teşekkürler, önerin alındı!';
+                        document.getElementById('videoSuggestionThanksMessage').textContent = 'Önerin incelenmek üzere gönderildi. İncelemeden sonra kataloğa eklenebilir.';
+                        document.getElementById('videoSuggestionThanksStatus').textContent = 'Önerin sunucu tarafından kabul edildi ve inceleme sürecine alındı.';
+                    } else {
+                        document.getElementById('videoSuggestionThanksTitle').textContent = 'Önerin hazır!';
+                        document.getElementById('videoSuggestionThanksMessage').textContent = 'Form bilgilerini gözden geçirdin. Önerinin incelenip kataloğa eklenebilmesi için sunucu bağlantısı gerekiyor.';
+                        document.getElementById('videoSuggestionThanksStatus').textContent = 'Henüz veri tabanı veya gönderim servisi bağlı değil. Bilgiler sunucuya gönderilmedi, kaydedilmedi ve incelemeye alınmış sayılmıyor.';
+                    }
+                    formView.hidden = true;
+                    thanksView.hidden = false;
+                    document.getElementById('newVideoSuggestionButton').focus();
+                } catch (error) {
+                    alertBox.textContent = error && error.message ? error.message : 'Öneri hazırlanırken bir sorun oluştu. Bilgilerin kaydedildiğini varsaymıyoruz.';
+                    alertBox.hidden = false;
+                    alertBox.focus();
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.querySelector('span').textContent = 'Video önerisini hazırla';
+                }
+            });
+
+            document.getElementById('newVideoSuggestionButton').addEventListener('click', () => {
+                form.reset();
+                clearAllErrors();
+                showUrlState({});
+                document.getElementById('videoSuggestionThanksVideoTitle').textContent = '';
+                document.getElementById('videoSuggestionThanksTitle').textContent = 'Teşekkürler, önerin hazır!';
+                formView.hidden = false;
+                thanksView.hidden = true;
+                fillCurrentUser();
+                urlInput.focus();
+            });
+
+            fillCurrentUser();
         })();
     </script>
 </body>
